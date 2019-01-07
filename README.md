@@ -6,12 +6,13 @@ Design and implement the latest subgraph isomorphic algorithm based on MapReduce
 
 see the [wiki](https://en.wikipedia.org/wiki/Subgraph_isomorphism_problem)
 
-<br />
+---
 
 <div align="center">
 
 <strong>Classification of Representative Graph Pattern Matching Algorithm</strong> [1]
 
+</div>
 
 | Algorithm | Structural Matching | Semantic Matching |  Exact Matching | Inexact Matching | Optimal Solution | Approximate Solution | Static Graph Matching | Dynamic Graph Matching |
 | - | - | - | - | - | - | - | - | - |
@@ -35,7 +36,7 @@ see the [wiki](https://en.wikipedia.org/wiki/Subgraph_isomorphism_problem)
 | Umcyama <br/> (1998)      | No  | Yes | Yes | No  | No  | Yes | Yes | No  |
 | Christmas <br/> (1995)    | Yes | No  | Yes | No  | No  | Yes | Yes | No  |
 
-</div>
+
 
 ## Reference
 
