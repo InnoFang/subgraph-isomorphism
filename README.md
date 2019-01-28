@@ -1,6 +1,6 @@
 # Subgraph Isomorphism
 
-Design and implement the latest subgraph isomorphic algorithm based on MapReduce programming model on Hadoop platform
+Design and implement the common subgraph isomorphic algorithm based on `MapReduce` programming model on `Hadoop` platform
 
 ## What's subgraph isomorphism problem?
 
