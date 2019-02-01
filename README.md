@@ -41,3 +41,21 @@ see the [wiki](https://en.wikipedia.org/wiki/Subgraph_isomorphism_problem)
 ## Reference
 
 [1] 于静，刘燕兵，张宇，刘梦雅，谭建龙，郭莉.大规模图数据匹配技术综述[J].计算机研究与发展，2015，52(2): 391-409
+
+## [License](./LICENSE)
+
+    Subgraph Isomorphism: Design and implement the latest subgraph isomorphic algorithm based on MapReduce programming model on Hadoop platform
+    Copyright (C) 2019  InnoFang
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
