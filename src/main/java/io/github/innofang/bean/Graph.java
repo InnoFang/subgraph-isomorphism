@@ -1,5 +1,7 @@
 package io.github.innofang.bean;
 
+import com.sun.javafx.binding.StringFormatter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,5 +74,17 @@ public class Graph {
             }
         }
         return degree;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder ret = new StringBuilder();
+        for (Vertex vertex: vertexList) {
+            ret.append(String.format("v %s %s\n", vertex.getVertex(), vertex.getLabel()));
+        }
+        for (Edge edge: edgeList) {
+            ret.append(String.format("e %s %s %s\n", edge.getVertexI(), edge.getVertextJ(), edge.getLabel()));
+        }
+        return ret.toString();
     }
 }
