@@ -1,6 +1,4 @@
-package io.github.innofang.bean;
-
-import com.sun.javafx.binding.StringFormatter;
+package io.github.innofang.Graph.bean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +55,7 @@ public class Graph {
         int[][] matrix = new int[edgeSize][edgeSize];
         for (Edge edge: edgeList) {
             int i = Integer.parseInt(edge.getVertexI());
-            int j = Integer.parseInt(edge.getVertextJ());
+            int j = Integer.parseInt(edge.getVertexJ());
             matrix[i][j] = 1;
             if (directed) {
                 matrix[j][i] = 1;
@@ -83,7 +81,7 @@ public class Graph {
             ret.append(String.format("v %s %s\n", vertex.getVertex(), vertex.getLabel()));
         }
         for (Edge edge: edgeList) {
-            ret.append(String.format("e %s %s %s\n", edge.getVertexI(), edge.getVertextJ(), edge.getLabel()));
+            ret.append(String.format("e %s %s %s\n", edge.getVertexI(), edge.getVertexJ(), edge.getLabel()));
         }
         return ret.toString();
     }

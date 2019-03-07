@@ -1,4 +1,4 @@
-package io.github.innofang.bean;
+package io.github.innofang.Graph.bean;
 
 /**
  *
@@ -25,8 +25,16 @@ package io.github.innofang.bean;
 public class Edge {
 
     private String vertexI;
-    private String vertextJ;
+    private String vertexJ;
     private String label;
+
+    public Edge() {}
+
+    public Edge(String vertexI, String vertexJ, String label) {
+        this.vertexI = vertexI;
+        this.vertexJ = vertexJ;
+        this.label = label;
+    }
 
     public String getVertexI() {
         return vertexI;
@@ -36,12 +44,12 @@ public class Edge {
         this.vertexI = vertexI;
     }
 
-    public String getVertextJ() {
-        return vertextJ;
+    public String getVertexJ() {
+        return vertexJ;
     }
 
-    public void setVertextJ(String vertextJ) {
-        this.vertextJ = vertextJ;
+    public void setVertexJ(String vertexJ) {
+        this.vertexJ = vertexJ;
     }
 
     public String getLabel() {
@@ -53,6 +61,6 @@ public class Edge {
     }
 
     public boolean contain(String vertex) {
-        return vertexI.equals(vertex) || vertextJ.equals(vertex);
+        return vertexI.equals(vertex) || vertexJ.equals(vertex);
     }
 }

@@ -1,4 +1,4 @@
-package io.github.innofang.bean;
+package io.github.innofang.Graph.bean;
 
 /**
  *
@@ -25,6 +25,13 @@ package io.github.innofang.bean;
 public class Vertex {
     private String vertex;
     private String label;
+
+    public Vertex() {}
+
+    public Vertex(String vertex, String label) {
+        this.vertex = vertex;
+        this.label = label;
+    }
 
     public String getVertex() {
         return vertex;
