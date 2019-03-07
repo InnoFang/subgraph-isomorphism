@@ -41,7 +41,7 @@ public class GraphReader {
         BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
         Graph graph;
         String line;
-        int lineNumber = 0;
+        int lineNumber = 1;
         if (reader.readLine().startsWith("t #")) {
             graph = new Graph();
             while ((line = reader.readLine()) != null) {
