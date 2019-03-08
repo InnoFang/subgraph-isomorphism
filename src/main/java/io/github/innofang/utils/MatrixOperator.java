@@ -5,7 +5,7 @@ public class MatrixOperator {
     public static Operator set(int[][] matrix) {
         assert matrix != null :
                 "matrix cannot be null.";
-        assert matrix.length == 0 || matrix[0].length == 0 :
+        assert matrix[0].length != 0 :
                 "Matrix cannot be empty.";
 
         return new Operator(matrix);
