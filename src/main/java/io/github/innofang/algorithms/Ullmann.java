@@ -14,36 +14,36 @@ import java.util.List;
 public class Ullmann {
 
     private Graph queryGraph;
-    private Graph largeGraph;
+    private Graph targetGraph;
 
     private List<Vertex> queryVertexList;
-    private List<Vertex> largeVertexList;
+    private List<Vertex> targetVertexList;
 
     private List<Edge> queryEdgeList;
-    private List<Edge> largeEdgeList;
+    private List<Edge> targetEdgeList;
 
     private int[][] MA; // for query graph
-    private int[][] MB; // for large graph
+    private int[][] MB; // for target graph
     private int[][] M0;
 
-    public boolean isIsomorphism(Graph largeGraph, Graph queryGraph) {
-        init(largeGraph, queryGraph);
+    public boolean isIsomorphism(Graph targetGraph, Graph queryGraph) {
+        init(targetGraph, queryGraph);
         return checkIsomorphism();
     }
 
-    private void init(Graph largeGraph, Graph queryGraph) {
-        this.largeGraph = largeGraph;
+    private void init(Graph targetGraph, Graph queryGraph) {
+        this.targetGraph = targetGraph;
         this.queryGraph = queryGraph;
 
-        largeVertexList = largeGraph.getVertexList();
+        targetVertexList = targetGraph.getVertexList();
         queryVertexList = queryGraph.getVertexList();
 
-        largeEdgeList = largeGraph.getEdgeList();
+        targetEdgeList = targetGraph.getEdgeList();
         queryEdgeList = queryGraph.getEdgeList();
 
         MA = queryGraph.getAdjacencyMatrix();
-        MB = largeGraph.getAdjacencyMatrix();
-        M0 = getMatrixM(largeGraph, queryGraph);
+        MB = targetGraph.getAdjacencyMatrix();
+        M0 = getMatrixM(targetGraph, queryGraph);
     }
 
 
@@ -55,16 +55,16 @@ public class Ullmann {
      *     = 0 otherwise
      *
      * @param query Query Graph
-     * @param large Large Graph
+     * @param target Large Graph
      * @return M0
      */
-    private int[][] getMatrixM(Graph large, Graph query) {
+    private int[][] getMatrixM(Graph target, Graph query) {
         int row = query.getVertexList().size();
-        int col = large.getVertexList().size();
+        int col = target.getVertexList().size();
         int[][] M0 = new int[row][col];
         for (int i = 0; i < row; ++ i) {
             for (int j = 0; j < col; ++ j) {
-                String vertexJ = large.getVertexList().get(j).getVertex();
+                String vertexJ = target.getVertexList().get(j).getVertex();
                 String vertexI = query.getVertexList().get(i).getVertex();
                 int degreeJ = query.getVertexDegree(vertexJ);
                 int degreeI = query.getVertexDegree(vertexI);
@@ -87,17 +87,17 @@ public class Ullmann {
      */
     private void refineM() {
 
-        assert largeGraph != null && queryGraph != null && M0 != null :
+        assert targetGraph != null && queryGraph != null && M0 != null :
                 "Haven't initial parameter before executing refinement procedure.";
 
         int row = queryVertexList.size();
-        int col = largeVertexList.size();
+        int col = targetVertexList.size();
 
         for (int i = 0; i < row; ++ i) {
             for (int j = 0; j < col; ++ j) {
                 if (M0[i][j] == 1) {
                     String labelI = queryVertexList.get(i).getLabel();
-                    String labelJ = largeVertexList.get(j).getLabel();
+                    String labelJ = targetVertexList.get(j).getLabel();
                     if (labelI.equals(labelJ)) {
                         for (int x = 0; x < row; ++ x) {
                             boolean match = false;
@@ -109,7 +109,7 @@ public class Ullmann {
                                 for (int y = 0; y < col; ++ y) {
                                     if (M0[x][y] * MB[y][j] == 1) {
                                         // label of MB[y][j]
-                                        String labelYJ = largeGraph.getEdgeLabel(
+                                        String labelYJ = targetGraph.getEdgeLabel(
                                                 String.valueOf(y),
                                                 String.valueOf(j));
                                         if (labelIX.equals(labelYJ)) {
@@ -137,12 +137,12 @@ public class Ullmann {
      * @return
      */
     private boolean checkIsomorphism() {
-        assert largeGraph != null && queryGraph != null && M0 != null :
+        assert targetGraph != null && queryGraph != null && M0 != null :
                 "Haven't initial parameter before checking isomorphism.";
         refineM();
         // check M0
         int row = queryVertexList.size();
-        int col = largeVertexList.size();
+        int col = targetVertexList.size();
         for (int i = 0; i < row; ++ i) {
             int sumOfRow = 0;
             for (int j = 0; j < col; ++ j) {
