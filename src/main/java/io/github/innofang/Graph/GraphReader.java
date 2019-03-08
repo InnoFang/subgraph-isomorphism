@@ -46,6 +46,9 @@ public class GraphReader {
             graph = new Graph();
             while ((line = reader.readLine()) != null) {
                 ++ lineNumber;
+                if (line.equals("")) {
+                    continue;
+                }
                 if (line.startsWith("t #")) {
                     graphList.add(graph);
                     graph = new Graph();
