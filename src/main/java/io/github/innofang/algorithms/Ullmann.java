@@ -101,25 +101,27 @@ public class Ullmann {
                     if (labelI.equals(labelJ)) {
                         for (int x = 0; x < row; ++ x) {
                             boolean match = false;
-                            // label of MA[i][x]
-                            String labelIX = queryGraph.getEdgeLabel(
-                                    String.valueOf(i),
-                                    String.valueOf(j));
-                            for (int y = 0; y < col; ++ y) {
-                                if (M0[x][y] * MB[y][j] == 1) {
-                                    // label of MB[y][j]
-                                    String labelYJ = largeGraph.getEdgeLabel(
-                                            String.valueOf(y),
-                                            String.valueOf(j));
-                                    if (labelIX.equals(labelYJ)) {
-                                        match = true;
-                                        break;
+                            if (MA[i][x] == 1) {
+                                // label of MA[i][x]
+                                String labelIX = queryGraph.getEdgeLabel(
+                                        String.valueOf(i),
+                                        String.valueOf(x));
+                                for (int y = 0; y < col; ++ y) {
+                                    if (M0[x][y] * MB[y][j] == 1) {
+                                        // label of MB[y][j]
+                                        String labelYJ = largeGraph.getEdgeLabel(
+                                                String.valueOf(y),
+                                                String.valueOf(j));
+                                        if (labelIX.equals(labelYJ)) {
+                                            match = true;
+                                            break;
+                                        }
                                     }
                                 }
-                            }
-                            if (!match) {
-                                M0[i][j] = 0;
-                                break;
+                                if (!match) {
+                                    M0[i][j] = 0;
+                                    break;
+                                }
                             }
                         }
                     }
