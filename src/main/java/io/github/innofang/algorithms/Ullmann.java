@@ -80,6 +80,57 @@ public class Ullmann {
 
 
     /**
+     * for any x, (MA[i][x] == 1) ===> exist y s.t. (M0[x][y] == 1 and MB[y][j] == 1).
+     * or M0[i][j] = 0
+     *
+     * @return
+     */
+    private void refineM() {
+
+        assert largeGraph != null && queryGraph != null && M0 != null :
+                "Haven't initial parameter before executing refinement procedure.";
+
+        int row = queryVertexList.size();
+        int col = largeVertexList.size();
+
+        for (int i = 0; i < row; ++ i) {
+            for (int j = 0; j < col; ++ j) {
+                if (M0[i][j] == 1) {
+                    String labelI = queryVertexList.get(i).getLabel();
+                    String labelJ = largeVertexList.get(j).getLabel();
+                    if (labelI.equals(labelJ)) {
+                        for (int x = 0; x < row; ++ x) {
+                            boolean match = false;
+                            // label of MA[i][x]
+                            String labelIX = queryGraph.getEdgeLabel(
+                                    String.valueOf(i),
+                                    String.valueOf(j));
+                            for (int y = 0; y < col; ++ y) {
+                                if (M0[x][y] * MB[y][j] == 1) {
+                                    // label of MB[y][j]
+                                    String labelYJ = largeGraph.getEdgeLabel(
+                                            String.valueOf(y),
+                                            String.valueOf(j));
+                                    if (labelIX.equals(labelYJ)) {
+                                        match = true;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (!match) {
+                                M0[i][j] = 0;
+                                break;
+                            }
+                        }
+                    }
+                } else {
+                    M0[i][j] = 0;
+                }
+            }
+        }
+    }
+
+    /**
      * check if (MA[i, j] = 1) ==> (M0[i, j] == 1) for any i, j
      * @return
      */
@@ -182,56 +233,5 @@ public class Ullmann {
         }
 
         return true;
-    }
-
-    /**
-     * for any x, (MA[i][x] == 1) ===> exist y s.t. (M0[x][y] == 1 and MB[y][j] == 1).
-     * or M0[i][j] = 0
-     *
-     * @return
-     */
-    private void refineM() {
-
-        assert largeGraph != null && queryGraph != null && M0 != null :
-                "Haven't initial parameter before executing refinement procedure.";
-
-        int row = queryVertexList.size();
-        int col = largeVertexList.size();
-
-        for (int i = 0; i < row; ++ i) {
-            for (int j = 0; j < col; ++ j) {
-                if (M0[i][j] == 1) {
-                    String labelI = queryVertexList.get(i).getLabel();
-                    String labelJ = largeVertexList.get(j).getLabel();
-                    if (labelI.equals(labelJ)) {
-                        for (int x = 0; x < row; ++ x) {
-                            boolean match = false;
-                            // label of MA[i][x]
-                            String labelIX = queryGraph.getEdgeLabel(
-                                    String.valueOf(i),
-                                    String.valueOf(j));
-                            for (int y = 0; y < col; ++ y) {
-                                if (M0[x][y] * MB[y][j] == 1) {
-                                    // label of MB[y][j]
-                                    String labelYJ = largeGraph.getEdgeLabel(
-                                            String.valueOf(y),
-                                            String.valueOf(j));
-                                    if (labelIX.equals(labelYJ)) {
-                                        match = true;
-                                        break;
-                                    }
-                                }
-                            }
-                            if (!match) {
-                                M0[i][j] = 0;
-                                break;
-                            }
-                        }
-                    }
-                } else {
-                    M0[i][j] = 0;
-                }
-            }
-        }
     }
 }
