@@ -74,6 +74,15 @@ public class Graph {
         return degree;
     }
 
+    public String getEdgeLabel(String vertexI, String vertexJ) {
+        for (Edge edge: edgeList) {
+            if (edge.contain(vertexI) && edge.contain(vertexJ)) {
+                return edge.getLabel();
+            }
+        }
+        return null;
+    }
+
     @Override
     public String toString() {
         StringBuilder ret = new StringBuilder();
