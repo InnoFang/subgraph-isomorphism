@@ -56,7 +56,7 @@ public class MatrixOperator {
             return this;
         }
 
-        public int[][] done() {
+        public int[][] get() {
             return selfMatrix;
         }
     }
