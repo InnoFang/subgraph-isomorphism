@@ -51,8 +51,8 @@ public class Graph {
     }
 
     public int[][] getAdjacencyMatrix(boolean directed) {
-        int edgeSize = edgeList.size();
-        int[][] matrix = new int[edgeSize][edgeSize];
+        int vertexSize = vertexList.size();
+        int[][] matrix = new int[vertexSize][vertexSize];
         for (Edge edge: edgeList) {
             int i = Integer.parseInt(edge.getVertexI());
             int j = Integer.parseInt(edge.getVertexJ());
