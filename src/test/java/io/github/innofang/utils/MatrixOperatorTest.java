@@ -16,7 +16,8 @@ public class MatrixOperatorTest {
         int[][] C = MatrixOperator.set(A).dot(B).T().get();
         print(C);
         System.out.println("========");
-        print(A);
+        C = MatrixOperator.set(A).T().get();
+        print(C);
 
     }
 
