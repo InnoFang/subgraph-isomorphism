@@ -2,8 +2,6 @@ package io.github.innofang.utils;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class MatrixOperatorTest {
 
     @Test
@@ -16,7 +14,14 @@ public class MatrixOperatorTest {
                      {5, 6}};
 
         int[][] C = MatrixOperator.set(A).dot(B).T().done();
-        for (int[] row: C) {
+        print(C);
+        System.out.println("========");
+        print(A);
+
+    }
+
+    private void print(int[][] matrix) {
+        for (int[] row: matrix) {
             for (int elem: row) {
                 System.out.print(elem + " ");
             }
