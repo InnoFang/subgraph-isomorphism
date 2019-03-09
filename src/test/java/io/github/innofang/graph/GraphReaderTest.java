@@ -1,19 +1,20 @@
-package io.github.innofang.Graph;
+package io.github.innofang.graph;
 
-import io.github.innofang.Graph.bean.Graph;
+import io.github.innofang.graph.bean.Graph;
+import io.github.innofang.graph.datasets.NormalDataSet;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 public class GraphReaderTest {
 
     @Test
     public void testRead() throws IOException {
         String path = "F:\\IDEA\\subgraph-isomorphism\\src\\main\\resources\\graphDB\\Q4.my";
-        List<Graph> graphList = new GraphReader().read(path);
+        GraphReader reader = new GraphReader();
+        reader.setDataSetStrategy(new NormalDataSet());
+        List<Graph> graphList = reader.read(path);
         for (Graph graph: graphList) {
             System.out.println(graph);
         }
