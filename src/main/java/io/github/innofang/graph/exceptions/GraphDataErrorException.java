@@ -1,4 +1,4 @@
-package io.github.innofang.Graph.exceptions;
+package io.github.innofang.graph.exceptions;
 
 /**
  * throw this exception when read a specify data set but failed.

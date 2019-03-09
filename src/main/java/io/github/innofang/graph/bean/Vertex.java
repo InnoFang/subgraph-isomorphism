@@ -1,14 +1,14 @@
-package io.github.innofang.Graph.bean;
+package io.github.innofang.graph.bean;
 
 /**
  *
- * Graph Data Template:
+ * graph Data Template:
  * ================
  * t # n    // nth graph
  * v i j    // the i is the vertex number, and the j is the vertex label
  * e i j k  // edge <i, j> which label is k
  *
- * Graph Data Example:
+ * graph Data Example:
  * ================
  * t # 1
  * v 0 2

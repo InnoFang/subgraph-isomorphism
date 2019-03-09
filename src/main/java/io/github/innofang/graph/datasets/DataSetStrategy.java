@@ -1,6 +1,6 @@
-package io.github.innofang.Graph.datasets;
+package io.github.innofang.graph.datasets;
 
-import io.github.innofang.Graph.bean.Graph;
+import io.github.innofang.graph.bean.Graph;
 
 import java.io.IOException;
 import java.util.List;

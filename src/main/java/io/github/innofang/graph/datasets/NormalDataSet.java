@@ -1,9 +1,9 @@
-package io.github.innofang.Graph.datasets;
+package io.github.innofang.graph.datasets;
 
-import io.github.innofang.Graph.bean.Edge;
-import io.github.innofang.Graph.bean.Graph;
-import io.github.innofang.Graph.bean.Vertex;
-import io.github.innofang.Graph.exceptions.GraphDataErrorException;
+import io.github.innofang.graph.bean.Edge;
+import io.github.innofang.graph.bean.Graph;
+import io.github.innofang.graph.bean.Vertex;
+import io.github.innofang.graph.exceptions.GraphDataErrorException;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ public class NormalDataSet implements DataSetStrategy {
                     graph.getEdgeList().add(edge);
                 } else {
                     throw new GraphDataErrorException(
-                            String.format("Graph data isn't standard, " +
+                            String.format("graph data isn't standard, " +
                                     "'%s' is the reason, " +
                                     "which is located at Line %d, File '%s'.", line, lineNumber, filePath));
                 }

@@ -1,20 +1,20 @@
-package io.github.innofang.Graph;
+package io.github.innofang.graph;
 
-import io.github.innofang.Graph.bean.Graph;
-import io.github.innofang.Graph.datasets.DataSetStrategy;
+import io.github.innofang.graph.bean.Graph;
+import io.github.innofang.graph.datasets.DataSetStrategy;
 
 import java.io.*;
 import java.util.List;
 
 /**
  *
- * Graph Data Template:
+ * graph Data Template:
  * ================
  * t # n    // nth graph
  * v i j    // the i is the vertex number, and the j is the vertex label
  * e i j k  // edge <i, j> which label is k
  *
- * Graph Data Example:
+ * graph Data Example:
  * ================
  * t # 1
  * v 0 2
