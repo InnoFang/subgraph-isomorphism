@@ -83,6 +83,14 @@ public class Graph {
         return null;
     }
 
+    public void addVertex(Vertex vertex) {
+        vertexList.add(vertex);
+    }
+
+    public void addEdge(Edge edge) {
+        edgeList.add(edge);
+    }
+
     @Override
     public String toString() {
         StringBuilder ret = new StringBuilder();
