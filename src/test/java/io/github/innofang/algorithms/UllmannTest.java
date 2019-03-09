@@ -1,9 +1,8 @@
 package io.github.innofang.algorithms;
 
-import io.github.innofang.Graph.GraphReader;
-import io.github.innofang.Graph.bean.Graph;
-import org.junit.After;
-import org.junit.Before;
+import io.github.innofang.graph.GraphReader;
+import io.github.innofang.graph.bean.Graph;
+import io.github.innofang.graph.datasets.NormalDataSet;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -16,30 +15,31 @@ public class UllmannTest {
         Ullmann ullmann = new Ullmann();
 
         String queryGraphPath = "F:\\IDEA\\subgraph-isomorphism\\src\\main\\resources\\graphDB\\Q4.my";
-        String largeGraphPath = "F:\\IDEA\\subgraph-isomorphism\\src\\main\\resources\\graphDB\\mygraphdb.data";
+        String targetGraphPath = "F:\\IDEA\\subgraph-isomorphism\\src\\main\\resources\\graphDB\\mygraphdb.data";
 
         GraphReader reader = new GraphReader();
+        reader.setDataSetStrategy(new NormalDataSet());
         List<Graph> queryGraphList = reader.read(queryGraphPath);
-        List<Graph> largeGraphList = reader.read(largeGraphPath);
+        List<Graph> targetGraphList = reader.read(targetGraphPath);
 
         int queryGraphSize = queryGraphList.size();
-        int largeGraphSize = largeGraphList.size();
+        int targetGraphSize = targetGraphList.size();
 
-        System.out.println("Large Graph File: " + largeGraphPath);
-        System.out.println("Query Graph File: " + queryGraphPath);
+        System.out.println("Target graph File: " + targetGraphPath);
+        System.out.println("Query graph File: " + queryGraphPath);
 
-        System.out.println("The size of large Graph: " + largeGraphSize);
-        System.out.println("The size of query Graph: " + queryGraphSize);
+        System.out.println("The size of target graph: " + targetGraphSize);
+        System.out.println("The size of query graph: " + queryGraphSize);
         System.out.println();
         System.out.println("Start searching ...");
         System.out.println("===================\n");
 
         long start = System.currentTimeMillis();
         for (int i = 0; i < queryGraphSize; ++ i) {
-            for (int j = 0; j < largeGraphSize; ++ j) {
+            for (int j = 0; j < targetGraphSize; ++ j) {
                 Graph query = queryGraphList.get(i);
-                Graph large = largeGraphList.get(j);
-                if (ullmann.isIsomorphism(large, query)) {
+                Graph target = targetGraphList.get(j);
+                if (ullmann.isIsomorphism(target, query)) {
                     System.out.printf("t # %d is isomorphic T # %d\n", i, j);
                 }
             }
