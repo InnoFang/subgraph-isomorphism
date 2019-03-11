@@ -1,4 +1,4 @@
-package io.github.innofang.utils;
+package io.github.innofang.util;
 
 import org.junit.Test;
 
