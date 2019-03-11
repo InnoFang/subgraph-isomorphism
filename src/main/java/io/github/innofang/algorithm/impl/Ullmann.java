@@ -30,7 +30,7 @@ public class Ullmann implements IsomorphismAlgorithm {
     private int[][] MB; // for target graph
     private int[][] M0;
 
-    private HashMap<Integer, Integer> mapping;
+    private HashMap<Vertex, Vertex> mapping;
 
     @Override
     public boolean match(Graph targetGraph, Graph queryGraph) {
@@ -56,7 +56,7 @@ public class Ullmann implements IsomorphismAlgorithm {
     }
 
     @Override
-    public HashMap<Integer, Integer> getMapping() {
+    public HashMap<Vertex, Vertex> getMapping() {
         assert mapping != null : "Haven't match yet.";
         return mapping;
     }
@@ -246,7 +246,7 @@ public class Ullmann implements IsomorphismAlgorithm {
                     mapping.clear();
                     return false;
                 } else if (MA[i][j] == 1 && MA[i][j] == MC[i][j]){
-                    mapping.put(i, j);
+                    mapping.put(queryGraph.getVertex(i), targetGraph.getVertex(j));
                 }
             }
         }

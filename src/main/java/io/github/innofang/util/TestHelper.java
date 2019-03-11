@@ -3,6 +3,7 @@ package io.github.innofang.util;
 import io.github.innofang.algorithm.IsomorphismAlgorithm;
 import io.github.innofang.graph.GraphReader;
 import io.github.innofang.graph.bean.Graph;
+import io.github.innofang.graph.bean.Vertex;
 import io.github.innofang.graph.datasets.DataSetStrategy;
 
 import java.io.IOException;
@@ -65,9 +66,9 @@ public class TestHelper {
     }
 
 
-    private static void printMapping(HashMap<Integer, Integer> mapping) {
-        for (HashMap.Entry<Integer, Integer> entry : mapping.entrySet()) {
-            System.out.println(" (" + entry.getKey() + ", " + entry.getValue() + ") ");
+    private static void printMapping(HashMap<Vertex, Vertex> mapping) {
+        for (HashMap.Entry<Vertex, Vertex> entry : mapping.entrySet()) {
+            System.out.println(" (" + entry.getKey().getVertex() + ", " + entry.getValue().getVertex() + ") ");
         }
     }
 
