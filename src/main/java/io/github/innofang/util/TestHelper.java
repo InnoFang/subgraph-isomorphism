@@ -66,9 +66,9 @@ public class TestHelper {
     }
 
 
-    private static void printMapping(HashMap<Vertex, Vertex> mapping) {
-        for (HashMap.Entry<Vertex, Vertex> entry : mapping.entrySet()) {
-            System.out.println(" (" + entry.getKey().getVertex() + ", " + entry.getValue().getVertex() + ") ");
+    private static void printMapping(HashMap<String, String> mapping) {
+        for (HashMap.Entry<String, String> entry : mapping.entrySet()) {
+            System.out.println(" (" + entry.getKey() + ", " + entry.getValue() + ") ");
         }
     }
 
