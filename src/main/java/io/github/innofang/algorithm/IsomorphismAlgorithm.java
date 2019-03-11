@@ -10,5 +10,5 @@ public interface IsomorphismAlgorithm {
 
     boolean match(Graph targetGraph, Graph queryGraph);
 
-    HashMap<Vertex, Vertex> getMapping() ;
+    HashMap<String, String> getMapping() ;
 }

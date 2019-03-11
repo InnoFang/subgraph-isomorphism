@@ -30,7 +30,7 @@ public class Ullmann implements IsomorphismAlgorithm {
     private int[][] MB; // for target graph
     private int[][] M0;
 
-    private HashMap<Vertex, Vertex> mapping;
+    private HashMap<String, String> mapping;
 
     @Override
     public boolean match(Graph targetGraph, Graph queryGraph) {
@@ -56,19 +56,21 @@ public class Ullmann implements IsomorphismAlgorithm {
     }
 
     @Override
-    public HashMap<Vertex, Vertex> getMapping() {
+    public HashMap<String, String> getMapping() {
         assert mapping != null : "Haven't match yet.";
-        return mapping;
+//        return mapping;
+        // the result of mapping is wrong
+        return new HashMap<>();
     }
 
     /**
      * construct Graph_query x Graph_large element matrix M0 in according with:
-     *
+     * <p>
      * Mij = 1 if the degree of the jth point of Graph_large is greater than or
-     *         equal to the degree of the ith point of Graph_query
-     *     = 0 otherwise
+     * equal to the degree of the ith point of Graph_query
+     * = 0 otherwise
      *
-     * @param query Query graph
+     * @param query  Query graph
      * @param target Large graph
      * @return M0
      */
@@ -76,8 +78,8 @@ public class Ullmann implements IsomorphismAlgorithm {
         int row = query.getVertexList().size();
         int col = target.getVertexList().size();
         int[][] M0 = new int[row][col];
-        for (int i = 0; i < row; ++ i) {
-            for (int j = 0; j < col; ++ j) {
+        for (int i = 0; i < row; ++i) {
+            for (int j = 0; j < col; ++j) {
                 String vertexJ = target.getVertexList().get(j).getVertex();
                 String vertexI = query.getVertexList().get(i).getVertex();
                 int degreeJ = query.getVertexDegree(vertexJ);
@@ -107,20 +109,20 @@ public class Ullmann implements IsomorphismAlgorithm {
         int row = queryVertexList.size();
         int col = targetVertexList.size();
 
-        for (int i = 0; i < row; ++ i) {
-            for (int j = 0; j < col; ++ j) {
+        for (int i = 0; i < row; ++i) {
+            for (int j = 0; j < col; ++j) {
                 if (M0[i][j] == 1) {
                     String labelI = queryVertexList.get(i).getLabel();
                     String labelJ = targetVertexList.get(j).getLabel();
                     if (labelI.equals(labelJ)) {
-                        for (int x = 0; x < row; ++ x) {
+                        for (int x = 0; x < row; ++x) {
                             boolean match = false;
                             if (MA[i][x] == 1) {
                                 // label of MA[i][x]
                                 String labelIX = queryGraph.getEdgeLabel(
                                         String.valueOf(i),
                                         String.valueOf(x));
-                                for (int y = 0; y < col; ++ y) {
+                                for (int y = 0; y < col; ++y) {
                                     if (M0[x][y] * MB[y][j] == 1) {
                                         // label of MB[y][j]
                                         String labelYJ = targetGraph.getEdgeLabel(
@@ -148,6 +150,7 @@ public class Ullmann implements IsomorphismAlgorithm {
 
     /**
      * check if (MA[i, j] = 1) ==> (M0[i, j] == 1) for any i, j
+     *
      * @return
      */
     private boolean checkIsomorphism() {
@@ -157,9 +160,9 @@ public class Ullmann implements IsomorphismAlgorithm {
         // check M0
         int row = queryVertexList.size();
         int col = targetVertexList.size();
-        for (int i = 0; i < row; ++ i) {
+        for (int i = 0; i < row; ++i) {
             int sumOfRow = 0;
-            for (int j = 0; j < col; ++ j) {
+            for (int j = 0; j < col; ++j) {
                 sumOfRow += M0[i][j];
             }
             // if the sum of a row is 0, return false directly.
@@ -230,6 +233,7 @@ public class Ullmann implements IsomorphismAlgorithm {
 
     /**
      * MC = M0 · (M0 · MB)T
+     *
      * @param MA
      * @param MB
      * @param M0
@@ -240,13 +244,13 @@ public class Ullmann implements IsomorphismAlgorithm {
                 MatrixOperator.set(M0).dot(MB).T().get()
         ).get();
 
-        for (int i = 0; i < MA.length; ++ i) {
-            for (int j = 0; j < MA[0].length; ++ j) {
+        for (int i = 0; i < MA.length; ++i) {
+            for (int j = 0; j < MA[0].length; ++j) {
                 if (MA[i][j] == 1 && MA[i][j] != MC[i][j]) {
-                    mapping.clear();
+//                    mapping.clear();
                     return false;
-                } else if (MA[i][j] == 1 && MA[i][j] == MC[i][j]){
-                    mapping.put(queryGraph.getVertex(i), targetGraph.getVertex(j));
+                } else if (MA[i][j] == 1 && MA[i][j] == MC[i][j]) {
+//                    mapping.put(queryGraph.getVertex(i).getVertex(), targetGraph.getVertex(j).getVertex());
                 }
             }
         }
