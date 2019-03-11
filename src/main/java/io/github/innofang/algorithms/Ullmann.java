@@ -1,10 +1,12 @@
 package io.github.innofang.algorithms;
 
-import io.github.innofang.Graph.bean.Edge;
-import io.github.innofang.Graph.bean.Graph;
-import io.github.innofang.Graph.bean.Vertex;
-import io.github.innofang.utils.MatrixOperator;
+import io.github.innofang.graph.bean.Edge;
+import io.github.innofang.graph.bean.Graph;
+import io.github.innofang.graph.bean.Vertex;
+import io.github.innofang.util.MatrixOperator;
+import io.github.innofang.util.Pair;
 
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -26,7 +28,10 @@ public class Ullmann {
     private int[][] MB; // for target graph
     private int[][] M0;
 
-    public boolean isIsomorphism(Graph targetGraph, Graph queryGraph) {
+    private int matchNum = 0;
+    private HashSet<Pair<Integer, Integer>> mapping;
+
+    public boolean match(Graph targetGraph, Graph queryGraph) {
         init(targetGraph, queryGraph);
         return checkIsomorphism();
     }
@@ -44,8 +49,15 @@ public class Ullmann {
         MA = queryGraph.getAdjacencyMatrix();
         MB = targetGraph.getAdjacencyMatrix();
         M0 = getMatrixM(targetGraph, queryGraph);
+
+        matchNum = 0;
+        mapping = new HashSet<>();
     }
 
+    public HashSet<Pair<Integer, Integer>> getMapping() {
+        assert mapping != null : "Haven't match yet.";
+        return mapping;
+    }
 
     /**
      * construct Graph_query x Graph_large element matrix M0 in according with:
@@ -54,8 +66,8 @@ public class Ullmann {
      *         equal to the degree of the ith point of Graph_query
      *     = 0 otherwise
      *
-     * @param query Query Graph
-     * @param target Large Graph
+     * @param query Query graph
+     * @param target Large graph
      * @return M0
      */
     private int[][] getMatrixM(Graph target, Graph query) {
@@ -229,7 +241,10 @@ public class Ullmann {
         for (int i = 0; i < MA.length; ++ i) {
             for (int j = 0; j < MA[0].length; ++ j) {
                 if (MA[i][j] == 1 && MA[i][j] != MC[i][j]) {
+                    mapping.clear();
                     return false;
+                } else if (MA[i][j] == 1 && MA[i][j] == MC[i][j]){
+                    mapping.add(new Pair<>(i, j));
                 }
             }
         }
