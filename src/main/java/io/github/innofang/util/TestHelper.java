@@ -1,11 +1,9 @@
 package io.github.innofang.util;
 
-import io.github.innofang.algorithms.IsomorphismAlgorithm;
-import io.github.innofang.algorithms.Ullmann;
+import io.github.innofang.algorithm.IsomorphismAlgorithm;
 import io.github.innofang.graph.GraphReader;
 import io.github.innofang.graph.bean.Graph;
 import io.github.innofang.graph.datasets.DataSetStrategy;
-import io.github.innofang.graph.datasets.NormalDataSet;
 
 import java.io.IOException;
 import java.util.HashSet;
