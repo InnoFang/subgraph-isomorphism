@@ -1,5 +1,6 @@
-package io.github.innofang.algorithms;
+package io.github.innofang.algorithms.impl;
 
+import io.github.innofang.algorithms.IsomorphismAlgorithm;
 import io.github.innofang.graph.bean.Edge;
 import io.github.innofang.graph.bean.Graph;
 import io.github.innofang.graph.bean.Vertex;
@@ -13,7 +14,7 @@ import java.util.List;
  * Using Ullmann algorithm to implement subgraph isomorphism
  */
 
-public class Ullmann {
+public class Ullmann implements IsomorphismAlgorithm {
 
     private Graph queryGraph;
     private Graph targetGraph;
@@ -28,9 +29,9 @@ public class Ullmann {
     private int[][] MB; // for target graph
     private int[][] M0;
 
-    private int matchNum = 0;
     private HashSet<Pair<Integer, Integer>> mapping;
 
+    @Override
     public boolean match(Graph targetGraph, Graph queryGraph) {
         init(targetGraph, queryGraph);
         return checkIsomorphism();
@@ -50,10 +51,10 @@ public class Ullmann {
         MB = targetGraph.getAdjacencyMatrix();
         M0 = getMatrixM(targetGraph, queryGraph);
 
-        matchNum = 0;
         mapping = new HashSet<>();
     }
 
+    @Override
     public HashSet<Pair<Integer, Integer>> getMapping() {
         assert mapping != null : "Haven't match yet.";
         return mapping;
