@@ -1,8 +1,6 @@
 package io.github.innofang.util;
 
-import javafx.beans.NamedArg;
-
-public class Pair<K,V>  {
+public class Pair<K, V>  {
 
     private K key;
 
@@ -12,7 +10,7 @@ public class Pair<K,V>  {
 
     public V getValue() { return value; }
 
-    public Pair(@NamedArg("key") K key, @NamedArg("value") V value) {
+    public Pair(K key, V value) {
         this.key = key;
         this.value = value;
     }
