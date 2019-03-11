@@ -6,7 +6,7 @@ import io.github.innofang.graph.bean.Graph;
 import io.github.innofang.graph.datasets.DataSetStrategy;
 
 import java.io.IOException;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
 
 public class TestHelper {
@@ -65,9 +65,9 @@ public class TestHelper {
     }
 
 
-    private static void printMapping(HashSet<Pair<Integer, Integer>> mapping) {
-        for (Pair<Integer, Integer> pair : mapping) {
-            System.out.println(" (" + pair.getKey() + ", " + pair.getValue() + ") ");
+    private static void printMapping(HashMap<Integer, Integer> mapping) {
+        for (HashMap.Entry<Integer, Integer> entry : mapping.entrySet()) {
+            System.out.println(" (" + entry.getKey() + ", " + entry.getValue() + ") ");
         }
     }
 

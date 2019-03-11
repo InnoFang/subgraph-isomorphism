@@ -7,6 +7,7 @@ import io.github.innofang.graph.bean.Vertex;
 import io.github.innofang.util.MatrixOperator;
 import io.github.innofang.util.Pair;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class Ullmann implements IsomorphismAlgorithm {
     private int[][] MB; // for target graph
     private int[][] M0;
 
-    private HashSet<Pair<Integer, Integer>> mapping;
+    private HashMap<Integer, Integer> mapping;
 
     @Override
     public boolean match(Graph targetGraph, Graph queryGraph) {
@@ -51,11 +52,11 @@ public class Ullmann implements IsomorphismAlgorithm {
         MB = targetGraph.getAdjacencyMatrix();
         M0 = getMatrixM(targetGraph, queryGraph);
 
-        mapping = new HashSet<>();
+        mapping = new HashMap<>();
     }
 
     @Override
-    public HashSet<Pair<Integer, Integer>> getMapping() {
+    public HashMap<Integer, Integer> getMapping() {
         assert mapping != null : "Haven't match yet.";
         return mapping;
     }
@@ -245,7 +246,7 @@ public class Ullmann implements IsomorphismAlgorithm {
                     mapping.clear();
                     return false;
                 } else if (MA[i][j] == 1 && MA[i][j] == MC[i][j]){
-                    mapping.add(new Pair<>(i, j));
+                    mapping.put(i, j);
                 }
             }
         }
