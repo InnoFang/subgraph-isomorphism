@@ -74,6 +74,10 @@ public class Graph {
         return degree;
     }
 
+    public String getVertexLabel(String vertex) {
+        return vertexList.get(Integer.parseInt(vertex)).getLabel();
+    }
+
     public String getEdgeLabel(String vertexI, String vertexJ) {
         for (Edge edge: edgeList) {
             if (edge.contain(vertexI) && edge.contain(vertexJ)) {
@@ -81,6 +85,16 @@ public class Graph {
             }
         }
         return null;
+    }
+
+    public List<String> getNeighborVertexList(String vertex) {
+        List<String> neighbors = new ArrayList<>();
+        for (Edge edge: edgeList) {
+            if (edge.contain(vertex)) {
+                neighbors.add(edge.getAdjacent(vertex));
+            }
+        }
+        return neighbors;
     }
 
     public void addVertex(Vertex vertex) {

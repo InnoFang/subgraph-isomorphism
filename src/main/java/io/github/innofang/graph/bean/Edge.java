@@ -63,4 +63,10 @@ public class Edge {
     public boolean contain(String vertex) {
         return vertexI.equals(vertex) || vertexJ.equals(vertex);
     }
+
+    public String getAdjacent(String vertex) {
+        if (vertex.equals(vertexI)) return vertexJ;
+        if (vertex.equals(vertexJ)) return vertexI;
+        return null;
+    }
 }
