@@ -87,6 +87,10 @@ public class Graph {
         vertexList.add(vertex);
     }
 
+    public Vertex getVertex(int vertexIdx) {
+        return vertexList.get(vertexIdx);
+    }
+
     public void addEdge(Edge edge) {
         edgeList.add(edge);
     }
