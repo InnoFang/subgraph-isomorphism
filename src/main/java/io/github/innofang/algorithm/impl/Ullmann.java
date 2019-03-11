@@ -33,11 +33,11 @@ public class Ullmann implements IsomorphismAlgorithm {
 
     @Override
     public boolean match(Graph targetGraph, Graph queryGraph) {
-        init(targetGraph, queryGraph);
+        initialize(targetGraph, queryGraph);
         return checkIsomorphism();
     }
 
-    private void init(Graph targetGraph, Graph queryGraph) {
+    private void initialize(Graph targetGraph, Graph queryGraph) {
         this.targetGraph = targetGraph;
         this.queryGraph = queryGraph;
 
