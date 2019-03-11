@@ -3,9 +3,11 @@ package io.github.innofang.algorithms;
 import io.github.innofang.graph.GraphReader;
 import io.github.innofang.graph.bean.Graph;
 import io.github.innofang.graph.datasets.NormalDataSet;
+import io.github.innofang.util.Pair;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 
 public class UllmannTest {
@@ -39,8 +41,9 @@ public class UllmannTest {
             for (int j = 0; j < targetGraphSize; ++ j) {
                 Graph query = queryGraphList.get(i);
                 Graph target = targetGraphList.get(j);
-                if (ullmann.isIsomorphism(target, query)) {
+                if (ullmann.match(target, query)) {
                     System.out.printf("t # %d is isomorphic T # %d\n", i, j);
+                    printMapping(ullmann.getMapping());
                 }
             }
         }
@@ -49,5 +52,11 @@ public class UllmannTest {
 
         System.out.println("\n===================");
         System.out.printf("End searching, used %f s\n.", seconds);
+    }
+
+    private void printMapping(HashSet<Pair<Integer, Integer>> mapping) {
+        for (Pair<Integer, Integer> pair : mapping) {
+            System.out.println(" (" + pair.getKey() + ", " + pair.getValue() + ") ");
+        }
     }
 }
