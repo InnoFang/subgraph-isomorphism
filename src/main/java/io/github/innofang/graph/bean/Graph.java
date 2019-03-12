@@ -101,8 +101,13 @@ public class Graph {
         vertexList.add(vertex);
     }
 
-    public Vertex getVertex(int vertexIdx) {
-        return vertexList.get(vertexIdx);
+    public Vertex getVertex(String vertex) {
+        for (Vertex v : vertexList) {
+            if (v.getVertex().equals(vertex)) {
+                return v;
+            }
+        }
+        return null;
     }
 
     public void addEdge(Edge edge) {
