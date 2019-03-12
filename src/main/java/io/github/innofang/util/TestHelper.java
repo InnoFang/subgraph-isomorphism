@@ -41,7 +41,7 @@ public class TestHelper {
         System.out.println("The size of target graph: " + targetGraphSize);
         System.out.println("The size of query graph: " + queryGraphSize);
         System.out.println();
-        System.out.println("Start searching ...");
+        System.out.println("Start search ...");
         System.out.println("===================\n");
         int matchNum = 0;
         long start = System.currentTimeMillis();
@@ -62,7 +62,7 @@ public class TestHelper {
         double seconds = used * 1.0 / 1000;
 
         System.out.println("\n===================");
-        System.out.printf("End searching, used %f s\n, %d graph isomorphism.", seconds, matchNum);
+        System.out.printf("End search, used %f s, %d pairs of SubGraphs Isomorphism.", seconds, matchNum);
     }
 
 
