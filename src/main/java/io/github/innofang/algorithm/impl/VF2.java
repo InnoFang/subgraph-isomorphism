@@ -30,6 +30,9 @@ public class VF2 implements IsomorphismAlgorithm {
         return state.matched;
     }
 
+    /**
+     * @return the map result between Query Graph and Target Graph
+     */
     @Override
     public HashMap<String, String> getMapping() {
         if (state.matched) {
@@ -43,6 +46,15 @@ public class VF2 implements IsomorphismAlgorithm {
         return null;
     }
 
+    /**
+     * Extends the isomorphism mapping.
+     * This function is called recursively to determine if a complete
+     * isomorphism can be found between TargetGraph and QueryGraph.
+     * @param state         VF2 state
+     * @param targetGraph   Target Graph (big one)
+     * @param queryGraph    Query Graph  (small one)
+     * @return  Match or not
+     */
     private boolean matchRecursive(State state, Graph targetGraph, Graph queryGraph) {
 
         if (state.depth == queryGraph.getVertexList().size()) {    // Found a isSubGraphIsomorphism
@@ -64,63 +76,20 @@ public class VF2 implements IsomorphismAlgorithm {
     }
 
     private Map<String, String> generateCandidates() {
-//        List<Pair<Integer, Integer>> pairList = new ArrayList<>();
         Map<String, String> candidates = new LinkedHashMap<>();
 
-
-
+        // If T1_inout and T2_inout are both nonempty.
+        // P(s) = T1_inout x {min T2_inout}
         if (!state.T1inout.isEmpty() && !state.T2inout.isEmpty()) {
             // Generate candidates from T1out and T2out if they are not empty
-
-            // Faster Version
-            // Since every node should be matched in query graph
-            // Therefore we can only extend one node of query graph (with biggest id)
-            // instead of generate the whole Cartesian product of the target and query
-//            int queryNodeIndex = -1;
-//            for (String vertex : state.T2inout) {
-//                queryNodeIndex = Math.max(v, queryNodeIndex);
-//            }
-//            for (int i : state.T1inout) {
-////                pairList.add(new Pair<>(i, queryNodeIndex));
-//                candidates.put(String.valueOf(i), String.valueOf(queryNodeIndex));
-//            }
-
-            // Slow Version
-//			for (int i : state.T1out){
-//				for (int j : state.T2out){
-//					pairList.add(new Pair<Integer,Integer>(i, j));
-//				}
-//			}
-
-            String vertex2 = Collections.max(state.T2inout);
+            String vertex2 = Collections.min(state.T2inout);
             for (String vertex1 : state.T1inout) {
                 candidates.put(vertex1, vertex2);
             }
             return candidates;
         } else {
             // Generate from all unmapped nodes
-
-            // Faster Version
-            // Since every node should be matched in query graph
-            // Therefore we can only extend one node of query graph (with biggest id)
-            // instead of generate the whole Cartesian product of the target and query
-//            int queryNodeIndex = -1;
-//            for (int i : state.unmapped2) {
-//                queryNodeIndex = Math.max(i, queryNodeIndex);
-//            }
-//            for (int i : state.unmapped1) {
-////                pairList.add(new Pair<>(i, queryNodeIndex));
-//                candidates.put(String.valueOf(i), String.valueOf(queryNodeIndex));
-//            }
-
-            // Slow Version
-//			for (int i : state.unmapped1){
-//				for (int j : state.unmapped2){
-//					pairList.add(new Pair<Integer,Integer>(i, j));
-//				}
-//			}
-
-            String otherVertex = Collections.max(state.unmapped2);
+            String otherVertex = Collections.min(state.unmapped2);
             for (String vertex : state.unmapped1) {
                 if (!state.inM1(vertex)) {
                     candidates.put(vertex, otherVertex);
@@ -133,36 +102,62 @@ public class VF2 implements IsomorphismAlgorithm {
     /**
      * Check the feasibility of adding this isSubGraphIsomorphism
      *
-     * @param targetVertex Target Graph Node Index
-     * @param queryVertex  Query Graph Node Index
-     * @return Feasible or not
+     * @param targetVertex Target Graph Vertex
+     * @param queryVertex  Query Graph Vertex
+     * @return return true if adding (targetVertex, queryVertex) is syntactically feasible.
      */
     private Boolean checkSyntacticFeasibility(String targetVertex, String queryVertex) {
-        // Node Label Rule
-        // The two nodes must have the same label
+        // Rule_self
+        // The number of self-loops for targetVertex must equal the number of
+        // self-loops for queryVertex. Without this check, we would fail on
+        // Rule_neighbor at the next recursion level. But it is good to prune the
+        // search tree now.
         if (!targetGraph.getVertexLabel(targetVertex).equals(
                 queryGraph.getVertexLabel(queryVertex))) {
             return false;
         }
 
-        // Predecessor Rule and Successor Rule
+        // Rule_neighbor
+        // For each neighbor n' of n in the partial mapping, the corresponding
+        // node m' is a neighbor of m, and vice versa. Also, the number of
+        // edges must be equal.
         if (!checkNeighborVertexes(targetVertex, queryVertex)) {
             return false;
         }
 
-        // In Rule and Out Rule
+        // Look ahead 1
+
+        // Rule_terminout
+        // The number of neighbors of n that are in T_1^{inout} is equal to the
+        // number of neighbors of m that are in T_2^{inout}, and vice versa.
         if (!checkInAndOut(targetVertex, queryVertex)) {
             return false;
         }
 
-        // New Rule
+        // Look ahead 2
+
+        // Rule_new
+        // The number of neighbors of n that are neither in the core_1 nor
+        // T_1^{inout} is equal to the number of neighbors of m
+        // that are neither in core_2 nor T_2^{inout}.
         if (!checkNew(targetVertex, queryVertex)) {
             return false;
         }
 
+        // Otherwise, this vertex pair is syntactically feasible!
         return true;
     }
 
+    /**
+     * Rule_neighbor
+     * For each neighbor n' of n in the partial mapping, the corresponding
+     * node m' is a neighbor of m, and vice versa. Also, the number of
+     * edges must be equal.
+     *
+     * @param targetVertex Target Graph Vertex
+     * @param queryVertex  Query Graph Vertex
+     * @return Feasible or not
+     */
     private boolean checkNeighborVertexes(String targetVertex, String queryVertex) {
         for (String neighbor : targetGraph.getNeighborVertexList(targetVertex)) {
             if (state.inM1(neighbor)) {
@@ -192,11 +187,12 @@ public class VF2 implements IsomorphismAlgorithm {
 
 
     /**
-     * Check the in rule and out rule
-     * This prunes the search tree using 1-look-ahead
+     * Rule_terminout
+     * The number of neighbors of n that are in T_1^{inout} is equal to the
+     * number of neighbors of m that are in T_2^{inout}, and vice versa.
      *
-     * @param targetVertex Target Graph Node Index
-     * @param queryVertex  Query Graph Node Index
+     * @param targetVertex Target Graph Vertex
+     * @param queryVertex  Query Graph Vertex
      * @return Feasible or not
      */
     private boolean checkInAndOut(String targetVertex, String queryVertex) {
@@ -218,11 +214,13 @@ public class VF2 implements IsomorphismAlgorithm {
     }
 
     /**
-     * Check the new rule
-     * This prunes the search tree using 2-look-ahead
+     * Rule_new
+     * The number of neighbors of n that are neither in the core_1 nor
+     * T_1^{inout} is equal to the number of neighbors of m
+     * that are neither in core_2 nor T_2^{inout}.
      *
-     * @param targetVertex Target Graph Node Index
-     * @param queryVertex  Query Graph Node Index
+     * @param targetVertex Target Graph vertex
+     * @param queryVertex  Query Graph vertex
      * @return Feasible or not
      */
     private boolean checkNew(String targetVertex, String queryVertex) {
@@ -240,22 +238,38 @@ public class VF2 implements IsomorphismAlgorithm {
             }
         }
 
-        if (num1 < num2) {
-            return false;
-        }
-        return true;
+        return num1 >= num2;
     }
 
     public class State {
 
-        private HashMap<String, String> core_1; // stores for each target graph node to which query graph node it maps ("-1" indicates no mapping)
-        private HashMap<String, String> core_2; // stores for each query graph node to which target graph node it maps ("-1" indicates no mapping)
+        /**
+         * core_1[n] contains the index of the node paired with n, which is m,
+         *           provided n is in the mapping.
+         * core_2[m] contains the index of the node paired with m, which is n,
+         *           provided m is in the mapping.
+         */
+        private HashMap<String, String> core_1;
+        private HashMap<String, String> core_2;
 
-        private HashMap<String, Integer> inout_1; // stores for each target graph node the depth in the search tree at which it entered "T_1 out" or the mapping ("-1" indicates that the node is not part of the set)
-        private HashMap<String, Integer> inout_2; // stores for each query graph node the depth in the search tree at which it entered "T_2 out" or the mapping ("-1" indicates that the node is not part of the set)
+        // See the paper for definitions of M_x and T_x^{y}
 
-        private HashSet<String> T1inout;    // nodes that not yet in the partial mapping, that are the origin of branches end into target graph
-        private HashSet<String> T2inout;    // nodes that not yet in the partial mapping, that are the origin of branches end into query graph
+        /**
+         *  inout_1[n]  is non-zero if n is in M_1 or in T_1^{inout}
+         *  inout_2[m]  is non-zero if m is in M_2 or in T_2^{inout}
+         *
+         *  The value stored is the depth of the SSR tree when the node became
+         *  part of the corresponding set.
+         */
+        private HashMap<String, Integer> inout_1;
+        private HashMap<String, Integer> inout_2;
+
+        /**
+         * // T1inout[n] is that not yet in the partial mapping, that are the origin of branches end into target graph
+         * // T2inout[m] is that not yet in the partial mapping, that are the origin of branches end into query graph
+         */
+        private HashSet<String> T1inout;
+        private HashSet<String> T2inout;
 
         private HashSet<String> unmapped1;    // unmapped nodes in target graph
         private HashSet<String> unmapped2;    // unmapped nodes in query graph
@@ -264,8 +278,6 @@ public class VF2 implements IsomorphismAlgorithm {
 
         private boolean matched = false;
 
-        private Graph targetGraph;
-        private Graph queryGraph;
 
         /**
          * Initialize a State
@@ -274,9 +286,6 @@ public class VF2 implements IsomorphismAlgorithm {
          * @param queryGraph  The small graph
          */
         public State(Graph targetGraph, Graph queryGraph) {
-
-            this.targetGraph = targetGraph;
-            this.queryGraph = queryGraph;
 
             int targetSize = targetGraph.getVertexList().size();
             int querySize = queryGraph.getVertexList().size();
@@ -293,68 +302,37 @@ public class VF2 implements IsomorphismAlgorithm {
             inout_1 = new HashMap<>();
             inout_2 = new HashMap<>();
 
-//            core_1 = new int[targetSize];
-//            core_2 = new int[querySize];
-
-//            inout_1 = new int[targetSize];
-//            inout_2 = new int[querySize];
-
-            // initialize values ("-1" means no mapping / not contained in the set)
             // initially, all sets are empty and no nodes are mapped
             for (int i = 0; i < targetSize; i++) {
-//                core_1[i] = -1;
-//                inout_1[i] = -1;
                 unmapped1.add(String.valueOf(i));
             }
             for (int i = 0; i < querySize; i++) {
-//                core_2[i] = -1;
-//                inout_2[i] = -1;
                 unmapped2.add(String.valueOf(i));
             }
         }
 
         public Boolean inM1(String vertex) {
-//            return (core_1[nodeId] > -1);
             return core_1.containsKey(vertex);
         }
 
         public Boolean inM2(String vertex) {
-//            return (core_2[nodeId] > -1);
             return core_2.containsKey(vertex);
         }
 
         public Boolean inT1inout(String vertex) {
-//            return ((core_1[nodeId] == -1) && (inout_1[nodeId] > -1));
             return core_1.containsKey(vertex) && inout_1.containsKey(vertex);
         }
 
 
         public Boolean inT2inout(String vertex) {
-//            return ((core_2[nodeId] == -1) && (inout_2[nodeId] > -1));
             return core_2.containsKey(vertex) && inout_2.containsKey(vertex);
         }
-//
-//        public Boolean inT1(String vertex) {
-//            return this.inT1inout(nodeId);
-//        }
-//
-//        public Boolean inT2(String vertex) {
-//            return this.inT2inout(nodeId);
-//        }
-//
-//        public Boolean inN1Tilde(String vertex) {
-//            return (core_1[nodeId] == -1) && (inout_1[nodeId] == -1);
-//        }
-//
-//        public Boolean inN2Tilde(String vertex) {
-//            return (core_2[nodeId] == -1) && (inout_2[nodeId] == -1);
-//        }
 
         /**
-         * Add a new isSubGraphIsomorphism (targetIndex, queryIndex) to the state
+         * Add a new isSubGraphIsomorphism (targetVertex, queryVertex) to the state
          *
-         * @param targetVertex Index of the node in target graph
-         * @param queryVertex  Index of the node in query graph
+         * @param targetVertex The vertex in target graph
+         * @param queryVertex  The vertex in query graph
          */
         public void extendMatch(String targetVertex, String queryVertex) {
 
@@ -365,18 +343,10 @@ public class VF2 implements IsomorphismAlgorithm {
             T1inout.remove(targetVertex);
             T2inout.remove(queryVertex);
 
-//            core_1[targetIndex] = queryIndex;
-//            core_2[queryIndex] = targetIndex;
-//            unmapped1.remove(targetIndex);
-//            unmapped2.remove(queryIndex);
-//            T1inout.remove(targetIndex);
-//            T2inout.remove(queryIndex);
-
             depth++;    // move down one level in the search tree
 
             for (String neighborVertex : targetGraph.getNeighborVertexList(targetVertex)) {
                 if (!inout_1.containsKey(neighborVertex)) {
-//                    inout_1[neighborIdx] = depth;
                     inout_1.put(neighborVertex, depth);
                     if (!inM1(neighborVertex)) {
                         T1inout.add(neighborVertex);
@@ -386,7 +356,6 @@ public class VF2 implements IsomorphismAlgorithm {
 
             for (String neighborVertex : queryGraph.getNeighborVertexList(queryVertex)) {
                 if (!inout_2.containsKey(neighborVertex)) {
-//                    inout_2[neighborIdx] = depth;
                     inout_2.put(neighborVertex, depth);
                     if (!inM2(neighborVertex)) {
                         T2inout.add(neighborVertex);
@@ -405,8 +374,6 @@ public class VF2 implements IsomorphismAlgorithm {
 
             core_1.remove(targetVertex);
             core_2.remove(queryVertex);
-//            core_1[targetVertex] = -1;
-//            core_2[queryVertex] = -1;
             unmapped1.add(targetVertex);
             unmapped2.add(queryVertex);
 
@@ -423,19 +390,6 @@ public class VF2 implements IsomorphismAlgorithm {
                     T2inout.remove(key);
                 }
             }
-
-//            for (int i = 0; i < core_1.length; i++) {
-//                if (inout_1[i] == depth) {
-//                    inout_1[i] = -1;
-//                    T1inout.remove(i);
-//                }
-//            }
-//            for (int i = 0; i < core_2.length; i++) {
-//                if (inout_2[i] == depth) {
-//                    inout_2[i] = -1;
-//                    T2inout.remove(i);
-//                }
-//            }
 
             // put targetVertex and queryVertex back into Tin and Tout sets if necessary
             if (inT1inout(targetVertex))
