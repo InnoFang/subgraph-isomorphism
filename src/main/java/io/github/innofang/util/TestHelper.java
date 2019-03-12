@@ -44,13 +44,14 @@ public class TestHelper {
         System.out.println();
         System.out.println("Start searching ...");
         System.out.println("===================\n");
-
+        int matchNum = 0;
         long start = System.currentTimeMillis();
         for (int i = 0; i < queryGraphSize; ++ i) {
             for (int j = 0; j < targetGraphSize; ++ j) {
                 Graph query = queryGraphList.get(i);
                 Graph target = targetGraphList.get(j);
                 if (algorithm.match(target, query)) {
+                    ++ matchNum;
                     listener.match(algorithm, i, j);
                     if (showMapping) {
                         printMapping(algorithm.getMapping());
@@ -62,7 +63,7 @@ public class TestHelper {
         double seconds = used * 1.0 / 1000;
 
         System.out.println("\n===================");
-        System.out.printf("End searching, used %f s\n.", seconds);
+        System.out.printf("End searching, used %f s\n, %d graph isomorphism.", seconds, matchNum);
     }
 
 
