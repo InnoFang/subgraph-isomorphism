@@ -36,11 +36,19 @@ see the [wiki](https://en.wikipedia.org/wiki/Subgraph_isomorphism_problem)
 | Umcyama <br/> (1998)      | No  | Yes | Yes | No  | No  | Yes | Yes | No  |
 | Christmas <br/> (1995)    | Yes | No  | Yes | No  | No  | Yes | Yes | No  |
 
+## TO-DO for SubGraph Isomorphism Algorithm Implementation
 
-
-## Reference
+ + [x] [Ullmann](./src/main/java/io/github/innofang/algorithm/impl/Ullmann.java) [2]
+ + [x] [VF2](./src/main/java/io/github/innofang/algorithm/impl/VF2.java) [3]
+ + ...
+ 
+## Reference & Bibliography
 
 [1] 于静，刘燕兵，张宇，刘梦雅，谭建龙，郭莉.大规模图数据匹配技术综述[J].计算机研究与发展，2015，52(2): 391-409
+
+[2] Ullmann J R. An algorithm for subgraph isomorphism[J]. Journal of the ACM (JACM), 1976, 23(1): 31-42.
+
+[3] Cordella L P, Foggia P and Sansone C. A (sub)graph isomorphism algorithm for matching large graphs[J]. IEEE PAMI, 2004, 26(10):1367–1372. 
 
 ## [License](./LICENSE)
 
