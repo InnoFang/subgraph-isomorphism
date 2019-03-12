@@ -2,8 +2,6 @@ package io.github.innofang.algorithm.impl;
 
 import io.github.innofang.algorithm.IsomorphismAlgorithm;
 import io.github.innofang.graph.bean.Graph;
-import io.github.innofang.graph.bean.Vertex;
-import io.github.innofang.util.Pair;
 
 import java.util.*;
 
@@ -26,9 +24,8 @@ public class VF2 implements IsomorphismAlgorithm {
     }
 
     @Override
-    public boolean match(Graph targetGraph, Graph queryGraph) {
+    public boolean isSubGraphIsomorphism(Graph targetGraph, Graph queryGraph) {
         initialize(targetGraph, queryGraph);
-        //writer.write("(" + core_2[i] + "-" + i + ") ");
         matchRecursive(state, targetGraph, queryGraph);
         return state.matched;
     }
@@ -48,7 +45,7 @@ public class VF2 implements IsomorphismAlgorithm {
 
     private boolean matchRecursive(State state, Graph targetGraph, Graph queryGraph) {
 
-        if (state.depth == queryGraph.getVertexList().size()) {    // Found a match
+        if (state.depth == queryGraph.getVertexList().size()) {    // Found a isSubGraphIsomorphism
             state.matched = true;
             return true;
         } else {    // Extend the state
@@ -56,10 +53,10 @@ public class VF2 implements IsomorphismAlgorithm {
             for (Map.Entry<String, String> entry : candidates.entrySet()) {
                 if (checkSyntacticFeasibility(entry.getKey(), entry.getValue())) {
                     state.extendMatch(entry.getKey(), entry.getValue()); // extend mapping
-                    if (matchRecursive(state, targetGraph, queryGraph)) {    // Found a match
+                    if (matchRecursive(state, targetGraph, queryGraph)) {    // Found a isSubGraphIsomorphism
                         return true;
                     }
-                    state.backtrack(entry.getKey(), entry.getValue()); // remove the match added before
+                    state.backtrack(entry.getKey(), entry.getValue()); // remove the isSubGraphIsomorphism added before
                 }
             }
         }
@@ -134,7 +131,7 @@ public class VF2 implements IsomorphismAlgorithm {
     }
 
     /**
-     * Check the feasibility of adding this match
+     * Check the feasibility of adding this isSubGraphIsomorphism
      *
      * @param targetVertex Target Graph Node Index
      * @param queryVertex  Query Graph Node Index
@@ -354,7 +351,7 @@ public class VF2 implements IsomorphismAlgorithm {
 //        }
 
         /**
-         * Add a new match (targetIndex, queryIndex) to the state
+         * Add a new isSubGraphIsomorphism (targetIndex, queryIndex) to the state
          *
          * @param targetVertex Index of the node in target graph
          * @param queryVertex  Index of the node in query graph
@@ -399,7 +396,7 @@ public class VF2 implements IsomorphismAlgorithm {
         }
 
         /**
-         * Remove the match of (targetVertex, queryVertex) for backtrack
+         * Remove the isSubGraphIsomorphism of (targetVertex, queryVertex) for backtrack
          *
          * @param targetVertex
          * @param queryVertex

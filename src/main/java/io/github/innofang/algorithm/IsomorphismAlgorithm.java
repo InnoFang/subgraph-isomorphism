@@ -8,7 +8,7 @@ import java.util.HashMap;
 public interface IsomorphismAlgorithm {
 
 
-    boolean match(Graph targetGraph, Graph queryGraph);
+    boolean isSubGraphIsomorphism(Graph targetGraph, Graph queryGraph);
 
     HashMap<String, String> getMapping() ;
 }

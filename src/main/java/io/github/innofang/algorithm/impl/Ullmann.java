@@ -33,7 +33,7 @@ public class Ullmann implements IsomorphismAlgorithm {
     private HashMap<String, String> mapping;
 
     @Override
-    public boolean match(Graph targetGraph, Graph queryGraph) {
+    public boolean isSubGraphIsomorphism(Graph targetGraph, Graph queryGraph) {
         initialize(targetGraph, queryGraph);
         return checkIsomorphism();
     }
@@ -57,7 +57,7 @@ public class Ullmann implements IsomorphismAlgorithm {
 
     @Override
     public HashMap<String, String> getMapping() {
-        assert mapping != null : "Haven't match yet.";
+        assert mapping != null : "Haven't isSubGraphIsomorphism yet.";
 //        return mapping;
         // the result of mapping is wrong
         return new HashMap<>();

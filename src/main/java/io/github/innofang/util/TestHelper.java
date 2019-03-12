@@ -3,7 +3,6 @@ package io.github.innofang.util;
 import io.github.innofang.algorithm.IsomorphismAlgorithm;
 import io.github.innofang.graph.GraphReader;
 import io.github.innofang.graph.bean.Graph;
-import io.github.innofang.graph.bean.Vertex;
 import io.github.innofang.graph.datasets.DataSetStrategy;
 
 import java.io.IOException;
@@ -50,7 +49,7 @@ public class TestHelper {
             for (int j = 0; j < targetGraphSize; ++ j) {
                 Graph query = queryGraphList.get(i);
                 Graph target = targetGraphList.get(j);
-                if (algorithm.match(target, query)) {
+                if (algorithm.isSubGraphIsomorphism(target, query)) {
                     ++ matchNum;
                     listener.match(algorithm, i, j);
                     if (showMapping) {
