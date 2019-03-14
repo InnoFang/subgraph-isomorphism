@@ -5,10 +5,8 @@ import io.github.innofang.graph.bean.Edge;
 import io.github.innofang.graph.bean.Graph;
 import io.github.innofang.graph.bean.Vertex;
 import io.github.innofang.util.MatrixOperator;
-import io.github.innofang.util.Pair;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 /**
