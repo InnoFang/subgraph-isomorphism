@@ -47,7 +47,7 @@ public class Graph {
     }
 
     public int[][] getAdjacencyMatrix() {
-        return getAdjacencyMatrix(false);
+        return getAdjacencyMatrix(true);
     }
 
     public int[][] getAdjacencyMatrix(boolean directed) {
