@@ -29,24 +29,43 @@ def read_graph_from(file_name):
                 raise EOFError
     return graphs
 
-target = read_graph_from(TARGET_PATH)[0]
-query = read_graph_from(QUERY_PATH)[0]
+def draw_graph_for(name, show_edge_value=False):
+    assert name == 'target' or name == 'query'
+
+    params = {
+        'target' : {
+            'file_path': TARGET_PATH,
+            'title': 'Target',
+            'node_color': 'b',
+            'edge_color': 'y'
+        },
+        'query': {
+            'file_path': QUERY_PATH,
+            'title': 'Query',
+            'node_color': 'r',
+            'edge_color': 'g'
+        }
+    }
+
+    file_path = params[name]['file_path']
+    title = params[name]['title']
+    node_color = params[name]['node_color']
+    edge_color = params[name]['edge_color']
+    plt.title('{} Graph'.format(title))
+    graph = read_graph_from(file_path)[0]
+    labels = nx.get_edge_attributes(graph, 'label')
+    pos = nx.spring_layout(graph)
+    nx.draw(graph, pos=pos, node_color=node_color, edge_color=edge_color, with_labels=True, font_weight='bold')
+    if show_edge_value:
+        nx.draw_networkx_edge_labels(graph, pos, edge_labels=labels)
+
+subplot = [121, 122]
+names = ['target', 'query']
  
-graph_matcher = iso.GraphMatcher(target, query)
-if graph_matcher.subgraph_is_isomorphic():
-    print("query_graph is isomorphisc target_graph")
-    print(graph_matcher.mapping)
-
-plt.subplot(121)
-labels = nx.get_edge_attributes(target, 'label')
-position = nx.spring_layout(target)
-nx.draw(target, pos=position, node_color='b', edge_color='y',with_labels=True, font_weight='bold')
-# nx.draw_networkx_edge_labels(target, pos=position, edge_labels=labels)
-
-plt.subplot(122)
-labels = nx.get_edge_attributes(query, 'label')
-position = nx.spring_layout(query)
-nx.draw(query, pos=position, node_color='r', edge_color='g',with_labels=True, font_weight='bold', edge_labels=labels)
-# nx.draw_networkx_edge_labels(query, pos=position, edge_labels=labels)
-
-plt.show()
+if __name__ == '__main__':
+    for sub, name in zip(subplot, names):
+        plt.subplot(sub)
+        draw_graph_for(name)
+    
+    plt.show()
+    
