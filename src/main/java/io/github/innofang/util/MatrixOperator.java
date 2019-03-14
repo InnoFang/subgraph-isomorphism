@@ -61,4 +61,13 @@ public class MatrixOperator {
             return selfMatrix;
         }
     }
+
+    public static void printMatrix(int[][] matrix) {
+        for (int[] row : matrix) {
+            for (int elem : row) {
+                System.out.print(elem + " ");
+            }
+            System.out.println();
+        }
+    }
 }
