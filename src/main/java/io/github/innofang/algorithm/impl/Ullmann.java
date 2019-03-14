@@ -252,7 +252,6 @@ public class Ullmann implements IsomorphismAlgorithm {
                 }
             }
         }
-
         return true;
     }
 }
