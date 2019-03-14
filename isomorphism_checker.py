@@ -22,9 +22,9 @@ def read_graph_from(file_name):
                     graphs.append(graph)
                 graph = nx.Graph()
             elif info[0] == 'v' and len(info) == 3:
-                graph.add_node(info[1], label=info[2])
+                graph.add_node(info[1], label=int(info[2]))
             elif info[0] == 'e' and len(info) == 4:
-                graph.add_edge(info[1], info[2], label=info[3])
+                graph.add_edge(info[1], info[2], label=int(info[3]))
             else:
                 raise EOFError
     return graphs
@@ -38,7 +38,15 @@ if graph_matcher.subgraph_is_isomorphic():
     print(graph_matcher.mapping)
 
 plt.subplot(121)
-nx.draw(target, pos=nx.spring_layout(target, iterations=200), node_color='b', edge_color='y',with_labels=True, font_weight='bold')
+labels = nx.get_edge_attributes(target, 'label')
+position = nx.spring_layout(target)
+nx.draw(target, pos=position, node_color='b', edge_color='y',with_labels=True, font_weight='bold')
+# nx.draw_networkx_edge_labels(target, pos=position, edge_labels=labels)
+
 plt.subplot(122)
-nx.draw(query, pos=nx.spring_layout(query, iterations=200), node_color='r', edge_color='g',with_labels=True, font_weight='bold')
+labels = nx.get_edge_attributes(query, 'label')
+position = nx.spring_layout(query)
+nx.draw(query, pos=position, node_color='r', edge_color='g',with_labels=True, font_weight='bold', edge_labels=labels)
+# nx.draw_networkx_edge_labels(query, pos=position, edge_labels=labels)
+
 plt.show()
