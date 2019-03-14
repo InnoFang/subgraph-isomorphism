@@ -110,6 +110,10 @@ public class Graph {
         return null;
     }
 
+    public Vertex getVertex(int vertexIndex) {
+        return vertexList.get(vertexIndex);
+    }
+
     public void addEdge(Edge edge) {
         edgeList.add(edge);
     }
