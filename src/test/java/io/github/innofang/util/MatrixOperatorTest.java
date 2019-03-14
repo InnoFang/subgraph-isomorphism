@@ -6,28 +6,37 @@ public class MatrixOperatorTest {
 
     @Test
     public void testMatrixOperator() {
-        int[][] A = {{1, 2, 3},
-                     {4, 5, 6}};
+        int[][] MA = {
+                {0, 1, 1},
+                {1, 0, 0},
+                {1, 0, 0}};
 
-        int[][] B = {{1, 2},
-                     {3, 4},
-                     {5, 6}};
+        int[][] MB = {
+                {0, 1, 1, 0},
+                {1, 0, 1, 1},
+                {1, 1, 0, 1},
+                {0, 1, 1, 0}};
 
-        int[][] C = MatrixOperator.set(A).dot(B).T().get();
-        print(C);
-        System.out.println("========");
-        C = MatrixOperator.set(A).T().get();
-        print(C);
+        int[][] M0 = {
+                {1, 0, 0, 0},
+                {0, 1, 0, 0},
+                {0, 0, 1, 0}};
 
-    }
+        int[][] MC = MatrixOperator.set(M0).dot(
+                MatrixOperator.set(M0).dot(MB).T().get()
+        ).get();
 
-    private void print(int[][] matrix) {
-        for (int[] row: matrix) {
-            for (int elem: row) {
-                System.out.print(elem + " ");
+        MatrixOperator.printMatrix(MC);
+
+        loop:
+        for (int i = 0; i < MA.length; ++i) {
+            for (int j = 0; j < MA[0].length; ++j) {
+                if (MA[i][j] == 1 && MC[i][j] != 1) {
+                    System.out.println("It is not");
+                    break loop;
+                }
             }
-            System.out.println();
         }
+        System.out.println("isomorphism");
     }
-
 }
