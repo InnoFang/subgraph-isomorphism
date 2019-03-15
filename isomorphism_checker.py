@@ -116,7 +116,9 @@ if __name__ == '__main__':
     target = read_graph_from(target_file_path)[target_number]
     query  = read_graph_from(query_file_path)[query_number] 
 
-    graph_matcher = iso.GraphMatcher(target, query, node_match=iso.categorical_node_match('label', -1), edge_match=iso.categorical_edge_match('label', -1))		
+    graph_matcher = iso.GraphMatcher(target, query, 
+        node_match=iso.categorical_node_match('label', -1), 
+        edge_match=iso.categorical_edge_match('label', -1))		
     if graph_matcher.subgraph_is_isomorphic():		
         print("<SubGraph Isomorphism> query_graph {} is subgraph isomorphisc target_graph {}.".format(query_number, target_number))		
         print(graph_matcher.mapping)
