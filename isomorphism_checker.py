@@ -4,8 +4,8 @@ import networkx as nx
 from networkx.algorithms import isomorphism as iso
 import matplotlib.pyplot as plt
 
-DEFAULT_TARGET_PATH = 'F:/IDEA/subgraph-isomorphism/src/main/resources/data/target_graph.txt'
-DEFAULT_QUERY_PATH = 'F:/IDEA/subgraph-isomorphism/src/main/resources/data/query_graph.txt'
+DEFAULT_TARGET_PATH = './src/main/resources/data/target_graph.txt'
+DEFAULT_QUERY_PATH = './src/main/resources/data/query_graph.txt'
 
 def read_graph_from(file_name):
     graphs = []
@@ -118,10 +118,10 @@ if __name__ == '__main__':
 
     graph_matcher = iso.GraphMatcher(target, query, node_match=iso.categorical_node_match('label', -1), edge_match=iso.categorical_edge_match('label', -1))		
     if graph_matcher.subgraph_is_isomorphic():		
-        print("<Isomorphism> query_graph {} is isomorphisc target_graph {}.".format(query_number, target_number))		
+        print("<SubGraph Isomorphism> query_graph {} is subgraph isomorphisc target_graph {}.".format(query_number, target_number))		
         print(graph_matcher.mapping)
     else:
-        print("<No Result> query_graph {} is not isomorphisc target_graph {}".format(query_number, target_number))
+        print("<No Result> query_graph {} is not subgraph isomorphisc target_graph {}".format(query_number, target_number))
 
     plt.subplot(121)
     draw_graph_for('target', target)
