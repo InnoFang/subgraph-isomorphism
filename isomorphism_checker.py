@@ -59,7 +59,7 @@ if __name__ == '__main__':
     target = read_graph_from(TARGET_PATH)[0]
     query = read_graph_from(QUERY_PATH)[0] 
 
-    graph_matcher = iso.GraphMatcher(target, query)		
+    graph_matcher = iso.GraphMatcher(target, query, node_match=iso.categorical_node_match('label', -1), edge_match=iso.categorical_edge_match('label', -1))		
     if graph_matcher.subgraph_is_isomorphic():		
         print("query_graph is isomorphisc target_graph")		
         print(graph_matcher.mapping)
