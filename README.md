@@ -40,7 +40,8 @@ see the [wiki](https://en.wikipedia.org/wiki/Subgraph_isomorphism_problem)
 
  + [x] [Ullmann](./src/main/java/io/github/innofang/algorithm/impl/Ullmann.java) [2]
  + [x] [VF2](./src/main/java/io/github/innofang/algorithm/impl/VF2.java) [3]
- + ...
+ + [ ] SPath
+ + [ ] GADDI
  
 ## Reference & Bibliography
 
