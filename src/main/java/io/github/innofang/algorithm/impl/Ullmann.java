@@ -56,9 +56,15 @@ public class Ullmann implements IsomorphismAlgorithm {
     @Override
     public HashMap<String, String> getMapping() {
         assert mapping != null : "Haven't isSubGraphIsomorphism yet.";
-//        return mapping;
-        // the result of mapping is wrong
-        return new HashMap<>();
+        MatrixOperator.printMatrix(M0);
+        for (int i = 0; i < M0.length; i++) {
+            for (int j = 0; j < M0[0].length; j++) {
+                if (M0[i][j] == 1) {
+                    mapping.put(String.valueOf(i), String.valueOf(j));
+                }
+            }
+        }
+        return mapping;
     }
 
     /**
@@ -242,13 +248,11 @@ public class Ullmann implements IsomorphismAlgorithm {
                 MatrixOperator.set(M0).dot(MB).T().get()
         ).get();
 
+
         for (int i = 0; i < MA.length; ++i) {
             for (int j = 0; j < MA[0].length; ++j) {
                 if (MA[i][j] == 1 && MA[i][j] != MC[i][j]) {
-//                    mapping.clear();
                     return false;
-                } else if (MA[i][j] == 1 && MA[i][j] == MC[i][j]) {
-//                    mapping.put(queryGraph.getVertex(i).getVertex(), targetGraph.getVertex(j).getVertex());
                 }
             }
         }
