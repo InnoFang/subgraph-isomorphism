@@ -40,8 +40,8 @@ see the [wiki](https://en.wikipedia.org/wiki/Subgraph_isomorphism_problem)
 
  + [x] [Ullmann](./src/main/java/io/github/innofang/algorithm/impl/Ullmann.java) [2]
  + [x] [VF2](./src/main/java/io/github/innofang/algorithm/impl/VF2.java) [3]
- + [ ] SPath
- + [ ] GADDI
+ + [ ] SPath [4]
+ + [ ] GADDI [5]
  
 ## Reference & Bibliography
 
@@ -50,6 +50,11 @@ see the [wiki](https://en.wikipedia.org/wiki/Subgraph_isomorphism_problem)
 [2] Ullmann J R. An algorithm for subgraph isomorphism[J]. Journal of the ACM (JACM), 1976, 23(1): 31-42. [link](https://www.cs.bgu.ac.il/~dinitz/Course/SS-12/Ullman_Algorithm.pdf)
 
 [3] Cordella L P, Foggia P and Sansone C. A (sub)graph isomorphism algorithm for matching large graphs[J]. IEEE PAMI, 2004, 26(10):1367–1372. [link](https://ieeexplore.ieee.org/document/1323804?arnumber=1323804&tag=1)
+
+[4] Zhao P, Han J. On graph query optimization in large networks[J]. Proceedings of the VLDB Endowment, 2010, 3(1): 340–351. [link](https://www.vldb.org/pvldb/vldb2010/pvldb_vol3/R30.pdf)
+
+[5] Zhang S, Li S, Yang J. GADDI: distance index based subgraph matching in biological networks[C]// Proceedings of the international Conference on Extending Database Technology. 2009: 192–203. [link](https://dl.acm.org/citation.cfm?id=1516384)
+
 
 ## [License](./LICENSE)
 
