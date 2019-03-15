@@ -58,9 +58,9 @@ def draw_graph_for(name, graph, show_edge_value=False):
         nx.draw_networkx_edge_labels(graph, pos, edge_labels=labels)
 
 def assertion():
-    assert len(sys.argv) == 1 or len(sys.argv) == 2 or len(sys.argv) == 5, \
+    assert len(sys.argv) in [1, 2, 5], \
         """
-        Wrong number of parameters. Please keep the number of parameters as 0 or 4, the format is as follows: 
+        Wrong number of parameters. Please keep the number of parameters as 0, 1 or 4, the format is as follows: 
 
         usage: python {} <target_graph_file_path> <target_graph_number> <query_graph_file_path> <query_graph_number>
 
@@ -118,10 +118,10 @@ if __name__ == '__main__':
 
     graph_matcher = iso.GraphMatcher(target, query, node_match=iso.categorical_node_match('label', -1), edge_match=iso.categorical_edge_match('label', -1))		
     if graph_matcher.subgraph_is_isomorphic():		
-        print("query_graph is isomorphisc target_graph")		
+        print("<Isomorphism> query_graph {} is isomorphisc target_graph {}.".format(query_number, target_number))		
         print(graph_matcher.mapping)
     else:
-        print("query_graph is not isomorphisc target_graph")
+        print("<No Result> query_graph {} is not isomorphisc target_graph {}".format(query_number, target_number))
 
     plt.subplot(121)
     draw_graph_for('target', target)
