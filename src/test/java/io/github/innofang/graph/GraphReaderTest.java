@@ -3,6 +3,7 @@ package io.github.innofang.graph;
 import io.github.innofang.graph.bean.Graph;
 import io.github.innofang.graph.datasets.CAAstroPhDataSet;
 import io.github.innofang.graph.datasets.NormalDataSet;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -27,9 +28,11 @@ public class GraphReaderTest {
         GraphReader reader = new GraphReader();
         reader.setDataSetStrategy(new CAAstroPhDataSet());
         List<Graph> graphList = reader.read(path);
-        for (Graph graph : graphList) {
-            System.out.println(graph);
-        }
+
+        Graph ca_astro_ph = graphList.get(0);
+
+        Assert.assertEquals(ca_astro_ph.getVertexList().size(), 18772);
+        Assert.assertEquals(ca_astro_ph.getEdgeList().size(), 396160);
     }
 
 }
