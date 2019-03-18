@@ -30,7 +30,11 @@ public class Edge {
     private String vertexJ;
     private String label  = "";  // default empty string
 
-    public Edge() {}
+    public Edge() { }
+
+    public Edge(String vertexI, String vertexJ) {
+        this(vertexI, vertexJ, "");
+    }
 
     public Edge(String vertexI, String vertexJ, String label) {
         this.vertexI = vertexI;

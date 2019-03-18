@@ -30,6 +30,10 @@ public class Vertex {
 
     public Vertex() {}
 
+    public Vertex(String vertex) {
+        this(vertex, "");
+    }
+
     public Vertex(String vertex, String label) {
         this.vertex = vertex;
         this.label = label;
