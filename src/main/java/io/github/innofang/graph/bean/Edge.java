@@ -26,7 +26,7 @@ public class Edge {
 
     private String vertexI;
     private String vertexJ;
-    private String label;
+    private String label  = "";  // default empty string
 
     public Edge() {}
 

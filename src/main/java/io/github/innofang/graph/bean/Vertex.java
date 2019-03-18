@@ -24,7 +24,7 @@ package io.github.innofang.graph.bean;
 
 public class Vertex {
     private String vertex;
-    private String label;
+    private String label = "";  // default empty string
 
     public Vertex() {}
 
