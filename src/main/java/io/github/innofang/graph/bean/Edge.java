@@ -1,5 +1,7 @@
 package io.github.innofang.graph.bean;
 
+import java.util.Objects;
+
 /**
  *
  * graph Data Template:
@@ -68,5 +70,30 @@ public class Edge {
         if (vertex.equals(vertexI)) return vertexJ;
         if (vertex.equals(vertexJ)) return vertexI;
         return null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Edge)) return false;
+        Edge edge = (Edge) o;
+        return Objects.equals(getVertexI(), edge.getVertexI()) &&
+                Objects.equals(getVertexJ(), edge.getVertexJ()) &&
+                Objects.equals(getLabel(), edge.getLabel());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getVertexI(), getVertexJ(), getLabel());
+    }
+
+    @Override
+    public String toString() {
+        return "Edge{" +
+                "vertexI='" + vertexI + '\'' +
+                ", vertexJ='" + vertexJ + '\'' +
+                ", label='" + label + '\'' +
+                '}';
     }
 }

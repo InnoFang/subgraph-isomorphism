@@ -1,6 +1,7 @@
 package io.github.innofang.graph.bean;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -27,8 +28,18 @@ import java.util.List;
 
 public class Graph {
 
-    private List<Vertex> vertexList = new ArrayList<>();
-    private List<Edge> edgeList = new ArrayList<>();
+    private List<Vertex> vertexList;
+    private List<Edge>   edgeList;
+
+    public Graph() {
+        this.vertexList = new ArrayList<>();
+        this.edgeList = new ArrayList<>();
+    }
+
+    public Graph(Collection<Vertex> vertexList, Collection<Edge> edgeList) {
+        this.vertexList = new ArrayList<>(vertexList);
+        this.edgeList = new ArrayList<>(edgeList);
+    }
 
     public List<Vertex> getVertexList() {
         return vertexList;
