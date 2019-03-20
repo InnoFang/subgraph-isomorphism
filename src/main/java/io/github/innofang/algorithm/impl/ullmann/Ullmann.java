@@ -1,4 +1,4 @@
-package io.github.innofang.algorithm.impl;
+package io.github.innofang.algorithm.impl.ullmann;
 
 import io.github.innofang.algorithm.IsomorphismAlgorithm;
 import io.github.innofang.graph.bean.Edge;
@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Using Ullmann algorithm to implement subgraph isomorphism
+ * Using ullmann algorithm to implement subgraph isomorphism
  */
 
 public class Ullmann implements IsomorphismAlgorithm {
