@@ -1,4 +1,4 @@
-package io.github.innofang.algorithm.impl;
+package io.github.innofang.algorithm.impl.vf2;
 
 import io.github.innofang.algorithm.IsomorphismAlgorithm;
 import io.github.innofang.graph.bean.Graph;
@@ -7,7 +7,7 @@ import java.util.*;
 
 
 /**
- * VF2 for undirected graph matcher
+ * vf2 for undirected graph matcher
  */
 
 public class VF2 implements IsomorphismAlgorithm {
@@ -50,7 +50,7 @@ public class VF2 implements IsomorphismAlgorithm {
      * Extends the isomorphism mapping.
      * This function is called recursively to determine if a complete
      * isomorphism can be found between TargetGraph and QueryGraph.
-     * @param state         VF2 state
+     * @param state         vf2 state
      * @param targetGraph   Target Graph (big one)
      * @param queryGraph    Query Graph  (small one)
      * @return  Match or not
