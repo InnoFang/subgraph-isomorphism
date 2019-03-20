@@ -1,5 +1,6 @@
-package io.github.innofang.algorithm.impl;
+package io.github.innofang.algorithm.impl.ullmann;
 
+import io.github.innofang.algorithm.impl.ullmann.Ullmann;
 import io.github.innofang.graph.datasets.NormalDataSet;
 import io.github.innofang.util.TestHelper;
 import org.junit.Test;
