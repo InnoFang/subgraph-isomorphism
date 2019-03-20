@@ -56,7 +56,6 @@ public class Ullmann implements IsomorphismAlgorithm {
     @Override
     public HashMap<String, String> getMapping() {
         assert mapping != null : "Haven't isSubGraphIsomorphism yet.";
-        MatrixOperator.printMatrix(M0);
         for (int i = 0; i < M0.length; i++) {
             for (int j = 0; j < M0[0].length; j++) {
                 if (M0[i][j] == 1) {
