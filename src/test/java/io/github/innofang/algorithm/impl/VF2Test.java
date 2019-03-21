@@ -1,6 +1,6 @@
-package io.github.innofang.algorithm.impl.vf2;
+package io.github.innofang.algorithm.impl;
 
-import io.github.innofang.algorithm.impl.vf2.VF2;
+import io.github.innofang.algorithm.impl.VF2;
 import io.github.innofang.graph.datasets.NormalDataSet;
 import io.github.innofang.util.TestHelper;
 import org.junit.Test;

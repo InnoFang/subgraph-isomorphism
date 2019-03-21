@@ -1,4 +1,4 @@
-package io.github.innofang.algorithm.impl.ullmann;
+package io.github.innofang.algorithm.impl;
 
 import io.github.innofang.algorithm.IsomorphismAlgorithm;
 import io.github.innofang.graph.bean.Edge;
