@@ -2,6 +2,7 @@ package io.github.innofang.graph.bean;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -31,14 +32,21 @@ public class Graph {
     private List<Vertex> vertexList;
     private List<Edge>   edgeList;
 
+    private HashMap<String, List<String>> neighborVertexMap;
+    private HashMap<String, Integer> vertexDegreeMap;
+
     public Graph() {
         this.vertexList = new ArrayList<>();
         this.edgeList = new ArrayList<>();
+        this.neighborVertexMap = new HashMap<>();
+        this.vertexDegreeMap = new HashMap<>();
     }
 
     public Graph(Collection<Vertex> vertexList, Collection<Edge> edgeList) {
         this.vertexList = new ArrayList<>(vertexList);
         this.edgeList = new ArrayList<>(edgeList);
+        this.neighborVertexMap = new HashMap<>();
+        this.vertexDegreeMap = new HashMap<>();
     }
 
     public List<Vertex> getVertexList() {
@@ -76,6 +84,10 @@ public class Graph {
     }
 
     public int getVertexDegree(String vertex) {
+        if (vertexDegreeMap.containsKey(vertex)) {
+            return vertexDegreeMap.get(vertex);
+        }
+
         int degree = 0;
         for (Edge edge: edgeList) {
             if (edge.contain(vertex)) {
@@ -99,6 +111,11 @@ public class Graph {
     }
 
     public List<String> getNeighborVertexList(String vertex) {
+
+        if (neighborVertexMap.containsKey(vertex)) {
+            return neighborVertexMap.get(vertex);
+        }
+
         List<String> neighbors = new ArrayList<>();
         for (Edge edge: edgeList) {
             if (edge.contain(vertex)) {
