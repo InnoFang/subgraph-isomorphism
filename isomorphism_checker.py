@@ -4,8 +4,8 @@ import networkx as nx
 from networkx.algorithms import isomorphism as iso
 import matplotlib.pyplot as plt
 
-DEFAULT_TARGET_PATH = './src/main/resources/data/target_graph.txt'
-DEFAULT_QUERY_PATH = './src/main/resources/data/query_graph.txt'
+DEFAULT_TARGET_PATH = './src/test/resources/test/target_graph.txt'
+DEFAULT_QUERY_PATH = './src/test/resources/test/query_graph.txt'
 
 def read_graph_from(file_name):
     graphs = []
@@ -73,8 +73,8 @@ def assertion():
     if len(sys.argv) == 2:
         if sys.argv[1] == '-examples':
             print("""
-            [0] python isomorphism_checker.py ./src/main/resources/data/target_graph.txt 0 ./src/main/resources/data/query_graph.txt 0
-            [1] python isomorphism_checker.py ./src/main/resources/graphDB/mygraphdb.data 3720 ./src/main/resources/graphDB/Q4.my 40
+            [0] python isomorphism_checker.py ./src/test/resources/test/target_graph.txt 0 ./src/test/resources/test/query_graph.txt 0
+            [1] python isomorphism_checker.py ./src/test/resources/graphDB/mygraphdb.test 3720 ./src/test/resources/graphDB/Q4.my 40
             """)
         else:
             print("""
