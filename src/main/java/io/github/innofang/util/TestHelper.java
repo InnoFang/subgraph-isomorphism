@@ -16,7 +16,7 @@ public class TestHelper {
      * @param targetGraphPath   target graph file path
      * @param queryGraphPath    query graph file path
      * @param algorithm         which isomorphism algorithm do you want to use
-     * @param dataSetStrategy   which data set do you want to import
+     * @param dataSetStrategy   which test set do you want to import
      * @param showMapping       show mapping or not
      * @param listener          isomorphism listener, call it when two graph isomorphism
      */

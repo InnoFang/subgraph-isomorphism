@@ -27,7 +27,7 @@ public class GraphReaderTest {
     public void testCAAstroPhDataSet() throws IOException {
         // Nodes: 18772 Edges: 396160
 
-        String path = "F:\\IDEA\\subgraph-isomorphism\\src\\main\\resources\\ca-AstroPh\\CA-AstroPh.txt";
+        String path = "F:\\IDEA\\subgraph-isomorphism\\src\\test\\resources\\ca-AstroPh\\CA-AstroPh.txt";
         GraphReader reader = new GraphReader();
         reader.setDataSetStrategy(new CAAstroPhDataSet());
         List<Graph> graphList = reader.read(path);
@@ -42,7 +42,7 @@ public class GraphReaderTest {
     public void testRoadNetCA() throws IOException {
         // Nodes: 1965206 Edges: 5533214
 
-        String path = "F:\\IDEA\\subgraph-isomorphism\\src\\main\\resources\\roadNet-CA\\roadNet-CA.txt";
+        String path = "F:\\IDEA\\subgraph-isomorphism\\src\\test\\resources\\roadNet-CA\\roadNet-CA.txt";
         GraphReader reader = new GraphReader();
         reader.setDataSetStrategy(new RoadNetCADataSet());
         List<Graph> graphList = reader.read(path);

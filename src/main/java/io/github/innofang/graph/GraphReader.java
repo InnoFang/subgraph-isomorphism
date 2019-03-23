@@ -16,7 +16,7 @@ public class GraphReader {
 
     public List<Graph> read(String filePath) throws IOException {
         assert dataSetStrategy != null :
-                "Please specify the data set loading strategy before loading the data set you want.";
+                "Please specify the test set loading strategy before loading the test set you want.";
         return dataSetStrategy.load(filePath);
     }
 

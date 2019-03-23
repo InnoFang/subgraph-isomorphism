@@ -17,7 +17,7 @@ import java.util.List;
  * "v M L" means that the Mth vertex in this graph has label L,
  * "e P Q L" means that there is an edge connecting the Pth vertex with the Qth vertex. The edge has label L.
  *
- * Each data file or query file end with "t # -1".
+ * Each test file or query file end with "t # -1".
  *
  * graph Data Example:
  * ================
@@ -68,7 +68,7 @@ public class NormalDataSet implements DataSetStrategy {
                 graph.addEdge(edge);
             } else {
                 throw new GraphDataErrorException(
-                        String.format("graph data isn't standard, " +
+                        String.format("graph test isn't standard, " +
                                 "'%s' is the reason, " +
                                 "which is located at Line %d, File '%s'.", line, lineNumber, filePath));
             }

@@ -45,7 +45,7 @@ public class RoadNetCADataSet implements DataSetStrategy{
                 continue;
             } else {
                 throw new GraphDataErrorException(
-                        String.format("graph data isn't standard, " +
+                        String.format("graph test isn't standard, " +
                                 "'%s' is the reason, " +
                                 "which is located at Line %d, File '%s'.", line, lineNumber, filePath));
             }

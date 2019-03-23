@@ -8,9 +8,9 @@ import java.util.List;
 /**
  * Strategy Pattern
  *
- * which data set do you want to load?
+ * which test set do you want to load?
  *
- * Base upon the format of the data set to implement the specify load method
+ * Base upon the format of the test set to implement the specify load method
  */
 public interface DataSetStrategy {
     List<Graph> load(String filePath) throws IOException;

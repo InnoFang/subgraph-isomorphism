@@ -12,8 +12,8 @@ public class VF2Test {
     @Test
     public void testVF2WithBigData() throws IOException {
 
-        String queryGraphPath = "F:\\IDEA\\subgraph-isomorphism\\src\\main\\resources\\graphDB\\Q4.my";
-        String targetGraphPath = "F:\\IDEA\\subgraph-isomorphism\\src\\main\\resources\\graphDB\\mygraphdb.data";
+        String queryGraphPath = "F:\\IDEA\\subgraph-isomorphism\\src\\test\\resources\\graphDB\\Q4.my";
+        String targetGraphPath = "F:\\IDEA\\subgraph-isomorphism\\src\\test\\resources\\graphDB\\mygraphdb.test";
         VF2 vf2 = new VF2();
 
         TestHelper.testIsomorphismAlgorithm(
@@ -30,8 +30,8 @@ public class VF2Test {
     @Test
     public void testVF2() throws IOException {
 
-        String queryGraphPath = "F:\\IDEA\\subgraph-isomorphism\\src\\main\\resources\\data\\query_graph.txt";
-        String targetGraphPath = "F:\\IDEA\\subgraph-isomorphism\\src\\main\\resources\\data\\target_graph.txt";
+        String queryGraphPath = "F:\\IDEA\\subgraph-isomorphism\\src\\test\\resources\\test\\query_graph.txt";
+        String targetGraphPath = "F:\\IDEA\\subgraph-isomorphism\\src\\test\\resources\\test\\target_graph.txt";
         VF2 vf2 = new VF2();
 
         TestHelper.testIsomorphismAlgorithm(
