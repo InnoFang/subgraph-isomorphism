@@ -116,6 +116,13 @@ if __name__ == '__main__':
     target = read_graph_from(target_file_path)[target_number]
     query  = read_graph_from(query_file_path)[query_number] 
 
+    show_edge_value = input("Want to show the value of edge or not? (Y/N)")
+
+    while show_edge_value.upper() not in ['Y', 'N']:
+        show_edge_value = input("Please determine whether to show the value of edge? (Y/N)")
+
+    show_edge_value = True if show_edge_value == 'Y' else False
+
     graph_matcher = iso.GraphMatcher(target, query, 
         node_match=iso.categorical_node_match('label', -1), 
         edge_match=iso.categorical_edge_match('label', -1))		
@@ -126,9 +133,9 @@ if __name__ == '__main__':
         print("<No Result> query_graph {} is not subgraph isomorphisc target_graph {}".format(query_number, target_number))
 
     plt.subplot(121)
-    draw_graph_for('target', target)
+    draw_graph_for('target', target, show_edge_value)
     plt.subplot(122)
-    draw_graph_for('query', query)
+    draw_graph_for('query', query, show_edge_value)
     
     plt.show()
     
