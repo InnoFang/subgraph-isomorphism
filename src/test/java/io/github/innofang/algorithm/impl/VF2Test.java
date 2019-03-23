@@ -13,7 +13,7 @@ public class VF2Test {
     public void testVF2WithBigData() throws IOException {
 
         String queryGraphPath = "F:\\IDEA\\subgraph-isomorphism\\src\\test\\resources\\graphDB\\Q4.my";
-        String targetGraphPath = "F:\\IDEA\\subgraph-isomorphism\\src\\test\\resources\\graphDB\\mygraphdb.test";
+        String targetGraphPath = "F:\\IDEA\\subgraph-isomorphism\\src\\test\\resources\\graphDB\\mygraphdb.data";
         VF2 vf2 = new VF2();
 
         TestHelper.testIsomorphismAlgorithm(
