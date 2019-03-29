@@ -174,38 +174,38 @@ public class Ullmann implements IsomorphismAlgorithm {
             }
         }
 
-        int F[] = new int[col]; // F[i] = 1，表示第i列已选过
-        int H[] = new int[row]; // H[i] = j，表示第i行选第j列
+        int F[] = new int[col]; // F[i] = 1，represent the column i have been selected
+        int H[] = new int[row]; // H[i] = j，represent the column j have been selected by row i.
 
-        int d = 0; // 第d行
-        int k = 0; // 第k列
+        int d = 0; // row d
+        int k = 0; // column k
 
-        int[][][] matrixList = new int[row][][]; // 记录每个d对应的M0矩阵
+        int[][][] matrixList = new int[row][][]; // which is column d corresponding to the M0
 
-        for (int i = 0; i < F.length; i++) { // 初始化为-1
+        for (int i = 0; i < F.length; i++) { // initialize -1
             F[i] = -1;
         }
-        for (int i = 0; i < H.length; i++) { // 初始化为-1
+        for (int i = 0; i < H.length; i++) { // initialize -1
             H[i] = -1;
         }
 
         while (true) {
-            if (H[d] == -1) { // 第d行未选择，进行搜索
+            if (H[d] == -1) {   // if row d have not been selected, search it
                 k = 0;
                 matrixList[d] = M0;
-            } else { // 否则进行回溯
+            } else {            // or backtracking
                 k = H[d] + 1;
                 F[H[d]] = -1;
                 M0 = matrixList[d];
             }
-            // 查找符合条件的列
+            // To find which column is match the condition
             while (k < col) {
                 if (M0[d][k] == 1 && F[k] == -1) {
                     break;
                 }
                 k++;
             }
-            if (k == col) { // 第d行中找不到满足条件的列，回溯到上一层
+            if (k == col) { // row d is not match the condition, so backtracking
                 H[d] = -1;
                 d--;
             } else {
@@ -218,16 +218,16 @@ public class Ullmann implements IsomorphismAlgorithm {
                 F[k] = 1;
                 d++;
             }
-            // 搜索结束，未找到同构的映射
+            // end search, cannot find the map between query graph and target graph
             if (d == -1) {
                 return false;
             }
 
-            // 找到一个M0，验证是否符合条件
+            // find a M0, verify it if match the condition
             if (d == row) {
-                if (verify(MA, MB, M0)) {// 条件成立
+                if (verify(MA, MB, M0)) {
                     return true;
-                } else {// 回溯
+                } else {
                     d = row - 1;
                 }
             }
