@@ -9,16 +9,24 @@ import java.io.IOException;
 
 public class Vertex implements Writable {
 
-    private Text vertex;
-    private Text label;
+    private Text vertex = new Text();
+    private Text label  = new Text();
 
     public Vertex() {
         this("", "");
     }
 
     public Vertex(String vertex, String label) {
-        this.vertex = new Text(vertex);
-        this.label  = new Text(label);
+        this.vertex.set(vertex);
+        this.label .set(label);
+    }
+
+    public void setVertex(String vertex) {
+        this.vertex.set(vertex);
+    }
+
+    public void setLabel(String label) {
+        this.label.set(label);
     }
 
     @Override

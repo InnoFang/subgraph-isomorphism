@@ -9,18 +9,30 @@ import java.io.IOException;
 
 public class Edge implements Writable {
 
-    private Text vertexI;   // or Vertex 'from'
-    private Text vertexJ;   // or Vertex 'to'
-    private Text label;
+    private Text vertexI = new Text();   // or Vertex 'from'
+    private Text vertexJ = new Text();   // or Vertex 'to'
+    private Text label   = new Text();
 
     public Edge() {
         this("", "", "");
     }
 
     public Edge(String vertexI, String vertexJ, String label) {
-        this.vertexI = new Text(vertexI);
-        this.vertexJ = new Text(vertexJ);
-        this.label   = new Text(label);
+        this.vertexI.set(vertexI);
+        this.vertexJ.set(vertexJ);
+        this.label.set(label);
+    }
+
+    public void setVertexI(String vertexI) {
+        this.vertexI.set(vertexI);
+    }
+
+    public void setVertexJ(String vertexJ) {
+        this.vertexJ.set(vertexJ);
+    }
+
+    public void setLabel(String label) {
+        this.label.set(label);
     }
 
 
