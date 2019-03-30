@@ -6,9 +6,9 @@
 
   <groupId>io.github.innofang</groupId>
   <artifactId>subgraph-isomorphism</artifactId>
-  <version>1.0</version>
-
-  <name>subgraph-isomorphism</name>
+    <packaging>jar</packaging>
+    <version>1.0</version>
+    <name>subgraph-isomorphism</name>
   <url>https://github.com/InnoFang/subgraph-isomorphism</url>
 
   <properties>
