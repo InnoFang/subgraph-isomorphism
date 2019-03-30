@@ -10,7 +10,7 @@
     run the command `scp target/mapreduce-1.0.jar innofang@localhost:~/lib`
     
     the jar file is under the target folder, and the lib folder must be created on HDFS before you run this command,
-    `innofnag@localhost:` is my username, you should change into yours.
+    `innofang@localhost:` is my username, you should change into yours.
  
  + **Step three: Run the specify class/program**
  
