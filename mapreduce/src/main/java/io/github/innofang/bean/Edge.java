@@ -27,12 +27,24 @@ public class Edge implements Writable {
         this.vertexI.set(vertexI);
     }
 
+    public String getVertexI() {
+        return vertexI.toString();
+    }
+
     public void setVertexJ(String vertexJ) {
         this.vertexJ.set(vertexJ);
     }
 
+    public String getVertexJ() {
+        return vertexJ.toString();
+    }
+
     public void setLabel(String label) {
         this.label.set(label);
+    }
+
+    public String getLabel() {
+        return label.toString();
     }
 
 
@@ -49,4 +61,5 @@ public class Edge implements Writable {
         vertexJ.readFields(dataInput);
         label.readFields(dataInput);
     }
+
 }

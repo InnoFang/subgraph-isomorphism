@@ -25,8 +25,16 @@ public class Vertex implements Writable {
         this.vertex.set(vertex);
     }
 
+    public String getVertex() {
+        return vertex.toString();
+    }
+
     public void setLabel(String label) {
         this.label.set(label);
+    }
+
+    public String getLabel() {
+        return label.toString();
     }
 
     @Override

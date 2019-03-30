@@ -7,6 +7,7 @@ import org.apache.hadoop.io.WritableComparable;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.util.Objects;
 
 public class Graph implements WritableComparable<Graph> {
 
@@ -54,5 +55,32 @@ public class Graph implements WritableComparable<Graph> {
     @Override
     public int compareTo(Graph graph) {
         return this.graphId.get() - graph.graphId.get();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Graph graph = (Graph) o;
+        return Objects.equals(graphId, graph.graphId) &&
+                edgeArray.equals(graph.edgeArray) &&
+                Objects.equals(vertexArray, graph.vertexArray);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(graphId, edgeArray, vertexArray);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder ret = new StringBuilder();
+        for (Vertex vertex: (Vertex[]) vertexArray.get()) {
+            ret.append(String.format("v %s %s\n", vertex.getVertex(), vertex.getLabel()));
+        }
+        for (Edge edge: (Edge[]) edgeArray.get()) {
+            ret.append(String.format("e %s %s %s\n", edge.getVertexI(), edge.getVertexJ(), edge.getLabel()));
+        }
+        return ret.toString();
     }
 }
