@@ -8,10 +8,10 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 
-public class QueryFile2GraphMapper extends Mapper<IntWritable, Graph, IntWritable, Graph> {
+public class UllmannMapper extends Mapper<IntWritable, Graph, IntWritable, Text> {
 
     @Override
     protected void map(IntWritable key, Graph value, Context context) throws IOException, InterruptedException {
-        context.write(key, value);
+        context.write(key, new Text(value.toString()));
     }
 }

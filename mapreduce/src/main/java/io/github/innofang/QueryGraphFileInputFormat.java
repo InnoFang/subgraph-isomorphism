@@ -13,12 +13,11 @@ import org.apache.hadoop.mapreduce.RecordReader;
 import org.apache.hadoop.mapreduce.TaskAttemptContext;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.LineRecordReader;
-import sun.plugin.javascript.navig.Array;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class GraphFileInputFormat extends FileInputFormat<IntWritable, Graph> {
+public class QueryGraphFileInputFormat extends FileInputFormat<IntWritable, Graph> {
 
     @Override
     protected boolean isSplitable(JobContext context, Path filename) {
