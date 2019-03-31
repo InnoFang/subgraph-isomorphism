@@ -30,6 +30,7 @@ public class UllmannDriver {
 
         Job job = Job.getInstance(conf, "ullmann");
         job.setJarByClass(UllmannDriver.class);
+        job.setInputFormatClass(QueryGraphFileInputFormat.class);
         FileInputFormat.setInputPaths(job, new Path(args[0]));
 
         job.setMapperClass(UllmannMapper.class);
