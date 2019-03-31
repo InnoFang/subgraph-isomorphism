@@ -66,6 +66,7 @@ public class QueryGraphFileInputFormat extends FileInputFormat<IntWritable, Grap
                         return false;
                     }
                     graph = new Graph();
+                    graph.setGraphId(graphId);
                     this.graphId = new IntWritable(graphId);
                 } else if (info[0].equals("v") && info.length == 3) {    // v vertex label
                     vertexList.add(new Vertex(info[1], info[2]));
