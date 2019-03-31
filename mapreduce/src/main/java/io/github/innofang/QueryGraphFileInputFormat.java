@@ -6,7 +6,6 @@ import io.github.innofang.bean.Graph;
 import io.github.innofang.bean.Vertex;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
-import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.mapreduce.InputSplit;
 import org.apache.hadoop.mapreduce.JobContext;
 import org.apache.hadoop.mapreduce.RecordReader;
@@ -41,6 +40,8 @@ public class QueryGraphFileInputFormat extends FileInputFormat<IntWritable, Grap
         @Override
         public void initialize(InputSplit inputSplit, TaskAttemptContext taskAttemptContext) throws IOException, InterruptedException {
             lineReader = new LineRecordReader();
+            lineReader.initialize(inputSplit, taskAttemptContext); // should be initialized before used.
+
             vertexList = new ArrayList<>();
             edgeList = new ArrayList<>();
 
@@ -65,7 +66,7 @@ public class QueryGraphFileInputFormat extends FileInputFormat<IntWritable, Grap
                         return false;
                     }
                     graph = new Graph();
-                    this.graphId.set(graphId);
+                    this.graphId = new IntWritable(graphId);
                 } else if (info[0].equals("v") && info.length == 3) {    // v vertex label
                     vertexList.add(new Vertex(info[1], info[2]));
                 } else if (info[0].equals("e") && info.length == 4) {   // e from to label
