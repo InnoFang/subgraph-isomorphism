@@ -1,4 +1,4 @@
-## How to run
+## How to run on Hadoop
 
  + **Step one: Generate the jar file**
     
