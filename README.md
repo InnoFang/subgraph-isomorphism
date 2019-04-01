@@ -43,6 +43,11 @@ see the [wiki](https://en.wikipedia.org/wiki/Subgraph_isomorphism_problem)
  + [ ] SPath [4]
  + [ ] GADDI [5]
  
+## Data Set
+
+They are under the [src/test/resources/](src/test/resources/)
+ 
+ 
 ## Reference & Bibliography
 
 [1] 于静，刘燕兵，张宇，刘梦雅，谭建龙，郭莉.大规模图数据匹配技术综述[J].计算机研究与发展，2015，52(2): 391-409
@@ -54,7 +59,6 @@ see the [wiki](https://en.wikipedia.org/wiki/Subgraph_isomorphism_problem)
 [4] Zhao P, Han J. On graph query optimization in large networks[J]. Proceedings of the VLDB Endowment, 2010, 3(1): 340–351. [link](https://www.vldb.org/pvldb/vldb2010/pvldb_vol3/R30.pdf)
 
 [5] Zhang S, Li S, Yang J. GADDI: distance index based subgraph matching in biological networks[C]// Proceedings of the international Conference on Extending Database Technology. 2009: 192–203. [link](https://dl.acm.org/citation.cfm?id=1516384)
-
 
 ## [License](./LICENSE)
 
