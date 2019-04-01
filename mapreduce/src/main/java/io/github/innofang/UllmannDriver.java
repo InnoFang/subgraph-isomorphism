@@ -41,7 +41,7 @@ public class UllmannDriver {
 
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
-        System.out.println(job.waitForCompletion(true) ? 0 : 1);
+        System.exit(job.waitForCompletion(true) ? 0 : 1);
     }
 
 }

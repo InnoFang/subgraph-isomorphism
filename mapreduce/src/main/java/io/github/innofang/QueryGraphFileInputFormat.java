@@ -12,6 +12,7 @@ import org.apache.hadoop.mapreduce.RecordReader;
 import org.apache.hadoop.mapreduce.TaskAttemptContext;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.LineRecordReader;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,10 +42,8 @@ public class QueryGraphFileInputFormat extends FileInputFormat<IntWritable, Grap
         public void initialize(InputSplit inputSplit, TaskAttemptContext taskAttemptContext) throws IOException, InterruptedException {
             lineReader = new LineRecordReader();
             lineReader.initialize(inputSplit, taskAttemptContext); // should be initialized before used.
-
             vertexList = new ArrayList<>();
             edgeList = new ArrayList<>();
-
         }
 
         @Override
@@ -54,7 +53,13 @@ public class QueryGraphFileInputFormat extends FileInputFormat<IntWritable, Grap
                 String[] info = line.split("\\s+");
                 if (info[0].equals("t") && info.length == 3) {  // t # graphId
                     int graphId = Integer.valueOf(info[2]);
+                    if (graphId == -1) {
+                        return false;
+                    }
                     if (graph != null) {
+                        this.graphId = new IntWritable(graphId); // set key: GraphID
+
+                        // set value: Graph
                         graph.setGraphId(graphId);
                         graph.setVertexArray(vertexList.toArray(new Vertex[0]));
                         graph.setEdgeArray(edgeList.toArray(new Edge[0]));
@@ -62,12 +67,7 @@ public class QueryGraphFileInputFormat extends FileInputFormat<IntWritable, Grap
                         edgeList.clear();
                         return true;
                     }
-                    if (graphId == -1) {
-                        return false;
-                    }
                     graph = new Graph();
-                    graph.setGraphId(graphId);
-                    this.graphId = new IntWritable(graphId);
                 } else if (info[0].equals("v") && info.length == 3) {    // v vertex label
                     vertexList.add(new Vertex(info[1], info[2]));
                 } else if (info[0].equals("e") && info.length == 4) {   // e from to label
