@@ -22,4 +22,6 @@
     
 ## Make it run easily
 
-See [run.sh](./run.sh), you can modify it by yourself
+Use shell to make it easily, see [run.sh](run.sh), also you can catch the output content by [catch-output.sh](catch_output.sh).
+
+Please modify it according to your truly situation.
