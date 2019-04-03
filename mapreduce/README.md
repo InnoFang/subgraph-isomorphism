@@ -18,7 +18,7 @@
     
     For example, for me, if I want to run the `UllmannDriver.java` (which is to run Ullmann Algorithm), I would run the command as follow:
     
-    `hadoop jar /home/innofang/lib/mapreduce-1.0.jar io.github.innofang.UllmannDriver hdfs://localhost:9000/resources/graphDB/Q4.my hdfs://localhost:9000/output/subgraph-isomorphism/ullmann`
+    `hadoop jar /home/innofang/lib/mapreduce-1.0.jar io.github.innofang.ullmann.UllmannDriver hdfs://localhost:9000/resources/graphDB/Q4.my hdfs://localhost:9000/output/subgraph-isomorphism/ullmann`
     
 ## Make it run easily
 
