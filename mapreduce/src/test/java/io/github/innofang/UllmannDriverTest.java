@@ -1,5 +1,7 @@
 package io.github.innofang;
 
+import io.github.innofang.ullmann.UllmannMapper;
+import io.github.innofang.util.QueryGraphFileInputFormat;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FileSystem;
