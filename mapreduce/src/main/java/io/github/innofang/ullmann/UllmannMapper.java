@@ -1,4 +1,4 @@
-package io.github.innofang;
+package io.github.innofang.ullmann;
 
 import io.github.innofang.bean.Graph;
 import org.apache.hadoop.io.IntWritable;

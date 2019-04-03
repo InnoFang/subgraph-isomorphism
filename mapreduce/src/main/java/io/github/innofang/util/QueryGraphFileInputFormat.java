@@ -1,4 +1,4 @@
-package io.github.innofang;
+package io.github.innofang.util;
 
 
 import io.github.innofang.bean.Edge;
