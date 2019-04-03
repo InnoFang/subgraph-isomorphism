@@ -1,7 +1,6 @@
 package io.github.innofang.bean;
 
 import org.apache.hadoop.io.IntWritable;
-import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.io.WritableComparable;
 
 import java.io.DataInput;
@@ -20,10 +19,14 @@ public class Graph implements WritableComparable<Graph> {
 
     }
 
+    public Graph(Vertex[] vertexArray, Edge[] edgeArray) {
+        this(-1, vertexArray, edgeArray);
+    }
+
     public Graph(int graphId, Vertex[] vertexArray, Edge[] edgeArray) {
         this.graphId.set(graphId);
-        this.edgeArray.set(vertexArray);
-        this.vertexArray.set(edgeArray);
+        this.vertexArray.set(vertexArray);
+        this.edgeArray.set(edgeArray);
     }
 
     public void setGraphId(int graphId) {
@@ -34,8 +37,16 @@ public class Graph implements WritableComparable<Graph> {
         this.vertexArray.set(vertexArray);
     }
 
+    public Vertex[] getVertexArray() {
+        return (Vertex[]) vertexArray.get();
+    }
+
     public void setEdgeArray(Edge[] edgeArray) {
         this.edgeArray.set(edgeArray);
+    }
+
+    public Edge[] getEdgeArray() {
+        return (Edge[]) edgeArray.get();
     }
 
     @Override
@@ -75,10 +86,10 @@ public class Graph implements WritableComparable<Graph> {
     @Override
     public String toString() {
         StringBuilder ret = new StringBuilder();
-        for (Vertex vertex: (Vertex[]) vertexArray.get()) {
+        for (Vertex vertex : (Vertex[]) vertexArray.get()) {
             ret.append(String.format("v %s %s\n", vertex.getVertex(), vertex.getLabel()));
         }
-        for (Edge edge: (Edge[]) edgeArray.get()) {
+        for (Edge edge : (Edge[]) edgeArray.get()) {
             ret.append(String.format("e %s %s %s\n", edge.getVertexI(), edge.getVertexJ(), edge.getLabel()));
         }
         return ret.toString();

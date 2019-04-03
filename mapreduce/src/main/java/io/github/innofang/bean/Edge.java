@@ -6,6 +6,7 @@ import org.apache.hadoop.io.Writable;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.util.Objects;
 
 public class Edge implements Writable {
 
@@ -15,6 +16,10 @@ public class Edge implements Writable {
 
     public Edge() {
         this("", "", "");
+    }
+
+    public Edge(String vertexI, String vertexJ) {
+        this(vertexI, vertexJ, "");
     }
 
     public Edge(String vertexI, String vertexJ, String label) {
@@ -62,4 +67,18 @@ public class Edge implements Writable {
         label.readFields(dataInput);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Edge edge = (Edge) o;
+        return Objects.equals(vertexI, edge.vertexI) &&
+                Objects.equals(vertexJ, edge.vertexJ) &&
+                Objects.equals(label, edge.label);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(vertexI, vertexJ, label);
+    }
 }

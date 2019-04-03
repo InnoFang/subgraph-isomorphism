@@ -6,6 +6,7 @@ import org.apache.hadoop.io.Writable;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.util.Objects;
 
 public class Vertex implements Writable {
 
@@ -14,6 +15,10 @@ public class Vertex implements Writable {
 
     public Vertex() {
         this("", "");
+    }
+
+    public Vertex(String vertex) {
+        this(vertex, "");
     }
 
     public Vertex(String vertex, String label) {
@@ -47,5 +52,19 @@ public class Vertex implements Writable {
     public void readFields(DataInput dataInput) throws IOException {
         vertex.readFields(dataInput);
         label.readFields(dataInput);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vertex vertex1 = (Vertex) o;
+        return Objects.equals(vertex, vertex1.vertex) &&
+                Objects.equals(label, vertex1.label);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(vertex, label);
     }
 }
