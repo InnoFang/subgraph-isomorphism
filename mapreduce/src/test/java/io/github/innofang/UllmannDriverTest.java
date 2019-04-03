@@ -17,17 +17,20 @@ import org.apache.log4j.BasicConfigurator;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.net.URI;
 
 public class UllmannDriverTest extends Configured implements Tool {
 
     private static final String INPUT_FILE =
             "/home/innofang/Documents/Github/subgraph-isomorphism/src/test/resources/graphDB/Q4.my";
 
-    private static final String JOB_NAME = "ullmann";
     private static final String OUTPUT_FOLDER =
-            "/home/innofang/Documents/Github/subgraph-isomorphism/output/" + JOB_NAME;
+            "/home/innofang/Documents/Github/subgraph-isomorphism/output/ullmann/";
 
     private static final String OUTPUT_FILE = "part-m-00000";
+
+    private static final String MAIN_GRAPH_FILE =
+            "/home/innofang/Documents/Github/subgraph-isomorphism/src/test/resources/ca-AstroPh/CA-AstroPh.txt";
 
     @Test
     public void testUllmann() throws Exception {
@@ -37,7 +40,7 @@ public class UllmannDriverTest extends Configured implements Tool {
 
         Tool tool = new UllmannDriverTest();
         ToolRunner.run(tool, new String[0]);
-        print(tool);
+//        print(tool);
     }
 
     @Override
@@ -50,7 +53,8 @@ public class UllmannDriverTest extends Configured implements Tool {
             System.out.println("Output file exists, but it has deleted.");
         }
 
-        Job job = Job.getInstance(getConf(), JOB_NAME);
+        Job job = Job.getInstance(getConf(), "ullmann");
+        job.addCacheFile(new URI(MAIN_GRAPH_FILE));
         job.setJarByClass(getClass());
         job.setInputFormatClass(QueryGraphFileInputFormat.class);
         FileInputFormat.setInputPaths(job, new Path(INPUT_FILE));
