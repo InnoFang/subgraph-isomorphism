@@ -1,14 +1,20 @@
 package io.github.innofang;
 
-import io.github.innofang.ullmann.UllmannMapper;
+import io.github.innofang.bean.Graph;
+import io.github.innofang.bean.IntMatrixWritable;
+import io.github.innofang.ullmann.CalcAndCompMapper;
+import io.github.innofang.ullmann.ConstructMMapper;
 import io.github.innofang.util.QueryGraphFileInputFormat;
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.MapWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.chain.ChainMapper;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.Tool;
@@ -22,7 +28,7 @@ import java.net.URI;
 public class UllmannDriverTest extends Configured implements Tool {
 
     private static final String INPUT_FILE =
-            "/home/innofang/Documents/Github/subgraph-isomorphism/src/test/resources/graphDB/Q4.my";
+            "/home/innofang/Documents/Github/subgraph-isomorphism/src/test/resources/test/query_graph.txt";
 
     private static final String OUTPUT_FOLDER =
             "/home/innofang/Documents/Github/subgraph-isomorphism/output/ullmann/";
@@ -30,7 +36,7 @@ public class UllmannDriverTest extends Configured implements Tool {
     private static final String OUTPUT_FILE = "part-m-00000";
 
     private static final String MAIN_GRAPH_FILE =
-            "/home/innofang/Documents/Github/subgraph-isomorphism/src/test/resources/ca-AstroPh/CA-AstroPh.txt";
+            "/home/innofang/Documents/Github/subgraph-isomorphism/src/test/resources/roadNet-CA/roadNet-CA.txt";
 
     @Test
     public void testUllmann() throws Exception {
@@ -40,7 +46,7 @@ public class UllmannDriverTest extends Configured implements Tool {
 
         Tool tool = new UllmannDriverTest();
         ToolRunner.run(tool, new String[0]);
-//        print(tool);
+        print(tool);
     }
 
     @Override
@@ -59,9 +65,21 @@ public class UllmannDriverTest extends Configured implements Tool {
         job.setInputFormatClass(QueryGraphFileInputFormat.class);
         FileInputFormat.setInputPaths(job, new Path(INPUT_FILE));
 
-        job.setMapperClass(UllmannMapper.class);
-        job.setMapOutputKeyClass(IntWritable.class);
-        job.setMapOutputValueClass(Text.class);
+        ChainMapper.addMapper(job,
+                ConstructMMapper.class,
+                IntWritable.class,
+                Graph.class,
+                Graph.class,
+                IntMatrixWritable.class,
+                getConf());
+
+        ChainMapper.addMapper(job,
+                CalcAndCompMapper.class,
+                Graph.class,
+                IntMatrixWritable.class,
+                Text.class,
+                MapWritable.class,
+                new Configuration(false));
 
         job.setNumReduceTasks(0);
 
@@ -74,11 +92,15 @@ public class UllmannDriverTest extends Configured implements Tool {
     private void print(Tool tool) throws IOException {
         FileSystem fs = FileSystem.get(tool.getConf());
         Path path = new Path(OUTPUT_FOLDER, OUTPUT_FILE);
-        FSDataInputStream is = fs.open(path);
-        int length = 0;
-        byte[] buff = new byte[128];
-        while ((length = is.read(buff, 0, 128)) != -1) {
-            System.out.println(new String(buff, 0, length));
+        if (fs.exists(path)) {
+            FSDataInputStream is = fs.open(path);
+            int length = 0;
+            byte[] buff = new byte[128];
+            while ((length = is.read(buff, 0, 128)) != -1) {
+                System.out.println(new String(buff, 0, length));
+            }
+        } else {
+            System.err.println("Haven't generate the result correctly yet!");
         }
     }
 

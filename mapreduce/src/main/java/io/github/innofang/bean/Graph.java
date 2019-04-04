@@ -1,6 +1,7 @@
 package io.github.innofang.bean;
 
 import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.io.WritableComparable;
 
 import java.io.DataInput;
@@ -33,6 +34,10 @@ public class Graph implements WritableComparable<Graph> {
         this.graphId.set(graphId);
     }
 
+    public int getGraphId() {
+        return graphId.get();
+    }
+
     public void setVertexArray(Vertex[] vertexArray) {
         this.vertexArray.set(vertexArray);
     }
@@ -53,14 +58,16 @@ public class Graph implements WritableComparable<Graph> {
         return getAdjacencyMatrix(true);
     }
 
-    public int[][] getAdjacencyMatrix(boolean directed) {
+    public int[][] getAdjacencyMatrix(boolean undirected) {
         int vertexSize = vertexArray.get().length;
+
         int[][] matrix = new int[vertexSize][vertexSize];
-        for (Edge edge: (Edge[]) edgeArray.get()) {
+        for (Writable edgeWritable : edgeArray.get()) {
+            Edge edge = (Edge) edgeWritable;
             int i = Integer.parseInt(edge.getVertexI());
             int j = Integer.parseInt(edge.getVertexJ());
             matrix[i][j] = 1;
-            if (directed) {
+            if (undirected) {
                 matrix[j][i] = 1;
             }
         }
@@ -69,13 +76,25 @@ public class Graph implements WritableComparable<Graph> {
 
     public int getVertexDegree(String vertex) {
         int degree = 0;
-        for (Edge edge: (Edge[]) edgeArray.get()) {
+        for (Writable edgeWritable : edgeArray.get()) {
+            Edge edge = (Edge) edgeWritable;
             if (edge.contain(vertex)) {
-                ++ degree;
+                ++degree;
             }
         }
         return degree;
     }
+
+    public String getEdgeLabel(String vertexI, String vertexJ) {
+        for (Writable edgeWritable : edgeArray.get()) {
+            Edge edge = (Edge) edgeWritable;
+            if (edge.contain(vertexI) && edge.contain(vertexJ)) {
+                return edge.getLabel();
+            }
+        }
+        return null;
+    }
+
 
     @Override
     public void write(DataOutput dataOutput) throws IOException {
@@ -117,7 +136,8 @@ public class Graph implements WritableComparable<Graph> {
         for (Vertex vertex : (Vertex[]) vertexArray.get()) {
             ret.append(String.format("v %s %s\n", vertex.getVertex(), vertex.getLabel()));
         }
-        for (Edge edge : (Edge[]) edgeArray.get()) {
+        for (Writable edgeWritable : edgeArray.get()) {
+            Edge edge = (Edge) edgeWritable;
             ret.append(String.format("e %s %s %s\n", edge.getVertexI(), edge.getVertexJ(), edge.getLabel()));
         }
         return ret.toString();

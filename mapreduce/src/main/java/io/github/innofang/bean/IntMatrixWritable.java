@@ -1,9 +1,10 @@
 package io.github.innofang.bean;
 
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.TwoDArrayWritable;
 
-public class MatrixWritable extends TwoDArrayWritable {
-    public MatrixWritable(Class valueClass) {
-        super(valueClass);
+public class IntMatrixWritable extends TwoDArrayWritable {
+    public IntMatrixWritable() {
+        super(IntWritable.class);
     }
 }
