@@ -1,12 +1,17 @@
 package io.github.innofang.ullmann;
 
+import io.github.innofang.bean.Graph;
+import io.github.innofang.bean.MatrixWritable;
 import io.github.innofang.util.QueryGraphFileInputFormat;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.MapWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.chain.Chain;
+import org.apache.hadoop.mapreduce.lib.chain.ChainMapper;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
@@ -14,7 +19,7 @@ import java.io.IOException;
 
 public class UllmannDriver {
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
-        Configuration conf = new Configuration();
+        Configuration conf = new Configuration(false);
 
         if (args.length < 2) {
             System.out.println("Please specify the complete command.");
@@ -34,9 +39,21 @@ public class UllmannDriver {
         job.setInputFormatClass(QueryGraphFileInputFormat.class);
         FileInputFormat.setInputPaths(job, new Path(args[0]));
 
-        job.setMapperClass(ConstructMMapper.class);
-        job.setMapOutputKeyClass(IntWritable.class);
-        job.setMapOutputValueClass(Text.class);
+        ChainMapper.addMapper(job,
+                ConstructMMapper.class,
+                IntWritable.class,
+                Graph.class,
+                Graph.class,
+                MatrixWritable.class,
+                conf);
+
+        ChainMapper.addMapper(job,
+                CalcAndCompMapper.class,
+                Graph.class,
+                MatrixWritable.class,
+                Text.class,
+                MapWritable.class,
+                new Configuration(false));
 
         job.setNumReduceTasks(0);
 
