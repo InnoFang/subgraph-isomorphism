@@ -34,7 +34,7 @@ public class UllmannDriver {
         job.setInputFormatClass(QueryGraphFileInputFormat.class);
         FileInputFormat.setInputPaths(job, new Path(args[0]));
 
-        job.setMapperClass(UllmannMapper.class);
+        job.setMapperClass(ConstructMMapper.class);
         job.setMapOutputKeyClass(IntWritable.class);
         job.setMapOutputValueClass(Text.class);
 
