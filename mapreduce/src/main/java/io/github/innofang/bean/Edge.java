@@ -52,6 +52,9 @@ public class Edge implements Writable {
         return label.toString();
     }
 
+    public boolean contain(String vertex) {
+        return vertexI.toString().equals(vertex) || vertexJ.toString().equals(vertex);
+    }
 
     @Override
     public void write(DataOutput dataOutput) throws IOException {

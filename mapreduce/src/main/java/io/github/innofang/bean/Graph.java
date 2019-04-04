@@ -8,6 +8,7 @@ import java.io.DataOutput;
 import java.io.IOException;
 import java.util.Objects;
 
+@SuppressWarnings("ALL")
 public class Graph implements WritableComparable<Graph> {
 
     private IntWritable graphId = new IntWritable();
@@ -16,7 +17,6 @@ public class Graph implements WritableComparable<Graph> {
 
     public Graph() {
         this(-1, new Vertex[0], new Edge[0]);
-
     }
 
     public Graph(Vertex[] vertexArray, Edge[] edgeArray) {
@@ -47,6 +47,34 @@ public class Graph implements WritableComparable<Graph> {
 
     public Edge[] getEdgeArray() {
         return (Edge[]) edgeArray.get();
+    }
+
+    public int[][] getAdjacencyMatrix() {
+        return getAdjacencyMatrix(true);
+    }
+
+    public int[][] getAdjacencyMatrix(boolean directed) {
+        int vertexSize = vertexArray.get().length;
+        int[][] matrix = new int[vertexSize][vertexSize];
+        for (Edge edge: (Edge[]) edgeArray.get()) {
+            int i = Integer.parseInt(edge.getVertexI());
+            int j = Integer.parseInt(edge.getVertexJ());
+            matrix[i][j] = 1;
+            if (directed) {
+                matrix[j][i] = 1;
+            }
+        }
+        return matrix;
+    }
+
+    public int getVertexDegree(String vertex) {
+        int degree = 0;
+        for (Edge edge: (Edge[]) edgeArray.get()) {
+            if (edge.contain(vertex)) {
+                ++ degree;
+            }
+        }
+        return degree;
     }
 
     @Override
