@@ -30,7 +30,7 @@ import java.util.HashSet;
  */
 
 // Calculation and comparison Mapper
-public class CalcAndCompMapper extends Mapper<Graph, MatrixWritable, Text, MapWritable> {
+public class CalcAndCompMapper extends Mapper<Graph, IntMatrixWritable, Text, MapWritable> {
 
     private Graph targetGraph;
 
@@ -71,9 +71,9 @@ public class CalcAndCompMapper extends Mapper<Graph, MatrixWritable, Text, MapWr
     }
 
     @Override
-    protected void map(Graph queryGraph, MatrixWritable matrixWritable, Context context) throws IOException, InterruptedException {
-        int row = matrixWritable.get().length;
-        int col = matrixWritable.get()[0].length;
+    protected void map(Graph queryGraph, IntMatrixWritable intMatrixWritable, Context context) throws IOException, InterruptedException {
+        int row = intMatrixWritable.get().length;
+        int col = intMatrixWritable.get()[0].length;
 
         MA = queryGraph.getAdjacencyMatrix();
         MB = targetGraph.getAdjacencyMatrix();

@@ -2,12 +2,11 @@ package io.github.innofang.ullmann;
 
 import io.github.innofang.bean.Edge;
 import io.github.innofang.bean.Graph;
-import io.github.innofang.bean.MatrixWritable;
+import io.github.innofang.bean.IntMatrixWritable;
 import io.github.innofang.bean.Vertex;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
-import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.BufferedReader;
@@ -30,7 +29,7 @@ import java.util.HashSet;
  * CS420: Parallel Programming. Fall 2008.
  */
 
-public class ConstructMMapper extends Mapper<IntWritable, Graph, Graph, MatrixWritable> {
+public class ConstructMMapper extends Mapper<IntWritable, Graph, Graph, IntMatrixWritable> {
 
     private Graph targetGraph;
 
@@ -73,10 +72,10 @@ public class ConstructMMapper extends Mapper<IntWritable, Graph, Graph, MatrixWr
     protected void map(IntWritable graphId, Graph graph, Context context) throws IOException, InterruptedException {
         if (targetGraph == null) return;
 
-        MatrixWritable matrixWritable = new MatrixWritable(Integer.class);
-        matrixWritable.set(getMatrixM(targetGraph, graph));
+        IntMatrixWritable intMatrixWritable = new IntMatrixWritable();
+        intMatrixWritable.set(getMatrixM(targetGraph, graph));
 
-        context.write(graph, matrixWritable);
+        context.write(graph, intMatrixWritable);
     }
 
 

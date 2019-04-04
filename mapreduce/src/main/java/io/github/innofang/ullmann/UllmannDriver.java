@@ -1,7 +1,7 @@
 package io.github.innofang.ullmann;
 
 import io.github.innofang.bean.Graph;
-import io.github.innofang.bean.MatrixWritable;
+import io.github.innofang.bean.IntMatrixWritable;
 import io.github.innofang.util.QueryGraphFileInputFormat;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -10,7 +10,6 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.MapWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
-import org.apache.hadoop.mapreduce.lib.chain.Chain;
 import org.apache.hadoop.mapreduce.lib.chain.ChainMapper;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
@@ -44,13 +43,13 @@ public class UllmannDriver {
                 IntWritable.class,
                 Graph.class,
                 Graph.class,
-                MatrixWritable.class,
+                IntMatrixWritable.class,
                 conf);
 
         ChainMapper.addMapper(job,
                 CalcAndCompMapper.class,
                 Graph.class,
-                MatrixWritable.class,
+                IntMatrixWritable.class,
                 Text.class,
                 MapWritable.class,
                 new Configuration(false));
