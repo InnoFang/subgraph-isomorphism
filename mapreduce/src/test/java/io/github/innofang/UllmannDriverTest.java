@@ -28,7 +28,7 @@ import java.net.URI;
 public class UllmannDriverTest extends Configured implements Tool {
 
     private static final String INPUT_FILE =
-            "/home/innofang/Documents/Github/subgraph-isomorphism/src/test/resources/test/query_graph.txt";
+            "/home/innofang/Documents/Github/subgraph-isomorphism/src/test/resources/graphDB/Q4-10.my";
 
     private static final String OUTPUT_FOLDER =
             "/home/innofang/Documents/Github/subgraph-isomorphism/output/ullmann/";
@@ -36,7 +36,7 @@ public class UllmannDriverTest extends Configured implements Tool {
     private static final String OUTPUT_FILE = "part-m-00000";
 
     private static final String MAIN_GRAPH_FILE =
-            "/home/innofang/Documents/Github/subgraph-isomorphism/src/test/resources/roadNet-CA/roadNet-CA.txt";
+            "/home/innofang/Documents/Github/subgraph-isomorphism/datasets/CollegeMsg/CollegeMsg.txt";
 
     @Test
     public void testUllmann() throws Exception {
@@ -78,7 +78,7 @@ public class UllmannDriverTest extends Configured implements Tool {
                 Graph.class,
                 IntMatrixWritable.class,
                 Text.class,
-                MapWritable.class,
+                Text.class,
                 new Configuration(false));
 
         job.setNumReduceTasks(0);
