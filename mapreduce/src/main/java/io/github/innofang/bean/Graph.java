@@ -7,9 +7,9 @@ import org.apache.hadoop.io.WritableComparable;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Objects;
 
-@SuppressWarnings("ALL")
 public class Graph implements WritableComparable<Graph> {
 
     private IntWritable graphId = new IntWritable();
@@ -43,7 +43,7 @@ public class Graph implements WritableComparable<Graph> {
     }
 
     public Vertex[] getVertexArray() {
-        return (Vertex[]) vertexArray.get();
+        return Arrays.copyOf(vertexArray.get(), vertexArray.get().length, Vertex[].class);
     }
 
     public void setEdgeArray(Edge[] edgeArray) {
@@ -51,7 +51,7 @@ public class Graph implements WritableComparable<Graph> {
     }
 
     public Edge[] getEdgeArray() {
-        return (Edge[]) edgeArray.get();
+        return Arrays.copyOf(edgeArray.get(), edgeArray.get().length, Edge[].class);
     }
 
     public int[][] getAdjacencyMatrix() {
@@ -59,11 +59,11 @@ public class Graph implements WritableComparable<Graph> {
     }
 
     public int[][] getAdjacencyMatrix(boolean undirected) {
-        int vertexSize = vertexArray.get().length;
+        // some vertex id is from 1 to vertexSize
+        int vertexSize = vertexArray.get().length + 1;
 
         int[][] matrix = new int[vertexSize][vertexSize];
-        for (Writable edgeWritable : edgeArray.get()) {
-            Edge edge = (Edge) edgeWritable;
+        for (Edge edge: getEdgeArray()) {
             int i = Integer.parseInt(edge.getVertexI());
             int j = Integer.parseInt(edge.getVertexJ());
             matrix[i][j] = 1;
@@ -76,8 +76,7 @@ public class Graph implements WritableComparable<Graph> {
 
     public int getVertexDegree(String vertex) {
         int degree = 0;
-        for (Writable edgeWritable : edgeArray.get()) {
-            Edge edge = (Edge) edgeWritable;
+        for (Edge edge: getEdgeArray()) {
             if (edge.contain(vertex)) {
                 ++degree;
             }
@@ -86,8 +85,7 @@ public class Graph implements WritableComparable<Graph> {
     }
 
     public String getEdgeLabel(String vertexI, String vertexJ) {
-        for (Writable edgeWritable : edgeArray.get()) {
-            Edge edge = (Edge) edgeWritable;
+        for (Edge edge: getEdgeArray()) {
             if (edge.contain(vertexI) && edge.contain(vertexJ)) {
                 return edge.getLabel();
             }
@@ -133,11 +131,10 @@ public class Graph implements WritableComparable<Graph> {
     @Override
     public String toString() {
         StringBuilder ret = new StringBuilder();
-        for (Vertex vertex : (Vertex[]) vertexArray.get()) {
+        for (Vertex vertex : getVertexArray()) {
             ret.append(String.format("v %s %s\n", vertex.getVertex(), vertex.getLabel()));
         }
-        for (Writable edgeWritable : edgeArray.get()) {
-            Edge edge = (Edge) edgeWritable;
+        for (Edge edge : getEdgeArray()) {
             ret.append(String.format("e %s %s %s\n", edge.getVertexI(), edge.getVertexJ(), edge.getLabel()));
         }
         return ret.toString();
