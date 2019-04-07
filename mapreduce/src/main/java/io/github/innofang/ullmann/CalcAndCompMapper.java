@@ -76,7 +76,7 @@ public class CalcAndCompMapper extends Mapper<Graph, IntMatrixWritable, Text, Te
         resultMapping.putAll(getMapping());
         if (!resultMapping.isEmpty()) {
             context.write(
-                    new Text(String.format("Query Graph %s is isormophic Target Graph\n", queryGraph.getGraphId())),
+                    new Text(String.format("Query Graph %s is isomorphic Target Graph\n", queryGraph.getGraphId())),
                     new Text(getMapping().toString())
             );
         }
