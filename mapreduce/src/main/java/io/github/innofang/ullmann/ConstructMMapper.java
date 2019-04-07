@@ -65,8 +65,8 @@ public class ConstructMMapper extends Mapper<IntWritable, Graph, Graph, IntMatri
      * construct Graph_query x Graph_large element matrix M0 in according with:
      * <p>
      * Mij = 1 if the degree of the jth point of Graph_large is greater than or
-     * equal to the degree of the ith point of Graph_query
-     * = 0 otherwise
+     *         equal to the degree of the ith point of Graph_query
+     *     = 0 otherwise
      *
      * @param query  Query graph
      * @param target Large graph
@@ -77,8 +77,8 @@ public class ConstructMMapper extends Mapper<IntWritable, Graph, Graph, IntMatri
         int row = queryVertices.length;
         int col = targetVertices.length;
         IntWritable[][] M0 = new IntWritable[row][col];
-        for (int i = 0; i < row; ++i) {
-            for (int j = 0; j < col; ++j) {
+        for (int i = 0; i < row; ++ i) {
+            for (int j = 0; j < col; ++ j) {
                 String vertexJ = targetVertices[j].getVertex();
                 String vertexI = queryVertices[i].getVertex();
                 int degreeJ = query.getVertexDegree(vertexJ);
@@ -92,5 +92,4 @@ public class ConstructMMapper extends Mapper<IntWritable, Graph, Graph, IntMatri
         }
         return M0;
     }
-
 }

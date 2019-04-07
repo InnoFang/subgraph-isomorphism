@@ -30,7 +30,7 @@ import java.util.HashMap;
  */
 
 // Calculation and comparison Mapper
-public class CalcAndCompMapper extends Mapper<Graph, IntMatrixWritable, Text, Text> {
+public class CalcAndCompMapper extends Mapper<Graph, IntMatrixWritable, Graph, MapWritable> {
 
     private Graph targetGraph;
 
@@ -75,10 +75,7 @@ public class CalcAndCompMapper extends Mapper<Graph, IntMatrixWritable, Text, Te
         MapWritable resultMapping = new MapWritable();
         resultMapping.putAll(getMapping());
         if (!resultMapping.isEmpty()) {
-            context.write(
-                    new Text(String.format("Query Graph %s is isomorphic Target Graph\n", queryGraph.getGraphId())),
-                    new Text(getMapping().toString())
-            );
+            context.write(queryGraph, resultMapping);
         }
     }
 

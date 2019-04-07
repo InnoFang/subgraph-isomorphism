@@ -2,6 +2,7 @@ package io.github.innofang.ullmann;
 
 import io.github.innofang.bean.Graph;
 import io.github.innofang.bean.IntMatrixWritable;
+import io.github.innofang.bean.TextArrayWritable;
 import io.github.innofang.util.QueryGraphFileInputFormat;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -50,11 +51,15 @@ public class UllmannDriver {
                 CalcAndCompMapper.class,
                 Graph.class,
                 IntMatrixWritable.class,
-                Text.class,
+                Graph.class,
                 MapWritable.class,
                 new Configuration(false));
 
-        job.setNumReduceTasks(0);
+        job.setNumReduceTasks(1);
+
+        job.setReducerClass(IdentityReducer.class);
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(TextArrayWritable.class);
 
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
