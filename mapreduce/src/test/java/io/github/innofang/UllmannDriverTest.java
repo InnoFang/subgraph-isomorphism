@@ -28,7 +28,7 @@ import java.net.URI;
 public class UllmannDriverTest extends Configured implements Tool {
 
     private static final String INPUT_FILE =
-            "/home/innofang/Documents/Github/subgraph-isomorphism/src/test/resources/graphDB/Q4-10.my";
+            "/home/innofang/Documents/Github/subgraph-isomorphism/src/test/resources/graphDB/Q4.my";
 
     private static final String OUTPUT_FOLDER =
             "/home/innofang/Documents/Github/subgraph-isomorphism/output/ullmann/";
