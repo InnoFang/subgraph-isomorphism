@@ -2,8 +2,10 @@ package io.github.innofang;
 
 import io.github.innofang.bean.Graph;
 import io.github.innofang.bean.IntMatrixWritable;
+import io.github.innofang.bean.TextArrayWritable;
 import io.github.innofang.ullmann.CalcAndCompMapper;
 import io.github.innofang.ullmann.ConstructMMapper;
+import io.github.innofang.ullmann.IdentityReducer;
 import io.github.innofang.util.QueryGraphFileInputFormat;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
@@ -33,7 +35,7 @@ public class UllmannDriverTest extends Configured implements Tool {
     private static final String OUTPUT_FOLDER =
             "/home/innofang/Documents/Github/subgraph-isomorphism/output/ullmann/";
 
-    private static final String OUTPUT_FILE = "part-m-00000";
+    private static final String OUTPUT_FILE = "part-r-00000";
 
     private static final String MAIN_GRAPH_FILE =
             "/home/innofang/Documents/Github/subgraph-isomorphism/datasets/CollegeMsg/CollegeMsg.txt";
@@ -77,12 +79,15 @@ public class UllmannDriverTest extends Configured implements Tool {
                 CalcAndCompMapper.class,
                 Graph.class,
                 IntMatrixWritable.class,
-                Text.class,
-                Text.class,
+                Graph.class,
+                MapWritable.class,
                 new Configuration(false));
 
-        job.setNumReduceTasks(0);
+        job.setNumReduceTasks(1);
 
+        job.setReducerClass(IdentityReducer.class);
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(TextArrayWritable.class);
         FileOutputFormat.setOutputPath(job, new Path(OUTPUT_FOLDER));
 
         job.waitForCompletion(true);
