@@ -19,6 +19,8 @@ SNAP as a temporal network.
   <tr><td>Time span</td> <td>193 days</td></tr>
 </table>
 
+<blockquote>After testing, I found that the number of Edge is 59798, some edge are duplicate.</blockquote>
+
 <h3>Source (citation)</h3>
 <ul>
   <li>Pietro Panzarasa, Tore Opsahl, and Kathleen M. Carley. "Patterns and
