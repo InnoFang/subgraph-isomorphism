@@ -50,6 +50,9 @@ public class QueryGraphFileInputFormat extends FileInputFormat<IntWritable, Grap
         public boolean nextKeyValue() throws IOException, InterruptedException {
             while (lineReader.nextKeyValue()) {
                 String line = lineReader.getCurrentValue().toString();
+                if (line.equals("")) {
+                    continue;
+                }
                 String[] info = line.split("\\s+");
                 if (info[0].equals("t") && info.length == 3) {  // t # graphId
                     int graphId = Integer.valueOf(info[2]);
@@ -73,7 +76,7 @@ public class QueryGraphFileInputFormat extends FileInputFormat<IntWritable, Grap
                 } else if (info[0].equals("e") && info.length == 4) {   // e from to label
                     edgeList.add(new Edge(info[1], info[2], info[3]));
                 } else {
-                    System.err.println("Wrong lien: " + line);
+                    System.err.println("Wrong line: " + line);
                     return false;
                 }
             }
