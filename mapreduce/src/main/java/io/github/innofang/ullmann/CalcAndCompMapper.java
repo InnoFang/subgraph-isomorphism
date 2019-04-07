@@ -1,19 +1,19 @@
 package io.github.innofang.ullmann;
 
 import io.github.innofang.bean.*;
+import io.github.innofang.util.GraphReader;
 import io.github.innofang.util.MatrixOperator;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.MapWritable;
 import org.apache.hadoop.io.Text;
+import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.mapreduce.Mapper;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.HashMap;
-import java.util.HashSet;
 
 /**
  * ChainMapper: [ConstructMMapper, CalcAndCompMapper]
@@ -30,13 +30,14 @@ import java.util.HashSet;
  */
 
 // Calculation and comparison Mapper
-public class CalcAndCompMapper extends Mapper<Graph, IntMatrixWritable, Text, MapWritable> {
+public class CalcAndCompMapper extends Mapper<Graph, IntMatrixWritable, Text, Text> {
 
     private Graph targetGraph;
 
     private int[][] MA; // for query graph
     private int[][] MB; // for target graph
     private int[][] M0;
+    private Vertex[] targetVertices;
 
     @Override
     protected void setup(Context context) throws IOException, InterruptedException {
@@ -46,25 +47,10 @@ public class CalcAndCompMapper extends Mapper<Graph, IntMatrixWritable, Text, Ma
         if (cacheFiles != null && cacheFiles.length > 0) {
             FileSystem fs = FileSystem.get(context.getConfiguration());
             Path path = new Path(cacheFiles[0].toString());
-            BufferedReader reader = new BufferedReader(new InputStreamReader(fs.open(path)));
-            String line;
-            HashSet<Vertex> vertices = new HashSet<>();
-            HashSet<Edge> edges = new HashSet<>();
-            while ((line = reader.readLine()) != null) {
-                line = line.trim();
-                if (line.startsWith("#"))
-                    continue;
-
-                String[] info = line.split("\\s+");
-                if (info.length == 2) {
-                    vertices.add(new Vertex(info[0]));
-                    vertices.add(new Vertex(info[1]));
-                    edges.add(new Edge(info[0], info[1]));
-                } else {
-                    System.err.println("Wrong Line: " + line);
-                }
-            }
-            targetGraph = new Graph(vertices.toArray(new Vertex[0]), edges.toArray(new Edge[0]));
+            GraphReader reader = new GraphReader(fs, path);
+            targetGraph = reader.loadGraph();
+            targetVertices = targetGraph.getVertexArray();
+            MB = targetGraph.getAdjacencyMatrix();
         } else {
             System.err.println(ConstructMMapper.class.getName() + " cannot get the distributed cache files.");
         }
@@ -76,8 +62,13 @@ public class CalcAndCompMapper extends Mapper<Graph, IntMatrixWritable, Text, Ma
         int col = intMatrixWritable.get()[0].length;
 
         MA = queryGraph.getAdjacencyMatrix();
-        MB = targetGraph.getAdjacencyMatrix();
         M0 = new int[row][col];
+        Writable[][] matrix = intMatrixWritable.get();
+        for (int i = 0; i < M0.length; i++) {
+            for (int j = 0; j < M0[0].length; j++) {
+                M0[i][j] = ((IntWritable) matrix[i][j]).get();
+            }
+        }
 
         refineM(targetGraph, queryGraph);
         checkIsomorphism(targetGraph, queryGraph);
@@ -86,7 +77,7 @@ public class CalcAndCompMapper extends Mapper<Graph, IntMatrixWritable, Text, Ma
         if (!resultMapping.isEmpty()) {
             context.write(
                     new Text(String.format("Query Graph %s is isormophic Target Graph\n", queryGraph.getGraphId())),
-                    resultMapping
+                    new Text(getMapping().toString())
             );
         }
     }
@@ -101,7 +92,7 @@ public class CalcAndCompMapper extends Mapper<Graph, IntMatrixWritable, Text, Ma
     private void refineM(Graph target, Graph query) {
 
         Vertex[] queryVertices = query.getVertexArray();
-        Vertex[] targetVertices = target.getVertexArray();
+
         int row = queryVertices.length;
         int col = targetVertices.length;
 
@@ -152,7 +143,7 @@ public class CalcAndCompMapper extends Mapper<Graph, IntMatrixWritable, Text, Ma
     private boolean checkIsomorphism(Graph target, Graph query) {
 
         Vertex[] queryVertices = query.getVertexArray();
-        Vertex[] targetVertices = target.getVertexArray();
+
         int row = queryVertices.length;
         int col = targetVertices.length;
 

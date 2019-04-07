@@ -1,19 +1,16 @@
 package io.github.innofang.ullmann;
 
-import io.github.innofang.bean.Edge;
 import io.github.innofang.bean.Graph;
 import io.github.innofang.bean.IntMatrixWritable;
 import io.github.innofang.bean.Vertex;
+import io.github.innofang.util.GraphReader;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.mapreduce.Mapper;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URI;
-import java.util.HashSet;
 
 /**
  * ChainMapper: [ConstructMMapper, CalcAndCompMapper]
@@ -35,6 +32,7 @@ public class ConstructMMapper extends Mapper<IntWritable, Graph, Graph, IntMatri
 
     private IntWritable one = new IntWritable(1);
     private IntWritable zero = new IntWritable(0);
+    private Vertex[] targetVertices;
 
     @Override
     protected void setup(Context context) throws IOException, InterruptedException {
@@ -44,25 +42,9 @@ public class ConstructMMapper extends Mapper<IntWritable, Graph, Graph, IntMatri
         if (cacheFiles != null && cacheFiles.length > 0) {
             FileSystem fs = FileSystem.get(context.getConfiguration());
             Path path = new Path(cacheFiles[0].toString());
-            BufferedReader reader = new BufferedReader(new InputStreamReader(fs.open(path)));
-            String line;
-            HashSet<Vertex> vertices = new HashSet<>();
-            HashSet<Edge> edges = new HashSet<>();
-            while ((line = reader.readLine()) != null) {
-                line = line.trim();
-                if (line.startsWith("#"))
-                    continue;
-
-                String[] info = line.split("\\s+");
-                if (info.length == 2) {
-                    vertices.add(new Vertex(info[0]));
-                    vertices.add(new Vertex(info[1]));
-                    edges.add(new Edge(info[0], info[1]));
-                } else {
-                    System.err.println("Wrong Line: " + line);
-                }
-            }
-            targetGraph = new Graph(vertices.toArray(new Vertex[0]), edges.toArray(new Edge[0]));
+            GraphReader reader = new GraphReader(fs, path);
+            targetGraph = reader.loadGraph();
+            targetVertices = targetGraph.getVertexArray();
         } else {
             System.err.println(ConstructMMapper.class.getName() + " cannot get the distributed cache files.");
         }
@@ -92,7 +74,6 @@ public class ConstructMMapper extends Mapper<IntWritable, Graph, Graph, IntMatri
      */
     private IntWritable[][] getMatrixM(Graph target, Graph query) {
         Vertex[] queryVertices = query.getVertexArray();
-        Vertex[] targetVertices = target.getVertexArray();
         int row = queryVertices.length;
         int col = targetVertices.length;
         IntWritable[][] M0 = new IntWritable[row][col];
