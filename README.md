@@ -42,6 +42,8 @@ see the [wiki](https://en.wikipedia.org/wiki/Subgraph_isomorphism_problem)
  + [x] [VF2](./src/main/java/io/github/innofang/algorithm/impl/VF2.java) [3]
  + [ ] SPath [4]
  + [ ] GADDI [5]
+ + [x] [Ullmann Algorithm on MapReduce](./mapreduce/src/main/java/io/github/innofang/ullmann) [6]
+ + [ ] VF2 Algorithm on MapReduce [7]
  
 ## Reference & Bibliography
 
@@ -55,9 +57,9 @@ see the [wiki](https://en.wikipedia.org/wiki/Subgraph_isomorphism_problem)
 
  + [5] Zhang S, Li S, Yang J. GADDI: distance index based subgraph matching in biological networks[C]// Proceedings of the international Conference on Extending Database Technology. 2009: 192–203. [link](https://dl.acm.org/citation.cfm?id=1516384)
 
- + Ashish Sharma, Santosh Bahir, Sushant Narsale, Unmil Tambe, "A  Parallel Algorithm for Finding Sub-graph Isomorphism", CS420-ProjectReport  (www.cs.jhu.edu/~snarsal/CS420-ProjectReport.pdf), CS420: Parallel Programming. Fall 2008.
+ + [6] Ashish Sharma, Santosh Bahir, Sushant Narsale, Unmil Tambe, "A  Parallel Algorithm for Finding Sub-graph Isomorphism", CS420-ProjectReport  (www.cs.jhu.edu/~snarsal/CS420-ProjectReport.pdf), CS420: Parallel Programming. Fall 2008.
 
- + P. Feher, M. Asztalos, T. Vajk, T. Meszaros, L. Lengyel, "Detecting subgraph isomorphism with MapReduce", Journal of Supercomputing, vol. 73, no. 5, 2017.
+ + [7] P. Feher, M. Asztalos, T. Vajk, T. Meszaros, L. Lengyel, "Detecting subgraph isomorphism with MapReduce", Journal of Supercomputing, vol. 73, no. 5, 2017.
 
 ## [License](./LICENSE)
 
