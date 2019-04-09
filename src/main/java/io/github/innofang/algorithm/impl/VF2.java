@@ -35,15 +35,15 @@ public class VF2 implements IsomorphismAlgorithm {
      */
     @Override
     public HashMap<String, String> getMapping() {
-        if (state.matched) {
+//        if (state.matched) {
             HashMap<String, String> mapping = new HashMap<>();
             for (Map.Entry<String, String> entry : state.core_2.entrySet()) {
                 mapping.put(entry.getKey(), entry.getValue());
             }
             return mapping;
-        }
-        System.out.println("Not isomorphism");
-        return null;
+//        }
+//        System.out.println("Not isomorphism");
+//        return null;
     }
 
     /**
@@ -59,15 +59,19 @@ public class VF2 implements IsomorphismAlgorithm {
 
         if (state.depth == queryGraph.getVertexList().size()) {    // Found a isSubGraphIsomorphism
             state.matched = true;
+            System.out.println(getMapping());
             return true;
         } else {    // Extend the state
             Map<String, String> candidates = generateCandidates();
             for (Map.Entry<String, String> entry : candidates.entrySet()) {
                 if (checkSyntacticFeasibility(entry.getKey(), entry.getValue())) {
                     state.extendMatch(entry.getKey(), entry.getValue()); // extend mapping
-                    if (matchRecursive(state, targetGraph, queryGraph)) {    // Found a isSubGraphIsomorphism
-                        return true;
-                    }
+
+//                    if (matchRecursive(state, targetGraph, queryGraph)) {    // Found a isSubGraphIsomorphism
+////                        System.out.println(getMapping());
+//                        return true;
+//                    }
+                    matchRecursive(state, targetGraph, queryGraph);
                     state.backtrack(entry.getKey(), entry.getValue()); // remove the isSubGraphIsomorphism added before
                 }
             }
