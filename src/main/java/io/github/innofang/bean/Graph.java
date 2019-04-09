@@ -1,4 +1,4 @@
-package io.github.innofang.graph.bean;
+package io.github.innofang.bean;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -1,7 +1,7 @@
 package io.github.innofang.algorithm.impl;
 
 import io.github.innofang.algorithm.IsomorphismAlgorithm;
-import io.github.innofang.graph.bean.Graph;
+import io.github.innofang.bean.Graph;
 
 import java.util.*;
 

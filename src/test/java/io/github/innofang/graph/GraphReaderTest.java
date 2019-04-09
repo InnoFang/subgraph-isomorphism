@@ -1,6 +1,6 @@
 package io.github.innofang.graph;
 
-import io.github.innofang.graph.bean.Graph;
+import io.github.innofang.bean.Graph;
 import io.github.innofang.graph.datasets.CAAstroPhDataSet;
 import io.github.innofang.graph.datasets.NormalDataSet;
 import io.github.innofang.graph.datasets.RoadNetCADataSet;

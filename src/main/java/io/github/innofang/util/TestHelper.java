@@ -2,7 +2,7 @@ package io.github.innofang.util;
 
 import io.github.innofang.algorithm.IsomorphismAlgorithm;
 import io.github.innofang.graph.GraphReader;
-import io.github.innofang.graph.bean.Graph;
+import io.github.innofang.bean.Graph;
 import io.github.innofang.graph.datasets.DataSetStrategy;
 
 import java.io.IOException;

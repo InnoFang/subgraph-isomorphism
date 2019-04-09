@@ -1,7 +1,6 @@
 package io.github.innofang.algorithm;
 
-import io.github.innofang.graph.bean.Graph;
-import io.github.innofang.graph.bean.Vertex;
+import io.github.innofang.bean.Graph;
 
 import java.util.HashMap;
 

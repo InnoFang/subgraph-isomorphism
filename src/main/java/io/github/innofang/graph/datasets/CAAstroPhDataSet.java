@@ -1,8 +1,8 @@
 package io.github.innofang.graph.datasets;
 
-import io.github.innofang.graph.bean.Edge;
-import io.github.innofang.graph.bean.Graph;
-import io.github.innofang.graph.bean.Vertex;
+import io.github.innofang.bean.Edge;
+import io.github.innofang.bean.Graph;
+import io.github.innofang.bean.Vertex;
 import io.github.innofang.graph.exceptions.GraphDataErrorException;
 
 import java.io.*;
