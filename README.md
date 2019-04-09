@@ -4,32 +4,53 @@ Design and implement the common subgraph isomorphic algorithm based on `MapReduc
 
 ## What's subgraph isomorphism problem?
 
-In theoretical computer science, the subgraph isomorphism problem is a computational task in which two graphs G and H are given as input, and one must determine whether G contains a subgraph that is isomorphic to H. [1]
+see the [wiki](https://en.wikipedia.org/wiki/Subgraph_isomorphism_problem)
+
+---
+
+<div align="center">
+
+<strong>Classification of Representative Graph Pattern Matching Algorithm</strong> [1]
+
+</div>
+
+| Algorithm | Structural Matching | Semantic Matching |  Exact Matching | Inexact Matching | Optimal Solution | Approximate Solution | Static Graph Matching | Dynamic Graph Matching |
+| - | - | - | - | - | - | - | - | - |
+| Ullmann <br/> (1976)      | Yes | No  | Yes | No  | Yes | No  | Yes | No  |
+| VF2 <br/> (2001)          | Yes | Yes | Yes | No  | Yes | No  | Yes | No  |
+| QuickSI <br/> (2008)      | No  | Yes | Yes | No  | Yes | No  | Yes | No  |
+| GraphQL <br/> (2008)      | No  | Yes | Yes | No  | Yes | No  | Yes | No  |
+| GADDI <br/> (2009)        | Yes | Yes | Yes | No  | Yes | No  | Yes | No  |
+| SPath <br/> (2010)        | No  | Yes | Yes | No  | Yes | No  | Yes | No  |
+| GraphGrep <br/> (2002)    | No  | Yes | Yes | No  | Yes | No  | Yes | Yes |
+| CTree <br/> (2006)        | No  | Yes | Yes | Yes | Yes | No  | Yes | No  |
+| GCoding <br/> (2008)      | No  | Yes | Yes | No  | Yes | No  | Yes | No  |
+| GIndex <br/> (2004)       | Yes | Yes | Yes | No  | Yes | No  | Yes | No  |
+| FG-Index <br/> (2007)     | No  | Yes | Yes | No  | Yes | No  | Yes | No  |
+| Tree+Delta <br/> (2007)   | No  | Yes | Yes | No  | Yes | No  | Yes | No  |
+| SUBDUE <br/> (1994)       | Yes | No  | No  | Yes | Yes | No  | Yes | No  |
+| LAW <br/> (2003)          | No  | Yes | No  | Yes | Yes | No  | Yes | No  |
+| NPV <br/> (2010)          | No  | Yes | Yes | No  | Yes | No  | Yes | Yes |
+| IncMatch <br/> (2012)     | No  | Yes | Yes | No  | Yes | No  | Yes | Yes |
+| StreamWorks <br/> (2013)  | No  | Yes | Yes | No  | Yes | No  | No  | Yes |
+| Umcyama <br/> (1998)      | No  | Yes | Yes | No  | No  | Yes | Yes | No  |
+| Christmas <br/> (1995)    | Yes | No  | Yes | No  | No  | Yes | Yes | No  |
 
 ## TO-DO for SubGraph Isomorphism Algorithm Implementation
 
  + [x] [Ullmann](./src/main/java/io/github/innofang/algorithm/impl/Ullmann.java) [2]
  + [x] [VF2](./src/main/java/io/github/innofang/algorithm/impl/VF2.java) [3]
- + [ ] SPath [4]
- + [ ] GADDI [5]
- + [x] [Ullmann Algorithm on MapReduce](./mapreduce/src/main/java/io/github/innofang/ullmann) [6]
- + [ ] VF2 Algorithm on MapReduce [7]
+ 
+> **PS** Data sets are located in [src/test/resources/](src/test/resources/)
+ 
  
 ## Reference & Bibliography
 
- + [1] Wikipedia contributors. (2018, October 13). Subgraph isomorphism problem. In Wikipedia, The Free Encyclopedia. Retrieved 09:12, April 8, 2019, from https://en.wikipedia.org/w/index.php?title=Subgraph_isomorphism_problem&oldid=863918223
+[1] 于静，刘燕兵，张宇，刘梦雅，谭建龙，郭莉.大规模图数据匹配技术综述[J].计算机研究与发展，2015，52(2): 391-409
 
- + [2] Ullmann J R. An algorithm for subgraph isomorphism[J]. Journal of the ACM (JACM), 1976, 23(1): 31-42. [link](https://www.cs.bgu.ac.il/~dinitz/Course/SS-12/Ullman_Algorithm.pdf)
+[2] Ullmann J R. An algorithm for subgraph isomorphism[J]. Journal of the ACM (JACM), 1976, 23(1): 31-42. [link](https://www.cs.bgu.ac.il/~dinitz/Course/SS-12/Ullman_Algorithm.pdf)
 
- + [3] Cordella L P, Foggia P and Sansone C. A (sub)graph isomorphism algorithm for matching large graphs[J]. IEEE PAMI, 2004, 26(10):1367–1372. [link](https://ieeexplore.ieee.org/document/1323804?arnumber=1323804&tag=1)
-
- + [4] Zhao P, Han J. On graph query optimization in large networks[J]. Proceedings of the VLDB Endowment, 2010, 3(1): 340–351. [link](https://www.vldb.org/pvldb/vldb2010/pvldb_vol3/R30.pdf)
-
- + [5] Zhang S, Li S, Yang J. GADDI: distance index based subgraph matching in biological networks[C]// Proceedings of the international Conference on Extending Database Technology. 2009: 192–203. [link](https://dl.acm.org/citation.cfm?id=1516384)
-
- + [6] Ashish Sharma, Santosh Bahir, Sushant Narsale, Unmil Tambe, "A  Parallel Algorithm for Finding Sub-graph Isomorphism", CS420-ProjectReport  (www.cs.jhu.edu/~snarsal/CS420-ProjectReport.pdf), CS420: Parallel Programming. Fall 2008.
-
- + [7] P. Feher, M. Asztalos, T. Vajk, T. Meszaros, L. Lengyel, "Detecting subgraph isomorphism with MapReduce", Journal of Supercomputing, vol. 73, no. 5, 2017.
+[3] Cordella L P, Foggia P and Sansone C. A (sub)graph isomorphism algorithm for matching large graphs[J]. IEEE PAMI, 2004, 26(10):1367–1372. [link](https://ieeexplore.ieee.org/document/1323804?arnumber=1323804&tag=1)
 
 ## [License](./LICENSE)
 

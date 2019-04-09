@@ -13,8 +13,8 @@ public class UllmannTest {
     @Test
     public void testUllmannWithBigData() throws IOException {
 
-        String queryGraphPath = "F:\\IDEA\\subgraph-isomorphism\\src\\test\\resources\\graphDB\\Q4.my";
-        String targetGraphPath = "F:\\IDEA\\subgraph-isomorphism\\src\\test\\resources\\graphDB\\mygraphdb.test";
+        String queryGraphPath = "../../../../../../../test/resources/graphDB/Q4.my";
+        String targetGraphPath = "../../../../../../../test/resources/graphDB/mygraphdb.test";
         Ullmann ullmann = new Ullmann();
 
         TestHelper.testIsomorphismAlgorithm(
@@ -31,8 +31,8 @@ public class UllmannTest {
     @Test
     public void testUllmann() throws IOException {
 
-        String queryGraphPath = "F:\\IDEA\\subgraph-isomorphism\\src\\test\\resources\\test\\query_graph.txt";
-        String targetGraphPath = "F:\\IDEA\\subgraph-isomorphism\\src\\test\\resources\\test\\target_graph.txt";
+        String queryGraphPath = "../../../../../../../test/resources/test/query_graph.txt";
+        String targetGraphPath = "../../../../../../../test/resources/test/target_graph.txt";
         Ullmann ullmann = new Ullmann();
 
         TestHelper.testIsomorphismAlgorithm(
