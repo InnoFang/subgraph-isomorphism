@@ -26,8 +26,8 @@ import java.util.Objects;
 
 public class Edge {
 
-    private String vertexI;
-    private String vertexJ;
+    private String vertexFrom;
+    private String vertexTo;
     private String label  = "";  // default empty string
 
     public Edge() { }
@@ -37,25 +37,25 @@ public class Edge {
     }
 
     public Edge(String vertexI, String vertexJ, String label) {
-        this.vertexI = vertexI;
-        this.vertexJ = vertexJ;
+        this.vertexFrom = vertexI;
+        this.vertexTo = vertexJ;
         this.label = label;
     }
 
-    public String getVertexI() {
-        return vertexI;
+    public String getVertexFrom() {
+        return vertexFrom;
     }
 
-    public void setVertexI(String vertexI) {
-        this.vertexI = vertexI;
+    public void setVertexFrom(String vertexFrom) {
+        this.vertexFrom = vertexFrom;
     }
 
-    public String getVertexJ() {
-        return vertexJ;
+    public String getVertexTo() {
+        return vertexTo;
     }
 
-    public void setVertexJ(String vertexJ) {
-        this.vertexJ = vertexJ;
+    public void setVertexTo(String vertexTo) {
+        this.vertexTo = vertexTo;
     }
 
     public String getLabel() {
@@ -67,12 +67,12 @@ public class Edge {
     }
 
     public boolean contain(String vertex) {
-        return vertexI.equals(vertex) || vertexJ.equals(vertex);
+        return vertexFrom.equals(vertex) || vertexTo.equals(vertex);
     }
 
     public String getAdjacent(String vertex) {
-        if (vertex.equals(vertexI)) return vertexJ;
-        if (vertex.equals(vertexJ)) return vertexI;
+        if (vertex.equals(vertexFrom)) return vertexTo;
+        if (vertex.equals(vertexTo)) return vertexFrom;
         return null;
     }
 
@@ -81,22 +81,22 @@ public class Edge {
         if (this == o) return true;
         if (!(o instanceof Edge)) return false;
         Edge edge = (Edge) o;
-        return Objects.equals(getVertexI(), edge.getVertexI()) &&
-                Objects.equals(getVertexJ(), edge.getVertexJ()) &&
+        return Objects.equals(getVertexFrom(), edge.getVertexFrom()) &&
+                Objects.equals(getVertexTo(), edge.getVertexTo()) &&
                 Objects.equals(getLabel(), edge.getLabel());
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(getVertexI(), getVertexJ(), getLabel());
+        return Objects.hash(getVertexFrom(), getVertexTo(), getLabel());
     }
 
     @Override
     public String toString() {
         return "Edge{" +
-                "vertexI='" + vertexI + '\'' +
-                ", vertexJ='" + vertexJ + '\'' +
+                "vertexFrom='" + vertexFrom + '\'' +
+                ", vertexTo='" + vertexTo + '\'' +
                 ", label='" + label + '\'' +
                 '}';
     }
