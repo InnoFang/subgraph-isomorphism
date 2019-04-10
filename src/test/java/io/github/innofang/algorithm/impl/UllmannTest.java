@@ -1,13 +1,12 @@
 package io.github.innofang.algorithm.impl;
 
-import io.github.innofang.algorithm.UllmannState;
+import io.github.innofang.lib.UllmannState;
 import io.github.innofang.graph.datasets.NormalDataSet;
 import io.github.innofang.util.TestHelper;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class UllmannTest {
 

@@ -1,4 +1,4 @@
-package io.github.innofang.algorithm;
+package io.github.innofang.lib;
 
 import io.github.innofang.bean.Pair;
 

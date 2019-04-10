@@ -1,7 +1,7 @@
 package io.github.innofang.util;
 
-import io.github.innofang.algorithm.Matcher;
-import io.github.innofang.algorithm.State;
+import io.github.innofang.lib.Matcher;
+import io.github.innofang.lib.State;
 import io.github.innofang.graph.GraphReader;
 import io.github.innofang.bean.Graph;
 import io.github.innofang.graph.datasets.DataSetStrategy;
