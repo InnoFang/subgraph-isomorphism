@@ -53,11 +53,14 @@ public class TestHelper {
             for (Graph targetGraph : targetGraphList) {
                 Constructor<? extends State> constructor = stateClass.getDeclaredConstructor(Graph.class, Graph.class);
                 State state = constructor.newInstance(sourceGraph, targetGraph);
+                long oneSearch = System.currentTimeMillis();
                 int count = Matcher.match(state, visitor);
                 if (count != 0) {
-                    System.out.println(
-                            String.format("Source graph #%d is sub-graph isomorphic target graph #%d, %d pairs of mapping.\n",
-                                    sourceGraph.getGraphId(), targetGraph.getGraphId(), count));
+                    long oneSearchUsed = System.currentTimeMillis() - oneSearch;
+                    double oneSearchSeconds = oneSearchUsed * 1.0 / 1000;
+                    System.out.println(String.format(
+                            "Source graph #%d is sub-graph isomorphic target graph #%d, %d pairs of mapping, used %f s.\n",
+                                    sourceGraph.getGraphId(), targetGraph.getGraphId(), count, oneSearchSeconds));
                     ++ matchNum;
                 }
             }
@@ -66,6 +69,6 @@ public class TestHelper {
         double seconds = used * 1.0 / 1000;
 
         System.out.println("\n===================");
-        System.out.printf("End search, used %f s, %d pairs of SubGraphs Isomorphism.\n", seconds, matchNum);
+        System.out.printf("End search, totally used %f s, %d pairs of SubGraphs Isomorphism.\n", seconds, matchNum);
     }
 }
