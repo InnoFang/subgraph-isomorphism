@@ -1,44 +1,51 @@
 package io.github.innofang.algorithm;
 
-import io.github.innofang.bean.Edge;
 import io.github.innofang.bean.Graph;
+import io.github.innofang.bean.Pair;
 import io.github.innofang.bean.Vertex;
 
 import java.util.HashMap;
 import java.util.List;
 
-public class UllmannState implements State {
+public class UllmannState extends State {
 
     private Graph sourceGraph;
     private Graph targetGraph;
     private List<Vertex> sourceVertexList;
     private List<Vertex> targetVertexList;
 
-    private List<Edge> sourceEdgeList;
-    private List<Edge> targetEdgeList;
-
     private int[][] M;
 
     private HashMap<Integer, Integer> mapping;
 
     public UllmannState(Graph sourceGraph, Graph targetGraph) {
+        super(sourceGraph, targetGraph);
         this.targetGraph = targetGraph;
         this.sourceGraph = sourceGraph;
         this.sourceVertexList = sourceGraph.getVertexList();
         this.targetVertexList = targetGraph.getVertexList();
-
-        sourceEdgeList = sourceGraph.getEdgeList();
-        targetEdgeList = targetGraph.getEdgeList();
+        this.mapping = new HashMap<>();
 
         M = generateMatrixM();
+    }
+
+    public UllmannState(UllmannState state) {
+        super(state);
+        this.targetGraph = state.targetGraph;
+        this.sourceGraph = state.sourceGraph;
+        this.sourceVertexList = state.sourceVertexList;
+        this.targetVertexList = state.targetVertexList;
+        this.mapping = state.mapping;
+
+        this.M = state.M;
     }
 
     /**
      * construct Graph_source x Graph_target element matrix M in according with:
      * <p>
      * Mij = 1 if the degree of the jth point of Graph_target is greater than or
-     * equal to the degree of the ith point of Graph_source
-     * = 0 otherwise
+     *       equal to the degree of the ith point of Graph_source
+     *     = 0 otherwise
      *
      * @return M
      */
@@ -48,8 +55,8 @@ public class UllmannState implements State {
         int[][] M = new int[row][col];
         for (int i = 0; i < row; ++i) {
             for (int j = 0; j < col; ++j) {
-                String vertexI = sourceVertexList.get(i).getVertex();
-                String vertexJ = targetVertexList.get(j).getVertex();
+                int vertexI = sourceVertexList.get(i).getVertex();
+                int vertexJ = targetVertexList.get(j).getVertex();
                 M[i][j] = (sourceGraph.getVertexInDegree(vertexI) <= targetGraph.getVertexInDegree(vertexJ) &&
                         sourceGraph.getVertexOutDegree(vertexI) <= targetGraph.getVertexOutDegree(vertexJ))
                         ? 1 : 0;
@@ -69,7 +76,9 @@ public class UllmannState implements State {
     }
 
     @Override
-    public boolean isFeasiblePair(int sourceVertex, int targetVertex) {
+    public boolean isFeasiblePair(Pair<Integer, Integer> pair) {
+        int sourceVertex = pair.getKey();
+        int targetVertex = pair.getValue();
         assert sourceVertex < sourceVertexList.size();
         assert targetVertex < targetVertexList.size();
 
@@ -77,7 +86,9 @@ public class UllmannState implements State {
     }
 
     @Override
-    public void addPair(int sourceVertex, int targetVertex) {
+    public void addPair(Pair<Integer, Integer> pair) {
+        int sourceVertex = pair.getKey();
+        int targetVertex = pair.getValue();
         assert sourceVertex < sourceVertexList.size();
         assert targetVertex < targetVertexList.size();
 
@@ -177,8 +188,8 @@ public class UllmannState implements State {
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
+    public State clone() {
+        return new UllmannState(this);
     }
 
     @Override
@@ -220,7 +231,7 @@ public class UllmannState implements State {
             if (sourceIndex != mappingSize) {
                 return false;
             }
-            while (targetIndex < targetVertexSize && M[sourceIndex][targetVertexSize] == 0) {
+            while (targetIndex < targetVertexSize && M[sourceIndex][targetIndex] == 0) {
                 ++ targetIndex;
             }
 
@@ -228,10 +239,8 @@ public class UllmannState implements State {
         }
 
         @Override
-        public HashMap<Integer, Integer> nextPair() {
-            HashMap<Integer, Integer> pair = new HashMap<>();
-            pair.put(sourceIndex, targetIndex);
-            return pair;
+        public Pair<Integer, Integer> nextPair() {
+            return new Pair<>(sourceIndex, targetIndex);
         }
     }
 }
