@@ -1,46 +1,47 @@
 package io.github.innofang.algorithm;
 
 import io.github.innofang.bean.Graph;
+import io.github.innofang.bean.Pair;
 
 import java.util.HashMap;
 
-public interface State extends Cloneable {
+public abstract class State implements Cloneable {
+
+    public State(Graph sourceGraph, Graph targetGraph){}
+    public State(State state){}
 
     /**
      * Get the source graph
      *
      * @return source graph
      */
-    Graph getSourceGraph();
+    abstract Graph getSourceGraph();
 
     /**
      * Get the target graph
      *
      * @return target graph
      */
-    Graph getTargetGraph();
+    abstract Graph getTargetGraph();
 
     /**
      * Check the new pair is match or not
      *
      * @return true if new pair is match, otherwise false
      */
-    boolean isFeasiblePair(int sourceVertex, int targetVertex);
+    abstract boolean isFeasiblePair(Pair<Integer, Integer> pair);
 
     /**
      * Add a pair to the mapping
-     *
-     * @param targetVertex the vertex of target graph
-     * @param sourceVertex the vertex of source graph
      */
-    void addPair(int sourceVertex, int targetVertex);
+    abstract void addPair(Pair<Integer, Integer> pair);
 
     /**
      * Is the source graph isomorphic the target graph or not
      *
      * @return true if sub-graph isomorphism, otherwise false
      */
-    boolean isSuccess();
+    abstract boolean isSuccess();
 
     /**
      * It's not simply the opposite of the return value of isSuccess(),
@@ -49,7 +50,7 @@ public interface State extends Cloneable {
      *
      * @return
      */
-    boolean isFailure();
+    abstract boolean isFailure();
 
     /**
      * Get the mapping between source graph and target graph when they're
@@ -57,19 +58,25 @@ public interface State extends Cloneable {
      *
      * @return
      */
-    HashMap<Integer, Integer> getMapping();
+    abstract HashMap<Integer, Integer> getMapping();
 
     /**
      * Allow a state to clean up things before reverting to its parent
      * when execute DFS
      */
-    void backTrack();
+    abstract void backTrack();
+
+    /**
+     * Clone a same new state instance
+     * @return a same new state
+     */
+    protected abstract State clone();
 
     /**
      * Get the state iterator, which make you can to get the next pair
      * @return a iterator instance
      */
-    Iterator iterator();
+    abstract Iterator iterator();
 
     interface Iterator {
         /**
@@ -84,6 +91,6 @@ public interface State extends Cloneable {
          *
          * @return true if have more pairs, otherwise false
          */
-        HashMap<Integer, Integer> nextPair();
+        Pair<Integer, Integer> nextPair();
     }
 }
