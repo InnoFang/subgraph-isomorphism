@@ -26,35 +26,35 @@ import java.util.Objects;
 
 public class Edge {
 
-    private String vertexFrom;
-    private String vertexTo;
+    private int vertexFrom;
+    private int vertexTo;
     private String label  = "";  // default empty string
 
     public Edge() { }
 
-    public Edge(String vertexI, String vertexJ) {
+    public Edge(int vertexI, int vertexJ) {
         this(vertexI, vertexJ, "");
     }
 
-    public Edge(String vertexI, String vertexJ, String label) {
+    public Edge(int vertexI, int vertexJ, String label) {
         this.vertexFrom = vertexI;
         this.vertexTo = vertexJ;
         this.label = label;
     }
 
-    public String getVertexFrom() {
+    public int getVertexFrom() {
         return vertexFrom;
     }
 
-    public void setVertexFrom(String vertexFrom) {
+    public void setVertexFrom(int vertexFrom) {
         this.vertexFrom = vertexFrom;
     }
 
-    public String getVertexTo() {
+    public int getVertexTo() {
         return vertexTo;
     }
 
-    public void setVertexTo(String vertexTo) {
+    public void setVertexTo(int vertexTo) {
         this.vertexTo = vertexTo;
     }
 
@@ -66,14 +66,14 @@ public class Edge {
         this.label = label;
     }
 
-    public boolean contain(String vertex) {
-        return vertexFrom.equals(vertex) || vertexTo.equals(vertex);
+    public boolean contain(int vertex) {
+        return vertexFrom == vertex || vertexTo  == vertex;
     }
 
-    public String getAdjacent(String vertex) {
-        if (vertex.equals(vertexFrom)) return vertexTo;
-        if (vertex.equals(vertexTo)) return vertexFrom;
-        return null;
+    public int getAdjacent(int vertex) {
+        if (vertex == vertexFrom) return vertexTo;
+        if (vertex == vertexTo) return vertexFrom;
+        return -1;
     }
 
     @Override

@@ -29,10 +29,12 @@ import java.util.List;
 
 public class Graph {
 
+    private int graphId;
+
     private List<Vertex> vertexList;
     private List<Edge>   edgeList;
 
-    private HashMap<String, List<String>> neighborVertexMap;
+    private HashMap<Integer, List<Integer>> neighborVertexMap;
 
     private int[] vertexInDegree;
     private int[] vertexOutDegree;
@@ -45,33 +47,43 @@ public class Graph {
     public Graph(Collection<Vertex> vertexList, Collection<Edge> edgeList) {
         this.vertexList = new ArrayList<>(vertexList);
         this.edgeList = new ArrayList<>(edgeList);
+        reset();
+    }
+
+    void reset() {
         this.neighborVertexMap = new HashMap<>();
 
         vertexInDegree =  new int[vertexList.size()];
         vertexOutDegree = new int[vertexList.size()];
 
         for (Edge edge : edgeList) {
-           int from =  Integer.parseInt(edge.getVertexFrom());
-           int to = Integer.parseInt(edge.getVertexTo());
-           ++ vertexInDegree[to];
-           ++ vertexOutDegree[from];
+            int from = edge.getVertexFrom();
+            int to = edge.getVertexTo();
+            ++ vertexInDegree[to];
+            ++ vertexOutDegree[from];
         }
+    }
+
+    public int getGraphId() {
+        return graphId;
+    }
+
+    public void setGraphId(int graphId) {
+        this.graphId = graphId;
+    }
+
+    public void setVertexesAndEdges(Collection<Vertex> vertexes, Collection<Edge> edges) {
+        this.vertexList = new ArrayList<>(vertexList);
+        this.edgeList = new ArrayList<>(edgeList);
+        reset();
     }
 
     public List<Vertex> getVertexList() {
         return vertexList;
     }
 
-    public void setVertexList(List<Vertex> vertexList) {
-        this.vertexList = vertexList;
-    }
-
     public List<Edge> getEdgeList() {
         return edgeList;
-    }
-
-    public void setEdgeList(List<Edge> edgeList) {
-        this.edgeList = edgeList;
     }
 
     public int[][] getAdjacencyMatrix() {
@@ -82,8 +94,8 @@ public class Graph {
         int vertexSize = vertexList.size();
         int[][] matrix = new int[vertexSize][vertexSize];
         for (Edge edge: edgeList) {
-            int i = Integer.parseInt(edge.getVertexFrom());
-            int j = Integer.parseInt(edge.getVertexTo());
+            int i = edge.getVertexFrom();
+            int j = edge.getVertexTo();
             matrix[i][j] = 1;
             if (directed) {
                 matrix[j][i] = 1;
@@ -92,18 +104,15 @@ public class Graph {
         return matrix;
     }
 
-    public int getVertexInDegree(String vertex) {
-        int v = Integer.parseInt(vertex);
+    public int getVertexInDegree(int v) {
         return vertexInDegree[v];
     }
 
-    public int getVertexOutDegree(String vertex) {
-        int v = Integer.parseInt(vertex);
+    public int getVertexOutDegree(int v) {
         return vertexOutDegree[v];
     }
 
-    public int getVertexDegree(String vertex) {
-        int v = Integer.parseInt(vertex);
+    public int getVertexDegree(int v) {
         return vertexInDegree[v] + vertexOutDegree[v];
     }
 
@@ -113,21 +122,21 @@ public class Graph {
 
     public String getEdgeLabel(int vertexFrom, int vertexTo) {
         for (Edge edge: edgeList) {
-            if (edge.getVertexFrom().equals(vertexFrom + "") &&
-                    edge.getVertexTo().equals(vertexTo + "")) {
+            if (edge.getVertexFrom() == vertexFrom &&
+                    edge.getVertexTo() == vertexTo) {
                 return edge.getLabel();
             }
         }
         return null;
     }
 
-    public List<String> getNeighborVertexList(String vertex) {
+    public List<Integer> getNeighborVertexList(int vertex) {
 
         if (neighborVertexMap.containsKey(vertex)) {
             return neighborVertexMap.get(vertex);
         }
 
-        List<String> neighbors = new ArrayList<>();
+        List<Integer> neighbors = new ArrayList<>();
         for (Edge edge: edgeList) {
             if (edge.contain(vertex)) {
                 neighbors.add(edge.getAdjacent(vertex));
@@ -136,25 +145,8 @@ public class Graph {
         return neighbors;
     }
 
-    public void addVertex(Vertex vertex) {
-        vertexList.add(vertex);
-    }
-
-    public Vertex getVertex(String vertex) {
-        for (Vertex v : vertexList) {
-            if (v.getVertex().equals(vertex)) {
-                return v;
-            }
-        }
-        return null;
-    }
-
     public Vertex getVertex(int vertexIndex) {
         return vertexList.get(vertexIndex);
-    }
-
-    public void addEdge(Edge edge) {
-        edgeList.add(edge);
     }
 
     @Override

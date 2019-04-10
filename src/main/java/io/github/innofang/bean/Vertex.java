@@ -25,25 +25,25 @@ import java.util.Objects;
  */
 
 public class Vertex {
-    private String vertex;
+    private int vertex;
     private String label = "";  // default empty string
 
     public Vertex() {}
 
-    public Vertex(String vertex) {
+    public Vertex(int vertex) {
         this(vertex, "");
     }
 
-    public Vertex(String vertex, String label) {
+    public Vertex(int vertex, String label) {
         this.vertex = vertex;
         this.label = label;
     }
 
-    public String getVertex() {
+    public int getVertex() {
         return vertex;
     }
 
-    public void setVertex(String vertex) {
+    public void setVertex(int vertex) {
         this.vertex = vertex;
     }
 
