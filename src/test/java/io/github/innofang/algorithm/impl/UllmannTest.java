@@ -1,48 +1,48 @@
 package io.github.innofang.algorithm.impl;
 
-import io.github.innofang.algorithm.impl.Ullmann;
+import io.github.innofang.algorithm.UllmannState;
 import io.github.innofang.graph.datasets.NormalDataSet;
 import io.github.innofang.util.TestHelper;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class UllmannTest {
 
 
     @Test
-    public void testUllmannWithBigData() throws IOException {
-
-        String queryGraphPath = "F:\\IDEA\\subgraph-isomorphism\\src\\test\\resources\\graphDB\\Q4.my";
-        String targetGraphPath = "F:\\IDEA\\subgraph-isomorphism\\src\\test\\resources\\graphDB\\mygraphdb.test";
-        Ullmann ullmann = new Ullmann();
+    public void testUllmannWithBigData() throws IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        String queryGraphPath = "F:\\IDEA\\subgraph-isomorphism\\datasets\\graphDB\\Q4.my";
+        String targetGraphPath = "F:\\IDEA\\subgraph-isomorphism\\datasets\\graphDB\\mygraphdb.data";
 
         TestHelper.testIsomorphismAlgorithm(
                 targetGraphPath,
                 queryGraphPath,
-                ullmann,
+                UllmannState.class,
                 new NormalDataSet(),
-                true,
-                (algorithm, queryGraphIndex, targetGraphIndex) ->
-                        System.out.printf("t # %d is isomorphic T # %d\n", queryGraphIndex, targetGraphIndex)
+                mapping -> {
+                    System.out.println(mapping.toString());
+                    return false;
+                }
         );
     }
 
     @Test
-    public void testUllmann() throws IOException {
-
-        String queryGraphPath = "F:\\IDEA\\subgraph-isomorphism\\src\\test\\resources\\test\\query_graph.txt";
-        String targetGraphPath = "F:\\IDEA\\subgraph-isomorphism\\src\\test\\resources\\test\\target_graph.txt";
-        Ullmann ullmann = new Ullmann();
+    public void testUllmann() throws IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        String sourceGraphPath = "F:\\IDEA\\subgraph-isomorphism\\datasets\\test\\query_graph.txt";
+        String targetGraphPath = "F:\\IDEA\\subgraph-isomorphism\\datasets\\test\\target_graph.txt";
 
         TestHelper.testIsomorphismAlgorithm(
                 targetGraphPath,
-                queryGraphPath,
-                ullmann,
+                sourceGraphPath,
+                UllmannState.class,
                 new NormalDataSet(),
-                true,
-                (algorithm, queryGraphIndex, targetGraphIndex) ->
-                        System.out.printf("t # %d is isomorphic T # %d\n", queryGraphIndex, targetGraphIndex)
+                mapping -> {
+                    System.out.println(mapping.toString());
+                    return false;
+                }
         );
     }
 }
