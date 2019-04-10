@@ -64,7 +64,7 @@ public abstract class State implements Cloneable {
      * Allow a state to clean up things before reverting to its parent
      * when execute DFS
      */
-    abstract void backTrack();
+    abstract void backTrack(Pair<Integer, Integer> pair);
 
     /**
      * Clone a same new state instance
