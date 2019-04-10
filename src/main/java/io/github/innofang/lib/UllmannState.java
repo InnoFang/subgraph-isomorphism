@@ -193,11 +193,11 @@ public class UllmannState extends State {
     }
 
     @Override
-    public Iterator iterator() {
-        return new UllmannStateIterator(mapping.size(), sourceVertexList.size(), targetVertexList.size());
+    public PairIterator iterator() {
+        return new UllmannStatePairIterator(mapping.size(), sourceVertexList.size(), targetVertexList.size());
     }
 
-    public class UllmannStateIterator implements Iterator {
+    public class UllmannStatePairIterator implements PairIterator {
 
         private int sourceIndex = -1;    // the index along the direction of the row of matrix M
         private int targetIndex = -1;    // the index along the direction of the column of matrix M
@@ -206,7 +206,7 @@ public class UllmannState extends State {
         private int sourceVertexSize;
         private int targetVertexSize;
 
-        public UllmannStateIterator(int mappingSize, int sourceVertexSize, int targetVertexSize) {
+        public UllmannStatePairIterator(int mappingSize, int sourceVertexSize, int targetVertexSize) {
             this.mappingSize = mappingSize;
             this.sourceVertexSize = sourceVertexSize;
             this.targetVertexSize = targetVertexSize;

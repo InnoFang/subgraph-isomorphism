@@ -76,9 +76,9 @@ public abstract class State implements Cloneable {
      * Get the state iterator, which make you can to get the next pair
      * @return a iterator instance
      */
-    abstract Iterator iterator();
+    abstract PairIterator iterator();
 
-    interface Iterator {
+    interface PairIterator {
         /**
          * Check if the state have next pair
          *

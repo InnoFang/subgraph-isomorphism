@@ -23,18 +23,18 @@ public class Matcher {
             return false;
         }
 
-        State.Iterator iterator = state.iterator();
+        State.PairIterator iterator = state.iterator();
         while(iterator.hasNextPair()) {
             Pair<Integer, Integer> pair = iterator.nextPair();
             if (state.isFeasiblePair(pair)) {
                 State s = state.clone();
                 state.addPair(pair);
                 if (match(s, visitor, count)) {
-                    s.backTrack();
+                    s.backTrack(pair);
                     s = null;
                     return true;
                 } else {
-                    s.backTrack();
+                    s.backTrack(pair);
                     s = null;
                 }
             }
