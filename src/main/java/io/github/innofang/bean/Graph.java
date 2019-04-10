@@ -36,8 +36,11 @@ public class Graph {
 
     private HashMap<Integer, List<Integer>> neighborVertexMap;
 
-    private int[] vertexInDegree;
-    private int[] vertexOutDegree;
+    // the other end of an edge leaving a vertex
+    // Edge: from -----> to, for 'from' vertex, is the 'out' edge
+    private HashMap<Integer, ArrayList<Edge>> out;
+    // Edge: from -----> to, for 'to    vertex, is the 'in'  edge
+    private HashMap<Integer, ArrayList<Edge>> in;
 
 
     public Graph() {
@@ -53,14 +56,27 @@ public class Graph {
     void reset() {
         this.neighborVertexMap = new HashMap<>();
 
-        vertexInDegree =  new int[vertexList.size()];
-        vertexOutDegree = new int[vertexList.size()];
-
         for (Edge edge : edgeList) {
             int from = edge.getVertexFrom();
             int to = edge.getVertexTo();
-            ++ vertexInDegree[to];
-            ++ vertexOutDegree[from];
+
+            ArrayList<Edge> outEdges;
+            if (out.containsKey(from)) {
+                outEdges = out.get(from);
+            } else {
+                outEdges = new ArrayList<>();
+            }
+            outEdges.add(edge);
+            out.put(from, outEdges);
+
+            ArrayList<Edge> inEdges;
+            if (in.containsKey(to)) {
+                inEdges = in.get(to);
+            } else {
+                inEdges = new ArrayList<>();
+            }
+            inEdges.add(edge);
+            in.put(to, inEdges);
         }
     }
 
@@ -105,19 +121,21 @@ public class Graph {
     }
 
     public int getVertexInDegree(int v) {
-        return vertexInDegree[v];
+        ArrayList<Edge> inEdges = in.get(v);
+        return inEdges == null ? 0 : inEdges.size();
     }
 
     public int getVertexOutDegree(int v) {
-        return vertexOutDegree[v];
+        ArrayList<Edge> outEdges = out.get(v);
+        return outEdges == null ? 0 : outEdges.size();
     }
 
     public int getVertexDegree(int v) {
-        return vertexInDegree[v] + vertexOutDegree[v];
+        return getVertexOutDegree(v) + getVertexInDegree(v);
     }
 
-    public String getVertexLabel(String vertex) {
-        return vertexList.get(Integer.parseInt(vertex)).getLabel();
+    public String getVertexLabel(int v) {
+        return vertexList.get(v).getLabel();
     }
 
     public String getEdgeLabel(int vertexFrom, int vertexTo) {
@@ -125,6 +143,40 @@ public class Graph {
             if (edge.getVertexFrom() == vertexFrom &&
                     edge.getVertexTo() == vertexTo) {
                 return edge.getLabel();
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<Edge> getOutEdges(int vertex) {
+        assert vertex < vertexList.size();
+        return out.get(vertex);
+    }
+
+    public String getOutEdgeLabel(int vertex, int otherVertex) {
+        ArrayList<Edge> outEdges = out.get(vertex);
+        if (outEdges == null)
+            return null;
+        for (Edge outEdge : outEdges) {
+            if (outEdge.contain(otherVertex)) {
+                return outEdge.getLabel();
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<Edge> getInEdges(int vertex) {
+        assert vertex < vertexList.size();
+        return in.get(vertex);
+    }
+
+    public String getInEdgeLabel(int vertex, int otherVertex) {
+        ArrayList<Edge> inEdges = in.get(vertex);
+        if (inEdges == null)
+            return null;
+        for (Edge inEdge: inEdges) {
+            if (inEdge.contain(otherVertex)) {
+                return inEdge.getLabel();
             }
         }
         return null;
