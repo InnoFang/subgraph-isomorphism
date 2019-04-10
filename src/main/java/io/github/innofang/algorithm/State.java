@@ -21,13 +21,6 @@ public interface State extends Cloneable {
     Graph getTargetGraph();
 
     /**
-     * Generate a new pair
-     *
-     * @return true if have more pairs, otherwise false
-     */
-    HashMap<Integer, Integer> generatePair();
-
-    /**
      * Check the new pair is match or not
      *
      * @return true if new pair is match, otherwise false
@@ -71,4 +64,26 @@ public interface State extends Cloneable {
      * when execute DFS
      */
     void backTrack();
+
+    /**
+     * Get the state iterator, which make you can to get the next pair
+     * @return a iterator instance
+     */
+    Iterator iterator();
+
+    interface Iterator {
+        /**
+         * Check if the state have next pair
+         *
+         * @return true if the state have next pair, otherwise false
+         */
+        boolean hasNextPair();
+
+        /**
+         * Generate a new pair
+         *
+         * @return true if have more pairs, otherwise false
+         */
+        HashMap<Integer, Integer> nextPair();
+    }
 }
