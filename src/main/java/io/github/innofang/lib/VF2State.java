@@ -15,8 +15,8 @@ public class VF2State extends State {
     private List<Vertex> sourceVertexList;
     private List<Vertex> targetVertexList;
 
-    private int sourceVertexSize = sourceVertexList.size();
-    private int targetVertexSize = targetVertexList.size();
+    private int sourceVertexSize;
+    private int targetVertexSize;
 
     private int[] core_1;
     private int[] core_2;
@@ -40,23 +40,24 @@ public class VF2State extends State {
         this.sourceGraph = sourceGraph;
         this.sourceVertexList = sourceGraph.getVertexList();
         this.targetVertexList = targetGraph.getVertexList();
-
+        this.sourceVertexSize = this.sourceVertexList.size();
+        this.targetVertexSize = this.targetVertexList.size();
         this.mapping = new HashMap<>();
 
-        core_1 = new int[sourceVertexSize];
-        core_2 = new int[targetVertexSize];
-        in_1 = new int[sourceVertexSize];
-        in_2 = new int[targetVertexSize];
-        out_1 = new int[sourceVertexSize];
-        out_2 = new int[targetVertexSize];
+        this.core_1 = new int[sourceVertexSize];
+        this.core_2 = new int[targetVertexSize];
+        this.in_1 = new int[sourceVertexSize];
+        this.in_2 = new int[targetVertexSize];
+        this.out_1 = new int[sourceVertexSize];
+        this.out_2 = new int[targetVertexSize];
 
-        t1in = new HashSet<>(sourceVertexSize * 2);
-        t1out = new HashSet<>(sourceVertexSize * 2);
-        t2in = new HashSet<>(targetVertexSize * 2);
-        t2out = new HashSet<>(targetVertexSize * 2);
+        this.t1in = new HashSet<>(sourceVertexSize * 2);
+        this.t1out = new HashSet<>(sourceVertexSize * 2);
+        this.t2in = new HashSet<>(targetVertexSize * 2);
+        this.t2out = new HashSet<>(targetVertexSize * 2);
 
-        unmapped1 = new HashSet<>(sourceVertexSize * 2);
-        unmapped2 = new HashSet<>(targetVertexSize * 2);
+        this.unmapped1 = new HashSet<>(sourceVertexSize * 2);
+        this.unmapped2 = new HashSet<>(targetVertexSize * 2);
 
         for (int i = 0; i < sourceVertexSize; i++) {
             core_1[i] = -1;
@@ -79,6 +80,8 @@ public class VF2State extends State {
         this.sourceGraph = state.sourceGraph;
         this.sourceVertexList = state.sourceVertexList;
         this.targetVertexList = state.targetVertexList;
+        this.sourceVertexSize = state.sourceVertexSize;
+        this.targetVertexSize = state.targetVertexSize;
 
         this.mapping = state.mapping;
 
@@ -374,28 +377,27 @@ public class VF2State extends State {
 
     public class VF2StatePairIterator implements PairIterator {
 
-        private Iterator<Map.Entry<Integer, Integer>> iterator;
-        private HashMap<Integer, Integer> pairs = new HashMap<>();
-
+        private final Iterator<Pair<Integer, Integer>> iterator;
+        private ArrayList<Pair<Integer, Integer>> pairs = new ArrayList<>();
 
         public VF2StatePairIterator() {
             if (!t1out.isEmpty() && !t2out.isEmpty()) {
                 int vertex1 = Collections.min(t1out);
                 for (Integer vertex2 : t2out) {
-                    pairs.put(vertex1, vertex2);
+                    pairs.add(new Pair<>(vertex1, vertex2));
                 }
             } else if (!t1in.isEmpty() && !t2in.isEmpty()) {
                 int vertex1 = Collections.min(t1in);
                 for (Integer vertex2 : t2in) {
-                    pairs.put(vertex1, vertex2);
+                    pairs.add(new Pair<>(vertex1, vertex2));
                 }
             } else {
                 int unmappedVertex1 = Collections.min(unmapped1);
                 for (Integer unmappedVertex2 : unmapped2) {
-                    pairs.put(unmappedVertex1, unmappedVertex2);
+                    pairs.add(new Pair<>(unmappedVertex1, unmappedVertex2));
                 }
             }
-            iterator = pairs.entrySet().iterator();
+            iterator = pairs.iterator();
         }
 
         @Override
@@ -405,8 +407,7 @@ public class VF2State extends State {
 
         @Override
         public Pair<Integer, Integer> nextPair() {
-            Map.Entry<Integer, Integer> entry = iterator.next();
-            return new Pair<>(entry.getKey(), entry.getValue());
+            return iterator.next();
         }
     }
 }
