@@ -53,14 +53,13 @@ public class TestHelper {
             for (Graph targetGraph : targetGraphList) {
                 Constructor<? extends State> constructor = stateClass.getDeclaredConstructor(Graph.class, Graph.class);
                 State state = constructor.newInstance(sourceGraph, targetGraph);
-                long oneSearch = System.currentTimeMillis();
+                long oneSearch = System.nanoTime();
                 int count = Matcher.match(state, visitor);
                 if (count != 0) {
-                    long oneSearchUsed = System.currentTimeMillis() - oneSearch;
-                    double oneSearchSeconds = oneSearchUsed * 1.0 / 1000;
+                    long oneSearchUsed = System.nanoTime() - oneSearch;
                     System.out.println(String.format(
-                            "Source graph #%d is sub-graph isomorphic target graph #%d, %d pairs of mapping, used %f s.\n",
-                                    sourceGraph.getGraphId(), targetGraph.getGraphId(), count, oneSearchSeconds));
+                            "Source graph #%d is sub-graph isomorphic target graph #%d, %d pairs of mapping, used %d ns.\n",
+                                    sourceGraph.getGraphId(), targetGraph.getGraphId(), count, oneSearchUsed));
                     ++ matchNum;
                 }
             }
