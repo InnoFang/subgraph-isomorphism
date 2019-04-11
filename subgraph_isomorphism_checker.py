@@ -4,10 +4,10 @@ import networkx as nx
 from networkx.algorithms import isomorphism as iso
 import matplotlib.pyplot as plt
 
-DEFAULT_TARGET_PATH = './src/test/resources/test/target_graph.txt'
-DEFAULT_QUERY_PATH = './src/test/resources/test/query_graph.txt'
+DEFAULT_SOURCE_PATH  = './datasets/test/query_graph.txt'
+DEFAULT_TARGET_PATH = './datasets/test/target_graph.txt'
 
-def read_graph_from(file_name):
+def read_graph_from(file_name, directed=True):
     graphs = []
     with open(file_name) as file:
         lines = file.readlines()
@@ -22,7 +22,11 @@ def read_graph_from(file_name):
             if info[0] == 't':
                 if graph:
                     graphs.append(graph)
-                graph = nx.Graph()
+                if directed:
+                    graph = nx.DiGraph() # create a directed graph
+                else:
+                    graph = nx.Graph()   # create a undirected graph
+
             elif info[0] == 'v' and len(info) == 3:
                 graph.add_node(info[1], label=int(info[2]))
             elif info[0] == 'e' and len(info) == 4:
@@ -32,19 +36,19 @@ def read_graph_from(file_name):
     return graphs
 
 def draw_graph_for(name, graph, show_edge_value=False):
-    assert name == 'target' or name == 'query'
+    assert name == 'target' or name == 'source'
 
     params = {
+        'source': {
+            'title': 'Source',
+            'node_color': 'r',
+            'edge_color': 'g'
+        },
         'target' : {
             'title': 'Target',
             'node_color': 'b',
             'edge_color': 'y'
         },
-        'query': {
-            'title': 'Query',
-            'node_color': 'r',
-            'edge_color': 'g'
-        }
     }
 
     title = params[name]['title']
@@ -62,7 +66,7 @@ def assertion():
         """
         Wrong number of parameters. Please keep the number of parameters as 0, 1 or 4, the format is as follows: 
 
-        usage: python {} <target_graph_file_path> <target_graph_number> <query_graph_file_path> <query_graph_number>
+        usage: python {} <target_graph_file_path> <target_graph_number> <source_graph_file_path> <source_graph_number>
 
         usage: python {} -examples
         """.format(sys.argv[0], sys.argv[0])
@@ -73,8 +77,8 @@ def assertion():
     if len(sys.argv) == 2:
         if sys.argv[1] == '-examples':
             print("""
-            [0] python isomorphism_checker.py ./src/test/resources/test/target_graph.txt 0 ./src/test/resources/test/query_graph.txt 0
-            [1] python isomorphism_checker.py ./src/test/resources/graphDB/mygraphdb.test 3720 ./src/test/resources/graphDB/Q4.my 40
+            [0] python isomorphism_checker.py ./datasets/test/target_graph.txt 0 ./datasets/test/query_graph.txt 0
+            [1] python isomorphism_checker.py ./datasets/graphDB/mygraphdb.test 3720 ./datasets/graphDB/Q4.my 40
             """)
         else:
             print("""
@@ -85,36 +89,36 @@ def assertion():
     assert os.path.exists(sys.argv[1]) and os.path.exists(sys.argv[3]), \
         """
         <target_graph_file_path>: {}
-        <query_graph_file_path>:  {}
+        <source_graph_file_path>:  {}
         Please ensure that the above files exist.
         """.format(sys.argv[1], sys.argv[3])
     
     assert sys.argv[2].isdigit() and sys.argv[4].isdigit(), \
         """
         <target_graph_number>: {}
-        <query_graph_number>:  {}
+        <source_graph_number>:  {}
         The above parameters must be integers.
         """.format(sys.argv[2], sys.argv[4])
 
     assert int(sys.argv[2]) and int(sys.argv[4]) , \
         """
         <target_graph_number>: {}
-        <query_graph_number>:  {}
+        <source_graph_number>:  {}
         target graph number must be less than or equal to  10000 
-        query  graph number must be less than or equal to  1000
+        source  graph number must be less than or equal to  1000
         """.format(sys.argv[2], sys.argv[4])
 
     return sys.argv[1], int(sys.argv[2]), sys.argv[3], int(sys.argv[4])
 
 if __name__ == '__main__':
     
-    target_file_path, target_number, query_file_path, query_number = assertion()
+    target_file_path, target_number, source_file_path, source_number = assertion()
 
-    target_file_path = DEFAULT_TARGET_PATH if target_file_path == None else target_file_path
-    query_file_path  = DEFAULT_QUERY_PATH  if query_file_path  == None else query_file_path
+    target_file_path = DEFAULT_TARGET_PATH if target_file_path == None else target_file_path    
+    source_file_path = DEFAULT_SOURCE_PATH if source_file_path == None else source_file_path
 
     target = read_graph_from(target_file_path)[target_number]
-    query  = read_graph_from(query_file_path)[query_number] 
+    source = read_graph_from(source_file_path)[source_number] 
 
     show_edge_value = input("Want to show the value of edge or not? (Y/N)")
 
@@ -123,19 +127,23 @@ if __name__ == '__main__':
 
     show_edge_value = True if show_edge_value == 'Y' else False
 
-    graph_matcher = iso.GraphMatcher(target, query, 
+    graph_matcher = iso.GraphMatcher(target, source, 
         node_match=iso.categorical_node_match('label', -1), 
         edge_match=iso.categorical_edge_match('label', -1))		
     if graph_matcher.subgraph_is_isomorphic():		
-        print("<SubGraph Isomorphism> query_graph {} is subgraph isomorphisc target_graph {}.".format(query_number, target_number))		
-        print(graph_matcher.mapping)
+        print("<SubGraph Isomorphism> source_graph {} is subgraph isomorphisc target_graph {}.".format(source_number, target_number))
+        iso_num = 0
+        for mapping in graph_matcher.subgraph_isomorphisms_iter():
+            iso_num += 1
+            print(mapping)
+        print('{} pairs of sub-graph isomorphism.'.format(iso_num))
     else:
-        print("<No Result> query_graph {} is not subgraph isomorphisc target_graph {}".format(query_number, target_number))
+        print("<No Result> source_graph {} is not subgraph isomorphisc target_graph {}".format(source_number, target_number))
 
     plt.subplot(121)
-    draw_graph_for('target', target, show_edge_value)
+    draw_graph_for('source', source, show_edge_value)
     plt.subplot(122)
-    draw_graph_for('query', query, show_edge_value)
+    draw_graph_for('target', target, show_edge_value)
     
     plt.show()
     
