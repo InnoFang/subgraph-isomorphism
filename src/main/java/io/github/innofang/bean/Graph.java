@@ -55,6 +55,8 @@ public class Graph {
 
     void reset() {
         this.neighborVertexMap = new HashMap<>();
+        this.out = new HashMap<>();
+        this.in  = new HashMap<>();
 
         for (Edge edge : edgeList) {
             int from = edge.getVertexFrom();
