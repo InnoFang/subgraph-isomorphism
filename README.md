@@ -8,11 +8,11 @@ In theoretical computer science, the subgraph isomorphism problem is a computati
 
 ## TO-DO for SubGraph Isomorphism Algorithm Implementation
 
- + [x] [Ullmann](./src/main/java/io/github/innofang/algorithm/impl/Ullmann.java) [2]
- + [x] [VF2](./src/main/java/io/github/innofang/algorithm/impl/VF2.java) [3]
+ + [x] Ullmann [2]
+ + [x] VF2] [3]
  + [ ] SPath [4]
  + [ ] GADDI [5]
- + [x] [Ullmann Algorithm on MapReduce](./mapreduce/src/main/java/io/github/innofang/ullmann) [6]
+ + [x] Ullmann Algorithm on MapReduce [6]
  + [ ] VF2 Algorithm on MapReduce [7]
  
 ## Reference & Bibliography
