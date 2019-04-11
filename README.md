@@ -12,7 +12,7 @@ In theoretical computer science, the subgraph isomorphism problem is a computati
  + [x] VF2] [3]
  + [ ] SPath [4]
  + [ ] GADDI [5]
- + [x] Ullmann Algorithm on MapReduce [6]
+ + [ ] Ullmann Algorithm on MapReduce [6]
  + [ ] VF2 Algorithm on MapReduce [7]
  
 ## Reference & Bibliography
