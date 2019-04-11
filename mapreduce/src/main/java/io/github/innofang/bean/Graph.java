@@ -1,13 +1,14 @@
 package io.github.innofang.bean;
 
 import org.apache.hadoop.io.IntWritable;
-import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.io.WritableComparable;
 
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class Graph implements WritableComparable<Graph> {
@@ -15,6 +16,12 @@ public class Graph implements WritableComparable<Graph> {
     private IntWritable graphId = new IntWritable();
     private EdgeArrayWritable edgeArray = new EdgeArrayWritable();
     private VertexArrayWritable vertexArray = new VertexArrayWritable();
+
+    // the other end of an edge leaving a vertex
+    // Edge: from -----> to, for 'from' vertex, is the 'out' edge
+    private HashMap<Integer, ArrayList<Edge>> out;
+    // Edge: from -----> to, for 'to    vertex, is the 'in'  edge
+    private HashMap<Integer, ArrayList<Edge>> in;
 
     public Graph() {
         this(-1, new Vertex[0], new Edge[0]);
@@ -28,6 +35,36 @@ public class Graph implements WritableComparable<Graph> {
         this.graphId.set(graphId);
         this.vertexArray.set(vertexArray);
         this.edgeArray.set(edgeArray);
+
+        init();
+    }
+
+    private void init() {
+        this.out = new HashMap<>();
+        this.in  = new HashMap<>();
+
+        for (Edge edge : getEdgeArray()) {
+            int from = edge.getVertexFrom();
+            int to = edge.getVertexTo();
+
+            ArrayList<Edge> outEdges;
+            if (out.containsKey(from)) {
+                outEdges = out.get(from);
+            } else {
+                outEdges = new ArrayList<>();
+            }
+            outEdges.add(edge);
+            out.put(from, outEdges);
+
+            ArrayList<Edge> inEdges;
+            if (in.containsKey(to)) {
+                inEdges = in.get(to);
+            } else {
+                inEdges = new ArrayList<>();
+            }
+            inEdges.add(edge);
+            in.put(to, inEdges);
+        }
     }
 
     public void setGraphId(int graphId) {
@@ -55,39 +92,78 @@ public class Graph implements WritableComparable<Graph> {
     }
 
     public int[][] getAdjacencyMatrix() {
-        return getAdjacencyMatrix(true);
+        return getAdjacencyMatrix(false);
     }
 
-    public int[][] getAdjacencyMatrix(boolean undirected) {
+    public int[][] getAdjacencyMatrix(boolean directed) {
         // some vertex id is from 1 to vertexSize
         int vertexSize = vertexArray.get().length + 1;
 
         int[][] matrix = new int[vertexSize][vertexSize];
         for (Edge edge: getEdgeArray()) {
-            int i = Integer.parseInt(edge.getVertexI());
-            int j = Integer.parseInt(edge.getVertexJ());
+            int i = edge.getVertexFrom();
+            int j = edge.getVertexTo();
             matrix[i][j] = 1;
-            if (undirected) {
+            if (directed) {
                 matrix[j][i] = 1;
             }
         }
         return matrix;
     }
 
-    public int getVertexDegree(String vertex) {
-        int degree = 0;
-        for (Edge edge: getEdgeArray()) {
-            if (edge.contain(vertex)) {
-                ++degree;
-            }
-        }
-        return degree;
+    public int getVertexInDegree(int v) {
+        ArrayList<Edge> inEdges = in.get(v);
+        return inEdges == null ? 0 : inEdges.size();
     }
 
-    public String getEdgeLabel(String vertexI, String vertexJ) {
+    public int getVertexOutDegree(int v) {
+        ArrayList<Edge> outEdges = out.get(v);
+        return outEdges == null ? 0 : outEdges.size();
+    }
+
+    public int getVertexDegree(int v) {
+        return getVertexOutDegree(v) + getVertexInDegree(v);
+    }
+
+    public String getEdgeLabel(int vertexFrom, int vertexTo) {
         for (Edge edge: getEdgeArray()) {
-            if (edge.contain(vertexI) && edge.contain(vertexJ)) {
+            if (edge.getVertexFrom() == vertexFrom &&
+                    edge.getVertexTo() == vertexTo) {
                 return edge.getLabel();
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<Edge> getOutEdges(int vertex) {
+        assert vertex < getVertexArray().length;
+        return out.get(vertex);
+    }
+
+    public String getOutEdgeLabel(int vertex, int otherVertex) {
+        ArrayList<Edge> outEdges = out.get(vertex);
+        if (outEdges == null)
+            return null;
+        for (Edge outEdge : outEdges) {
+            if (outEdge.contain(otherVertex)) {
+                return outEdge.getLabel();
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<Edge> getInEdges(int vertex) {
+        assert vertex < getVertexArray().length;
+        return in.get(vertex);
+    }
+
+    public String getInEdgeLabel(int vertex, int otherVertex) {
+        ArrayList<Edge> inEdges = in.get(vertex);
+        if (inEdges == null)
+            return null;
+        for (Edge inEdge: inEdges) {
+            if (inEdge.contain(otherVertex)) {
+                return inEdge.getLabel();
             }
         }
         return null;
@@ -106,6 +182,7 @@ public class Graph implements WritableComparable<Graph> {
         graphId.readFields(dataInput);
         edgeArray.readFields(dataInput);
         vertexArray.readFields(dataInput);
+        init();
     }
 
     @Override
@@ -135,7 +212,7 @@ public class Graph implements WritableComparable<Graph> {
             ret.append(String.format("v %s %s\n", vertex.getVertex(), vertex.getLabel()));
         }
         for (Edge edge : getEdgeArray()) {
-            ret.append(String.format("e %s %s %s\n", edge.getVertexI(), edge.getVertexJ(), edge.getLabel()));
+            ret.append(String.format("e %s %s %s\n", edge.getVertexFrom(), edge.getVertexTo(), edge.getLabel()));
         }
         return ret.toString();
     }

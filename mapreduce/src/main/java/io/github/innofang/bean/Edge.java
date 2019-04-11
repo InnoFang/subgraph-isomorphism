@@ -1,5 +1,6 @@
 package io.github.innofang.bean;
 
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.Writable;
 
@@ -10,38 +11,38 @@ import java.util.Objects;
 
 public class Edge implements Writable {
 
-    private Text vertexI = new Text();   // or Vertex 'from'
-    private Text vertexJ = new Text();   // or Vertex 'to'
+    private IntWritable vertexFrom = new IntWritable();
+    private IntWritable vertexTo = new IntWritable();
     private Text label   = new Text();
 
     public Edge() {
-        this("", "", "");
+        this(-1, -1, "");
     }
 
-    public Edge(String vertexI, String vertexJ) {
-        this(vertexI, vertexJ, "");
+    public Edge(int vertexFrom, int vertexTo) {
+        this(vertexFrom, vertexTo, "");
     }
 
-    public Edge(String vertexI, String vertexJ, String label) {
-        this.vertexI.set(vertexI);
-        this.vertexJ.set(vertexJ);
+    public Edge(int vertexFrom, int vertexTo, String label) {
+        this.vertexFrom.set(vertexFrom);
+        this.vertexTo.set(vertexTo);
         this.label.set(label);
     }
 
-    public void setVertexI(String vertexI) {
-        this.vertexI.set(vertexI);
+    public void setVertexFrom(int vertexFrom) {
+        this.vertexFrom.set(vertexFrom);
     }
 
-    public String getVertexI() {
-        return vertexI.toString();
+    public int getVertexFrom() {
+        return vertexFrom.get();
     }
 
-    public void setVertexJ(String vertexJ) {
-        this.vertexJ.set(vertexJ);
+    public void setVertexTo(int vertexTo) {
+        this.vertexTo.set(vertexTo);
     }
 
-    public String getVertexJ() {
-        return vertexJ.toString();
+    public int getVertexTo() {
+        return vertexTo.get();
     }
 
     public void setLabel(String label) {
@@ -52,21 +53,21 @@ public class Edge implements Writable {
         return label.toString();
     }
 
-    public boolean contain(String vertex) {
-        return vertexI.toString().equals(vertex) || vertexJ.toString().equals(vertex);
+    public boolean contain(int vertex) {
+        return vertexFrom.get() == vertex || vertexTo.get()  == vertex;
     }
 
     @Override
     public void write(DataOutput dataOutput) throws IOException {
-        vertexI.write(dataOutput);
-        vertexJ.write(dataOutput);
+        vertexFrom.write(dataOutput);
+        vertexTo.write(dataOutput);
         label.write(dataOutput);
     }
 
     @Override
     public void readFields(DataInput dataInput) throws IOException {
-        vertexI.readFields(dataInput);
-        vertexJ.readFields(dataInput);
+        vertexFrom.readFields(dataInput);
+        vertexTo.readFields(dataInput);
         label.readFields(dataInput);
     }
 
@@ -75,13 +76,13 @@ public class Edge implements Writable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Edge edge = (Edge) o;
-        return Objects.equals(vertexI, edge.vertexI) &&
-                Objects.equals(vertexJ, edge.vertexJ) &&
+        return Objects.equals(vertexFrom, edge.vertexFrom) &&
+                Objects.equals(vertexTo, edge.vertexTo) &&
                 Objects.equals(label, edge.label);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(vertexI, vertexJ, label);
+        return Objects.hash(vertexFrom, vertexTo, label);
     }
 }

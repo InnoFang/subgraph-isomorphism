@@ -1,5 +1,6 @@
 package io.github.innofang.bean;
 
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.Writable;
 
@@ -10,28 +11,28 @@ import java.util.Objects;
 
 public class Vertex implements Writable {
 
-    private Text vertex = new Text();
+    private IntWritable vertex = new IntWritable();
     private Text label  = new Text();
 
     public Vertex() {
-        this("", "");
+        this(-1, "");
     }
 
-    public Vertex(String vertex) {
+    public Vertex(int vertex) {
         this(vertex, "");
     }
 
-    public Vertex(String vertex, String label) {
+    public Vertex(int vertex, String label) {
         this.vertex.set(vertex);
         this.label .set(label);
     }
 
-    public void setVertex(String vertex) {
+    public void setVertex(int vertex) {
         this.vertex.set(vertex);
     }
 
-    public String getVertex() {
-        return vertex.toString();
+    public int getVertex() {
+        return vertex.get();
     }
 
     public void setLabel(String label) {
