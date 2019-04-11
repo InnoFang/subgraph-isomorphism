@@ -1,4 +1,4 @@
-package io.github.innofang.mapper;
+package io.github.innofang.mapper.ullmann;
 
 import io.github.innofang.bean.*;
 import io.github.innofang.util.GraphReader;
