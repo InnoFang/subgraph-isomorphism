@@ -1,8 +1,10 @@
-package io.github.innofang.ullmann;
+package io.github.innofang.mapper.ullmann;
 
 import io.github.innofang.bean.Graph;
 import io.github.innofang.bean.IntMatrixWritable;
 import io.github.innofang.bean.TextArrayWritable;
+import io.github.innofang.mapper.CalcAndCompMapper;
+import io.github.innofang.mapper.ConstructMMapper;
 import io.github.innofang.util.QueryGraphFileInputFormat;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;

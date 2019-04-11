@@ -1,4 +1,4 @@
-package io.github.innofang.ullmann;
+package io.github.innofang.mapper;
 
 import io.github.innofang.bean.Graph;
 import io.github.innofang.bean.IntMatrixWritable;
@@ -79,8 +79,8 @@ public class ConstructMMapper extends Mapper<IntWritable, Graph, Graph, IntMatri
         IntWritable[][] M0 = new IntWritable[row][col];
         for (int i = 0; i < row; ++ i) {
             for (int j = 0; j < col; ++ j) {
-                String vertexJ = targetVertices[j].getVertex();
-                String vertexI = queryVertices[i].getVertex();
+                int vertexJ = targetVertices[j].getVertex();
+                int vertexI = queryVertices[i].getVertex();
                 int degreeJ = query.getVertexDegree(vertexJ);
                 int degreeI = query.getVertexDegree(vertexI);
                 if (degreeJ >= degreeI) {

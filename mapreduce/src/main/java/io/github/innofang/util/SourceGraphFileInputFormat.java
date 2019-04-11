@@ -72,9 +72,9 @@ public class QueryGraphFileInputFormat extends FileInputFormat<IntWritable, Grap
                     }
                     graph = new Graph();
                 } else if (info[0].equals("v") && info.length == 3) {    // v vertex label
-                    vertexList.add(new Vertex(info[1], info[2]));
+                    vertexList.add(new Vertex(Integer.parseInt(info[1]), info[2]));
                 } else if (info[0].equals("e") && info.length == 4) {   // e from to label
-                    edgeList.add(new Edge(info[1], info[2], info[3]));
+                    edgeList.add(new Edge(Integer.parseInt(info[1]), Integer.parseInt(info[2]), info[3]));
                 } else {
                     System.err.println("Wrong line: " + line);
                     return false;

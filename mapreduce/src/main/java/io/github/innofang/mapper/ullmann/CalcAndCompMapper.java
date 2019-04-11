@@ -1,4 +1,4 @@
-package io.github.innofang.ullmann;
+package io.github.innofang.mapper;
 
 import io.github.innofang.bean.*;
 import io.github.innofang.util.GraphReader;
@@ -103,15 +103,11 @@ public class CalcAndCompMapper extends Mapper<Graph, IntMatrixWritable, Graph, M
                             boolean match = false;
                             if (MA[i][x] == 1) {
                                 // label of MA[i][x]
-                                String labelIX = query.getEdgeLabel(
-                                        String.valueOf(i),
-                                        String.valueOf(x));
+                                String labelIX = query.getEdgeLabel(i, x);
                                 for (int y = 0; y < col; ++y) {
                                     if (M0[x][y] * MB[y][j] == 1) {
                                         // label of MB[y][j]
-                                        String labelYJ = target.getEdgeLabel(
-                                                String.valueOf(y),
-                                                String.valueOf(j));
+                                        String labelYJ = target.getEdgeLabel(y, j);
                                         if (labelIX.equals(labelYJ)) {
                                             match = true;
                                             break;

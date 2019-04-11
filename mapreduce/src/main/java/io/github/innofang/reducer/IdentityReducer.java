@@ -1,8 +1,7 @@
-package io.github.innofang.ullmann;
+package io.github.innofang.mapper.ullmann;
 
 import io.github.innofang.bean.Graph;
 import io.github.innofang.bean.TextArrayWritable;
-import org.apache.hadoop.io.ArrayWritable;
 import org.apache.hadoop.io.MapWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.Writable;
