@@ -1,42 +1,46 @@
 package io.github.innofang.util;
 
-import io.github.innofang.algorithm.IsomorphismAlgorithm;
+import io.github.innofang.lib.Matcher;
+import io.github.innofang.lib.State;
 import io.github.innofang.graph.GraphReader;
-import io.github.innofang.graph.bean.Graph;
+import io.github.innofang.bean.Graph;
 import io.github.innofang.graph.datasets.DataSetStrategy;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public class TestHelper {
 
     /**
-     *
-     * @param targetGraphPath   target graph file path
-     * @param queryGraphPath    query graph file path
-     * @param algorithm         which isomorphism algorithm do you want to use
-     * @param dataSetStrategy   which test set do you want to import
-     * @param showMapping       show mapping or not
-     * @param listener          isomorphism listener, call it when two graph isomorphism
+     * @param targetGraphPath   a file path of target graph
+     * @param sourceGraphPath   a file path of source graph
+     * @param stateClass        specify a state class
+     * @param dataSetStrategy   specify a strategy to read a data set
+     * @param visitor           how to visit a mapping
+     * @throws IOException
+     * @throws NoSuchMethodException
+     * @throws IllegalAccessException
+     * @throws InvocationTargetException
+     * @throws InstantiationException
      */
     public static void testIsomorphismAlgorithm(String targetGraphPath,
-                                         String queryGraphPath,
-                                         IsomorphismAlgorithm algorithm,
+                                         String sourceGraphPath,
+                                         Class<? extends State> stateClass,
                                          DataSetStrategy dataSetStrategy,
-                                         boolean showMapping,
-                                         IsomorphismListener listener)  throws IOException {
+                                         Matcher.Visitor visitor) throws IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
 
         GraphReader reader = new GraphReader();
         reader.setDataSetStrategy(dataSetStrategy);
-        List<Graph> queryGraphList = reader.read(queryGraphPath);
+        List<Graph> queryGraphList = reader.read(sourceGraphPath);
         List<Graph> targetGraphList = reader.read(targetGraphPath);
 
         int queryGraphSize = queryGraphList.size();
         int targetGraphSize = targetGraphList.size();
 
         System.out.println("Target graph File: " + targetGraphPath);
-        System.out.println("Query graph File: " + queryGraphPath);
+        System.out.println("Query graph File: " + sourceGraphPath);
 
         System.out.println("The size of target graph: " + targetGraphSize);
         System.out.println("The size of query graph: " + queryGraphSize);
@@ -45,16 +49,19 @@ public class TestHelper {
         System.out.println("===================\n");
         int matchNum = 0;
         long start = System.currentTimeMillis();
-        for (int i = 0; i < queryGraphSize; ++ i) {
-            for (int j = 0; j < targetGraphSize; ++ j) {
-                Graph query = queryGraphList.get(i);
-                Graph target = targetGraphList.get(j);
-                if (algorithm.isSubGraphIsomorphism(target, query)) {
+        for (Graph sourceGraph : queryGraphList) {
+            for (Graph targetGraph : targetGraphList) {
+                Constructor<? extends State> constructor = stateClass.getDeclaredConstructor(Graph.class, Graph.class);
+                State state = constructor.newInstance(sourceGraph, targetGraph);
+                long oneSearch = System.currentTimeMillis();
+                int count = Matcher.match(state, visitor);
+                if (count != 0) {
+                    long oneSearchUsed = System.currentTimeMillis() - oneSearch;
+                    double oneSearchSeconds = oneSearchUsed * 1.0 / 1000;
+                    System.out.println(String.format(
+                            "Source graph #%d is sub-graph isomorphic target graph #%d, %d pairs of mapping, used %f s.\n",
+                                    sourceGraph.getGraphId(), targetGraph.getGraphId(), count, oneSearchSeconds));
                     ++ matchNum;
-                    listener.match(algorithm, i, j);
-                    if (showMapping) {
-                        printMapping(algorithm.getMapping());
-                    }
                 }
             }
         }
@@ -62,18 +69,6 @@ public class TestHelper {
         double seconds = used * 1.0 / 1000;
 
         System.out.println("\n===================");
-        System.out.printf("End search, used %f s, %d pairs of SubGraphs Isomorphism.", seconds, matchNum);
+        System.out.printf("End search, totally used %f s, %d pairs of SubGraphs Isomorphism.\n", seconds, matchNum);
     }
-
-
-    private static void printMapping(HashMap<String, String> mapping) {
-        for (HashMap.Entry<String, String> entry : mapping.entrySet()) {
-            System.out.println(" (" + entry.getKey() + ", " + entry.getValue() + ") ");
-        }
-    }
-
-    public interface IsomorphismListener {
-        void match(IsomorphismAlgorithm algorithm, int queryGraphIndex, int targetGraphIndex);
-    }
-
 }
