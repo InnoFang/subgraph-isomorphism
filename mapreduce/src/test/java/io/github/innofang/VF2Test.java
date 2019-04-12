@@ -71,7 +71,7 @@ public class VF2Test extends Configured implements Tool {
         job.setReducerClass(IdentityReducer.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(TextArrayWritable.class);
-        FileOutputFormat.setOutputPath(job, new Path(OUTPUT_FOLDER));
+        FileOutputFormat.setOutputPath(job, outputPath);
 
         job.waitForCompletion(true);
         return 0;

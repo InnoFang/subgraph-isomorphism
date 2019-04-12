@@ -14,7 +14,10 @@ public class ArgsParserTest {
         args.add(new String[]{"-s/home/source", "-t/home/innofang/target", "-o/output"});
         args.add(new String[]{"-s=/home/source", "-t=/home/innofang/target", "-o=/output"});
 
-        System.out.println(ArgsParser.parse(args.get(3)));
+        ArgsParser parser = ArgsParser.parse(args.get(3));
+        System.out.println(parser.getSourceGraphFilePath());
+        System.out.println(parser.getTargetGraphFilePath());
+        System.out.println(parser.getOutputFolderPath());
     }
 
 }
