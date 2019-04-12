@@ -3,10 +3,10 @@ package io.github.innofang;
 import io.github.innofang.bean.Graph;
 import io.github.innofang.bean.IntMatrixWritable;
 import io.github.innofang.bean.TextArrayWritable;
-import io.github.innofang.ullmann.CalcAndCompMapper;
-import io.github.innofang.ullmann.ConstructMMapper;
-import io.github.innofang.ullmann.IdentityReducer;
-import io.github.innofang.util.QueryGraphFileInputFormat;
+import io.github.innofang.mapper.ullmann.CalcAndCompMapper;
+import io.github.innofang.mapper.ullmann.ConstructMMapper;
+import io.github.innofang.reducer.IdentityReducer;
+import io.github.innofang.util.SourceGraphFileInputFormat;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.FSDataInputStream;
@@ -30,7 +30,7 @@ import java.net.URI;
 public class UllmannDriverTest extends Configured implements Tool {
 
     private static final String INPUT_FILE =
-            "/home/innofang/Documents/Github/subgraph-isomorphism/src/test/resources/graphDB/Q4.my";
+            "/home/innofang/Documents/Github/subgraph-isomorphism/datasets/graphDB/Q4.my";
 
     private static final String OUTPUT_FOLDER =
             "/home/innofang/Documents/Github/subgraph-isomorphism/output/ullmann/";
@@ -64,7 +64,7 @@ public class UllmannDriverTest extends Configured implements Tool {
         Job job = Job.getInstance(getConf(), "ullmann");
         job.addCacheFile(new URI(MAIN_GRAPH_FILE));
         job.setJarByClass(getClass());
-        job.setInputFormatClass(QueryGraphFileInputFormat.class);
+        job.setInputFormatClass(SourceGraphFileInputFormat.class);
         FileInputFormat.setInputPaths(job, new Path(INPUT_FILE));
 
         ChainMapper.addMapper(job,
