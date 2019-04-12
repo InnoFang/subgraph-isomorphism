@@ -1,11 +1,14 @@
-package io.github.innofang.mapper.ullmann;
+package io.github.innofang;
 
+import com.sun.org.apache.xpath.internal.Arg;
 import io.github.innofang.bean.Graph;
 import io.github.innofang.bean.IntMatrixWritable;
 import io.github.innofang.bean.TextArrayWritable;
-import io.github.innofang.mapper.CalcAndCompMapper;
-import io.github.innofang.mapper.ConstructMMapper;
-import io.github.innofang.util.QueryGraphFileInputFormat;
+import io.github.innofang.mapper.ullmann.CalcAndCompMapper;
+import io.github.innofang.mapper.ullmann.ConstructMMapper;
+import io.github.innofang.reducer.IdentityReducer;
+import io.github.innofang.util.ArgsParser;
+import io.github.innofang.util.SourceGraphFileInputFormat;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -18,18 +21,16 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class UllmannDriver {
-    public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException, URISyntaxException {
         Configuration conf = new Configuration(false);
 
-        if (args.length < 2) {
-            System.out.println("Please specify the complete command.");
-            System.out.println("    hadoop jar <jar file> <main class> <input file> <output file>.");
-            System.exit(0);
-        }
+        ArgsParser parser = ArgsParser.parse(args);
 
-        Path outputPath = new Path(args[1]);
+        Path outputPath = new Path(parser.getOutputFolderPath());
         FileSystem fs = FileSystem.get(conf);
         if (fs.exists(outputPath)) {
             fs.delete(outputPath, true);
@@ -37,9 +38,10 @@ public class UllmannDriver {
         }
 
         Job job = Job.getInstance(conf, "ullmann");
+        job.addCacheFile(new URI(parser.getTargetGraphFilePath()));
         job.setJarByClass(UllmannDriver.class);
-        job.setInputFormatClass(QueryGraphFileInputFormat.class);
-        FileInputFormat.setInputPaths(job, new Path(args[0]));
+        job.setInputFormatClass(SourceGraphFileInputFormat.class);
+        FileInputFormat.setInputPaths(job, parser.getSourceGraphFilePath());
 
         ChainMapper.addMapper(job,
                 ConstructMMapper.class,
@@ -63,9 +65,8 @@ public class UllmannDriver {
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(TextArrayWritable.class);
 
-        FileOutputFormat.setOutputPath(job, new Path(args[1]));
+        FileOutputFormat.setOutputPath(job, outputPath);
 
         System.exit(job.waitForCompletion(true) ? 0 : 1);
     }
-
 }
