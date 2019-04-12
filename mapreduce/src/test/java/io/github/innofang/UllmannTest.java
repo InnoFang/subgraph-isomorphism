@@ -27,7 +27,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.net.URI;
 
-public class UllmannDriverTest extends Configured implements Tool {
+public class UllmannTest extends Configured implements Tool {
 
     private static final String INPUT_FILE =
             "/home/innofang/Documents/Github/subgraph-isomorphism/datasets/graphDB/Q4.my";
@@ -46,7 +46,7 @@ public class UllmannDriverTest extends Configured implements Tool {
         // https://stackoverflow.com/questions/12532339/no-appenders-could-be-found-for-loggerlog4j
         BasicConfigurator.configure();
 
-        Tool tool = new UllmannDriverTest();
+        Tool tool = new UllmannTest();
         ToolRunner.run(tool, new String[0]);
         print(tool);
     }
