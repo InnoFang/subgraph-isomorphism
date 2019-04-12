@@ -6,8 +6,15 @@ import org.apache.commons.cli.*;
 import java.util.HashMap;
 
 public class ArgsParser {
-    public static HashMap<String, String> parse(String[] args) {
-        HashMap<String, String> arguments = new HashMap<>();
+
+    private ArgsParser(){}
+    private static HashMap<String, String> arguments = new HashMap<>();
+
+    public static final String SOURCE = "source";
+    public static final String TARGET = "target";
+    public static final String OUTPUT = "output";
+
+    public static ArgsParser parse(String[] args) {
 
         Options options = new Options();
         options.addRequiredOption("s", "source", true,
@@ -25,9 +32,9 @@ public class ArgsParser {
 
         try {
             cmd = parser.parse(options, args);
-            arguments.put("source", cmd.getParsedOptionValue("s").toString());
-            arguments.put("target", cmd.getParsedOptionValue("t").toString());
-            arguments.put("output", cmd.getParsedOptionValue("o").toString());
+            arguments.put(SOURCE, cmd.getParsedOptionValue("s").toString());
+            arguments.put(TARGET, cmd.getParsedOptionValue("t").toString());
+            arguments.put(OUTPUT, cmd.getParsedOptionValue("o").toString());
         } catch (ParseException e) {
             e.printStackTrace();
             formatter.printHelp("sub-Graph Isomorphism", options, true);
@@ -39,6 +46,18 @@ public class ArgsParser {
             System.exit(0);
         }
 
-        return arguments;
+        return new ArgsParser();
+    }
+
+    public String getSourceGraphFilePath() {
+        return arguments.get(SOURCE);
+    }
+
+    public String getTargetGraphFilePath() {
+        return arguments.get(TARGET);
+    }
+
+    public String getOutputFolderPath() {
+        return arguments.get(OUTPUT);
     }
 }
