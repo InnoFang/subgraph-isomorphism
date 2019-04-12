@@ -36,7 +36,7 @@ public class ArgsParser {
             arguments.put(TARGET, cmd.getParsedOptionValue("t").toString());
             arguments.put(OUTPUT, cmd.getParsedOptionValue("o").toString());
         } catch (ParseException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             formatter.printHelp("sub-Graph Isomorphism", options, true);
             System.exit(1);
         }
