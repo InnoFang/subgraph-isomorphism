@@ -17,7 +17,7 @@ import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class QueryGraphFileInputFormat extends FileInputFormat<IntWritable, Graph> {
+public class SourceGraphFileInputFormat extends FileInputFormat<IntWritable, Graph> {
 
     @Override
     protected boolean isSplitable(JobContext context, Path filename) {

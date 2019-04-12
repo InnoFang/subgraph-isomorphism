@@ -1,4 +1,4 @@
-package io.github.innofang.mapper.ullmann;
+package io.github.innofang.reducer;
 
 import io.github.innofang.bean.Graph;
 import io.github.innofang.bean.TextArrayWritable;
