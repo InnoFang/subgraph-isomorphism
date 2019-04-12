@@ -34,56 +34,47 @@ public class GraphReader {
         assert path != null : "Path cannot be null, please create a GraphReader instance before use loadGraph()";
         switch (path.getName()) {
             case CA_GRQC_TXT:
-                return loadGraphBy(new ReaderListener() {
-                    @Override
-                    public boolean onRead(String line, HashSet<Vertex> vertices, HashSet<Edge> edges) {
-                        if (line.startsWith("#"))
-                            return true;
-
-                        String[] info = line.split("\\s+");
-                        if (info.length == 2) {
-                            vertices.add(new Vertex(info[0]));
-                            vertices.add(new Vertex(info[1]));
-                            edges.add(new Edge(info[0], info[1]));
-                        } else {
-                            System.err.println("Wrong Line: " + line);
-                            return false;
-                        }
+                return loadGraphBy((line, vertices, edges) -> {
+                    if (line.startsWith("#"))
                         return true;
+
+                    String[] info = line.split("\\s+");
+                    if (info.length == 2) {
+                        vertices.add(new Vertex(Integer.parseInt(info[0])));
+                        vertices.add(new Vertex(Integer.parseInt(info[1])));
+                        edges.add(new Edge(Integer.parseInt(info[0]), Integer.parseInt(info[1])));
+                    } else {
+                        System.err.println("Wrong Line: " + line);
+                        return false;
                     }
+                    return true;
                 });
             case COLLEGE_MSG_TXT:
-                return loadGraphBy(new ReaderListener() {
-                    @Override
-                    public boolean onRead(String line, HashSet<Vertex> vertices, HashSet<Edge> edges) {
-                        String[] info = line.split("\\s+");
-                        if (info.length == 3) {
-                            vertices.add(new Vertex(info[0]));
-                            vertices.add(new Vertex(info[1]));
-                            edges.add(new Edge(info[0], info[1], info[2]));
-                        } else {
-                            System.err.println("Wrong Line: " + line);
-                            return false;
-                        }
-                        return true;
+                return loadGraphBy((line, vertices, edges) -> {
+                    String[] info = line.split("\\s+");
+                    if (info.length == 3) {
+                        vertices.add(new Vertex(Integer.parseInt(info[0])));
+                        vertices.add(new Vertex(Integer.parseInt(info[1])));
+                        edges.add(new Edge(Integer.parseInt(info[0]), Integer.parseInt(info[1]), info[2]));
+                    } else {
+                        System.err.println("Wrong Line: " + line);
+                        return false;
                     }
+                    return true;
                 });
             case EMAIL_EU_CORE_DEPARTMENT_LABELS_TXT:
             case EMAIL_EU_CORE_TXT:
-                return loadGraphBy(new ReaderListener() {
-                    @Override
-                    public boolean onRead(String line, HashSet<Vertex> vertices, HashSet<Edge> edges) {
-                        String[] info = line.split("\\s+");
-                        if (info.length == 2) {
-                            vertices.add(new Vertex(info[0]));
-                            vertices.add(new Vertex(info[1]));
-                            edges.add(new Edge(info[0], info[1]));
-                        } else {
-                            System.err.println("Wrong Line: " + line);
-                            return false;
-                        }
-                        return true;
+                return loadGraphBy((line, vertices, edges) -> {
+                    String[] info = line.split("\\s+");
+                    if (info.length == 2) {
+                        vertices.add(new Vertex(Integer.parseInt(info[0])));
+                        vertices.add(new Vertex(Integer.parseInt(info[1])));
+                        edges.add(new Edge(Integer.parseInt(info[0]), Integer.parseInt(info[1])));
+                    } else {
+                        System.err.println("Wrong Line: " + line);
+                        return false;
                     }
+                    return true;
                 });
             default:
                 System.out.println("Cannot load any graph file, '" + path.getName() + "' is NOT exist.");
