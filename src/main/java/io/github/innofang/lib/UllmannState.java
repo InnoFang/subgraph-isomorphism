@@ -183,7 +183,7 @@ public class UllmannState extends State {
     }
 
     @Override
-    void backTrack(Pair<Integer, Integer> pair) {
+    public void backTrack(Pair<Integer, Integer> pair) {
 
     }
 
