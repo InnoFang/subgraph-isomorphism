@@ -11,8 +11,9 @@ In theoretical computer science, the subgraph isomorphism problem is a computati
  + [x] Ullmann Algorithm
  + [x] VF2 Algorithm
  + [x] Ullmann Algorithm on MapReduce
- + [ ] VF2 Algorithm on MapReduce
- 
+ + [x] VF2 Algorithm on MapReduce
+
+
 ## Reference & Bibliography
 
  + Wikipedia contributors. (2018, October 13). Subgraph isomorphism problem. In Wikipedia, The Free Encyclopedia. Retrieved 09:12, April 8, 2019, from https://en.wikipedia.org/w/index.php?title=Subgraph_isomorphism_problem&oldid=863918223
@@ -22,7 +23,7 @@ In theoretical computer science, the subgraph isomorphism problem is a computati
  + Cordella L P, Foggia P and Sansone C. A (sub)graph isomorphism algorithm for matching large graphs[J]. IEEE PAMI, 2004, 26(10):1367–1372. [link](https://ieeexplore.ieee.org/document/1323804?arnumber=1323804&tag=1)
 
  + Ashish Sharma, Santosh Bahir, Sushant Narsale, Unmil Tambe, "A  Parallel Algorithm for Finding Sub-graph Isomorphism", CS420-ProjectReport  (www.cs.jhu.edu/~snarsal/CS420-ProjectReport.pdf), CS420: Parallel Programming. Fall 2008.
-``
+
  + P. Feher, M. Asztalos, T. Vajk, T. Meszaros, L. Lengyel, "Detecting subgraph isomorphism with MapReduce", Journal of Supercomputing, vol. 73, no. 5, 2017.
 
 ## [License](./LICENSE)
