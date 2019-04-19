@@ -6,9 +6,7 @@ import io.github.innofang.bean.Vertex;
 import io.github.innofang.graph.exceptions.GraphDataErrorException;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -46,8 +44,9 @@ public class NormalDataSet implements DataSetStrategy {
         BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
         String line;
         int lineNumber = 0;
-        HashSet<Vertex> vertices = new HashSet<>();
-        HashSet<Edge> edges = new HashSet<>();
+        // IMPORTANT: the vertex index is corresponding to the vertex, so must be keep ordered.
+        Set<Vertex> vertices = new TreeSet<>(Comparator.comparingInt(Vertex::getVertex));
+        Set<Edge> edges = new HashSet<>();
         int oldGraphId = 0;
         boolean first = true;
         while ((line = reader.readLine()) != null) {
