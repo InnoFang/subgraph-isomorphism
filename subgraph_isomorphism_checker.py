@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 DEFAULT_SOURCE_PATH  = './datasets/test/query_graph.txt'
 DEFAULT_TARGET_PATH = './datasets/test/target_graph.txt'
 
-def read_graph_from(file_name, directed=True):
+def read_graph_from(file_name):
     graphs = []
     with open(file_name) as file:
         lines = file.readlines()
@@ -22,10 +22,8 @@ def read_graph_from(file_name, directed=True):
             if info[0] == 't':
                 if graph:
                     graphs.append(graph)
-                if directed:
-                    graph = nx.DiGraph() # create a directed graph
-                else:
-                    graph = nx.Graph()   # create a undirected graph
+                
+                graph = nx.DiGraph() # create a directed graph
 
             elif info[0] == 'v' and len(info) == 3:
                 graph.add_node(info[1], label=int(info[2]))
@@ -127,7 +125,7 @@ if __name__ == '__main__':
 
     show_edge_value = True if show_edge_value == 'Y' else False
 
-    graph_matcher = iso.GraphMatcher(target, source, 
+    graph_matcher = iso.DiGraphMatcher(target, source, 
         node_match=iso.categorical_node_match('label', -1), 
         edge_match=iso.categorical_edge_match('label', -1))		
     if graph_matcher.subgraph_is_isomorphic():		
