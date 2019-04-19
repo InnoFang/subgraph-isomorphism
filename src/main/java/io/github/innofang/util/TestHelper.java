@@ -48,14 +48,14 @@ public class TestHelper {
         reader.setDataSetStrategy(targetDataSetStrategy);
         List<Graph> targetGraphList = reader.read(targetGraphPath);
 
-        int queryGraphSize = sourceGraphList.size();
+        int sourceGraphSize = sourceGraphList.size();
         int targetGraphSize = targetGraphList.size();
 
         System.out.println("Target graph File: " + targetGraphPath);
         System.out.println("Source graph File: " + sourceGraphPath);
 
         System.out.println("The size of target graph: " + targetGraphSize);
-        System.out.println("The size of source graph: " + queryGraphSize);
+        System.out.println("The size of source graph: " + sourceGraphSize);
         System.out.println();
         System.out.println("Start search ...");
         System.out.println("===================\n");
