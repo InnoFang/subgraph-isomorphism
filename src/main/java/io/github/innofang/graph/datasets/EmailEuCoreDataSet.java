@@ -21,8 +21,8 @@ public class EmailEuCoreDataSet implements DataSetStrategy {
             if (info.length == 2) {
                 int from = Integer.parseInt(info[0]);
                 int to   = Integer.parseInt(info[1]);
-                vertices.add(new Vertex(from, info[0]));
-                vertices.add(new Vertex(to, info[1]));
+                vertices.add(new Vertex(from));
+                vertices.add(new Vertex(to));
                 edges.add(new Edge(from, to));
             } else {
                 System.err.println("Wrong Line: " + line);
