@@ -42,9 +42,12 @@ public class UllmannState extends State {
         this.targetVertexList = state.targetVertexList;
         this.sourceVertexSize = state.sourceVertexSize;
         this.targetVertexSize = state.targetVertexSize;
-        this.mapping = state.mapping;
+        this.mapping = new HashMap<>(state.mapping);
 
-        this.M = state.M;
+        this.M = new int[state.M.length][state.M[0].length];
+        for (int i = 0; i < state.M.length; i++) {
+            System.arraycopy(state.M[i], 0, this.M[i], 0, state.M[i].length);
+        }
     }
 
     /**
@@ -60,15 +63,15 @@ public class UllmannState extends State {
         int row = sourceVertexSize;
         int col = targetVertexSize;
         int[][] M = new int[row][col];
+
         for (int i = 0; i < row; ++i) {
             for (int j = 0; j < col; ++j) {
-                int vertexI = sourceVertexList[i].getVertex();
-                int vertexJ = targetVertexList[j].getVertex();
-                M[i][j] = (sourceGraph.getVertexInDegree(vertexI) <= targetGraph.getVertexInDegree(vertexJ) &&
-                        sourceGraph.getVertexOutDegree(vertexI) <= targetGraph.getVertexOutDegree(vertexJ))
+                M[i][j] = (sourceGraph.getVertexInDegree(i) <= targetGraph.getVertexInDegree(j) &&
+                        sourceGraph.getVertexOutDegree(i) <= targetGraph.getVertexOutDegree(j))
                         ? 1 : 0;
             }
         }
+
         return M;
     }
 
@@ -122,7 +125,7 @@ public class UllmannState extends State {
 
         for (int i = len; i < row; ++i) {
             for (int j = 0; j < col; ++j) {
-                if (M[i][j] == 1) {
+                if (M[i][j] != 0) {
                     for (int k = len - 1; k < len; ++k) {
                         Integer l = mapping.get(k);
                         assert l != null;
