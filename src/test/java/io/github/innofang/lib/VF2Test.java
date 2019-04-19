@@ -1,6 +1,8 @@
 package io.github.innofang.lib;
 
+import io.github.innofang.graph.datasets.EmailEuCoreDataSet;
 import io.github.innofang.graph.datasets.NormalDataSet;
+import io.github.innofang.graph.datasets.NormalUnweightedDataSet;
 import io.github.innofang.util.TestHelper;
 import org.junit.Test;
 
@@ -36,6 +38,24 @@ public class VF2Test {
                 sourceGraphPath,
                 VF2State.class,
                 new NormalDataSet(),
+                mapping -> {
+                    System.out.println(mapping.toString());
+                    return false;
+                }
+        );
+    }
+
+    @Test
+    public void testVF2WithEmailEuCore() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, IOException {
+        String sourceGraphPath = "F:\\IDEA\\subgraph-isomorphism\\datasets\\email-Eu-core\\Q4-10-unweighted.my";
+        String targetGraphPath = "F:\\IDEA\\subgraph-isomorphism\\datasets\\email-Eu-core\\email-Eu-core-department-labels.txt";
+
+        TestHelper.testIsomorphismAlgorithm(
+                targetGraphPath,
+                sourceGraphPath,
+                VF2State.class,
+                new NormalUnweightedDataSet(),
+                new EmailEuCoreDataSet(),
                 mapping -> {
                     System.out.println(mapping.toString());
                     return false;
