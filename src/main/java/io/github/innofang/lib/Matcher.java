@@ -28,7 +28,7 @@ public class Matcher {
             Pair<Integer, Integer> pair = iterator.nextPair();
             if (state.isFeasiblePair(pair)) {
                 State s = state.clone();
-                state.addPair(pair);
+                s.addPair(pair);
                 if (match(s, visitor, count)) {
                     s.backTrack(pair);
                     s = null;
