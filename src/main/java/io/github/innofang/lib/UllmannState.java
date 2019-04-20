@@ -86,7 +86,12 @@ public class UllmannState extends State {
         assert sourceVertex < sourceVertexList.size();
         assert targetVertex < targetVertexList.size();
 
-        return M[sourceVertex][targetVertex] != 0;
+        // Whether to think about the vertex label is a question
+
+        String sourceVertexLabel = sourceGraph.getVertexLabel(sourceVertex);
+        String targetVertexLabel = targetGraph.getVertexLabel(targetVertex);
+
+        return sourceVertexLabel.equals(targetVertexLabel) && M[sourceVertex][targetVertex] != 0;
     }
 
     @Override
