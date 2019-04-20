@@ -83,22 +83,35 @@ public class VF2State extends State {
         this.sourceVertexSize = state.sourceVertexSize;
         this.targetVertexSize = state.targetVertexSize;
 
-        this.mapping = new HashMap<>(state.mapping);
+        // Too slow!!!
+//        this.mapping = new HashMap<>(state.mapping);
+//        this.core_1 = Arrays.copyOf(state.core_1, state.core_1.length);
+//        this.core_2 = Arrays.copyOf(state.core_2, state.core_2.length);
+//        this.in_1 = Arrays.copyOf(state.in_1, state.in_1.length);
+//        this.in_2 = Arrays.copyOf(state.in_2, state.in_2.length);
+//        this.out_1 = Arrays.copyOf(state.out_1, state.out_1.length);
+//        this.out_2 = Arrays.copyOf(state.out_2, state.out_2.length);
+//        this.t1in = new HashSet<>(state.t1in);
+//        this.t1out = new HashSet<>(state.t1out);
+//        this.t2in = new HashSet<>(state.t2in);
+//        this.t2out = new HashSet<>(state.t2out);
+//        this.unmapped1 = new HashSet<>(state.unmapped1);
+//        this.unmapped2 = new HashSet<>(state.unmapped2);
 
-        this.core_1 = Arrays.copyOf(state.core_1, state.core_1.length);
-        this.core_2 = Arrays.copyOf(state.core_2, state.core_2.length);
-        this.in_1 = Arrays.copyOf(state.in_1, state.in_1.length);
-        this.in_2 = Arrays.copyOf(state.in_2, state.in_2.length);
-        this.out_1 = Arrays.copyOf(state.out_1, state.out_1.length);
-        this.out_2 = Arrays.copyOf(state.out_2, state.out_2.length);
-
-        this.t1in = new HashSet<>(state.t1in);
-        this.t1out = new HashSet<>(state.t1out);
-        this.t2in = new HashSet<>(state.t2in);
-        this.t2out = new HashSet<>(state.t2out);
-
-        this.unmapped1 = new HashSet<>(state.unmapped1);
-        this.unmapped2 = new HashSet<>(state.unmapped2);
+        // Fast!!!
+        this.mapping   = state.mapping   ;
+        this.core_1    = state.core_1    ;
+        this.core_2    = state.core_2    ;
+        this.in_1      = state.in_1      ;
+        this.in_2      = state.in_2      ;
+        this.out_1     = state.out_1     ;
+        this.out_2     = state.out_2     ;
+        this.t1in      = state.t1in      ;
+        this.t1out     = state.t1out     ;
+        this.t2in      = state.t2in      ;
+        this.t2out     = state.t2out     ;
+        this.unmapped1 = state.unmapped1 ;
+        this.unmapped2 = state.unmapped2 ;
     }
 
     @Override
@@ -120,11 +133,11 @@ public class VF2State extends State {
 
         // Vertex Label Rule
         // The two vertex must have the same label
-//        String sourceVertexLabel = sourceVertexList.get(sourceVertex).getLabel();
-//        String targetVertexLabel = targetVertexList.get(targetVertex).getLabel();
-//        if (!sourceVertexLabel.equals(targetVertexLabel)) {
-//            return false;
-//        }
+        String sourceVertexLabel = sourceGraph.getVertexLabel(sourceVertex);
+        String targetVertexLabel = targetGraph.getVertexLabel(targetVertex);
+        if (!sourceVertexLabel.equals(targetVertexLabel)) {
+            return false;
+        }
 
         int termout1 = 0, termout2 = 0,
             termin1  = 0, termin2  = 0,
