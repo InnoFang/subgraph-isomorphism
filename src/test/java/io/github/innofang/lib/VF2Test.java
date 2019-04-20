@@ -30,8 +30,8 @@ public class VF2Test {
 
     @Test
     public void testVF2() throws IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        String sourceGraphPath = "F:\\IDEA\\subgraph-isomorphism\\datasets\\test\\query_graph.txt";
-        String targetGraphPath = "F:\\IDEA\\subgraph-isomorphism\\datasets\\test\\target_graph.txt";
+        String sourceGraphPath = "F:\\IDEA\\subgraph-isomorphism\\datasets\\test\\isomorphism\\source_graph.txt";
+        String targetGraphPath = "F:\\IDEA\\subgraph-isomorphism\\datasets\\test\\isomorphism\\target_graph.txt";
 
         TestHelper.testIsomorphismAlgorithm(
                 targetGraphPath,
