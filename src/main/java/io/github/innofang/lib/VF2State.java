@@ -139,6 +139,7 @@ public class VF2State extends State {
             return false;
         }
 
+
         int termout1 = 0, termout2 = 0,
             termin1  = 0, termin2  = 0,
             new1     = 0, new2     = 0;
@@ -201,7 +202,6 @@ public class VF2State extends State {
                 if (core_2[other2] != -1) {
                     int other1 = core_2[other2];
                     String sourceEdgeLabel = sourceGraph.getEdgeLabel(sourceVertex, other1);
-//                    if (sourceEdgeLabel == null) {
                     if (!outEdge.getLabel().equals(sourceEdgeLabel)) {
                         return false;
                     }
@@ -227,7 +227,6 @@ public class VF2State extends State {
                 if (core_2[other2] != -1) {
                     int other1 = core_2[other2];
                     String sourceEdgeLabel = sourceGraph.getEdgeLabel(other1, sourceVertex);
-//                    if (sourceEdgeLabel == null) {
                     if (!inEdge.getLabel().equals(sourceEdgeLabel)) {
                         return false;
                     }
@@ -262,7 +261,7 @@ public class VF2State extends State {
         t1in.remove(sourceVertex);
         t1out.remove(sourceVertex);
         t2in.remove(targetVertex);
-        t1out.remove(targetVertex);
+        t2out.remove(targetVertex);
 
         List<Edge> sourceInEdges = sourceGraph.getInEdges(sourceVertex);
         List<Edge> sourceOutEdges = sourceGraph.getOutEdges(sourceVertex);
