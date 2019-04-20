@@ -92,7 +92,10 @@ public class UllmannState extends State {
         assert sourceVertex < sourceVertexSize;
         assert targetVertex < targetVertexSize;
 
-        return M[sourceVertex][targetVertex] != 0;
+        String sourceVertexLabel = sourceVertexList[sourceVertex].getLabel();
+        String targetVertexLabel = targetVertexList[targetVertex].getLabel();
+
+        return sourceVertexLabel.equals(targetVertexLabel) &&M[sourceVertex][targetVertex] != 0;
     }
 
     @Override
