@@ -90,12 +90,6 @@ public class Graph {
         this.graphId = graphId;
     }
 
-    public void setVertexesAndEdges(Collection<Vertex> vertexes, Collection<Edge> edges) {
-        this.vertexList = new ArrayList<>(vertexList);
-        this.edgeList = new ArrayList<>(edgeList);
-        reset();
-    }
-
     public List<Vertex> getVertexList() {
         return vertexList;
     }
@@ -155,52 +149,9 @@ public class Graph {
         return out.get(vertex);
     }
 
-    public String getOutEdgeLabel(int vertex, int otherVertex) {
-        ArrayList<Edge> outEdges = out.get(vertex);
-        if (outEdges == null)
-            return null;
-        for (Edge outEdge : outEdges) {
-            if (outEdge.contain(otherVertex)) {
-                return outEdge.getLabel();
-            }
-        }
-        return null;
-    }
-
     public ArrayList<Edge> getInEdges(int vertex) {
         assert vertex < vertexList.size();
         return in.get(vertex);
-    }
-
-    public String getInEdgeLabel(int vertex, int otherVertex) {
-        ArrayList<Edge> inEdges = in.get(vertex);
-        if (inEdges == null)
-            return null;
-        for (Edge inEdge: inEdges) {
-            if (inEdge.contain(otherVertex)) {
-                return inEdge.getLabel();
-            }
-        }
-        return null;
-    }
-
-    public List<Integer> getNeighborVertexList(int vertex) {
-
-        if (neighborVertexMap.containsKey(vertex)) {
-            return neighborVertexMap.get(vertex);
-        }
-
-        List<Integer> neighbors = new ArrayList<>();
-        for (Edge edge: edgeList) {
-            if (edge.contain(vertex)) {
-                neighbors.add(edge.getAdjacent(vertex));
-            }
-        }
-        return neighbors;
-    }
-
-    public Vertex getVertex(int vertexIndex) {
-        return vertexList.get(vertexIndex);
     }
 
     @Override
