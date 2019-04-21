@@ -24,16 +24,16 @@ import java.net.URI;
 
 public class VF2Test extends Configured implements Tool {
 
-    private static final String INPUT_FILE =
-            "/home/innofang/Documents/Github/subgraph-isomorphism/datasets/graphDB/Q4.my";
+    private static final String SOURCE_GRAPH_FILE =
+            "/home/innofang/Documents/Github/subgraph-isomorphism/datasets/email-Eu-core/Q4-10-unweighted.my";
 
     private static final String OUTPUT_FOLDER =
             "/home/innofang/Documents/Github/subgraph-isomorphism/output/vf2/";
 
     private static final String OUTPUT_FILE = "part-r-00000";
 
-    private static final String MAIN_GRAPH_FILE =
-            "/home/innofang/Documents/Github/subgraph-isomorphism/datasets/CollegeMsg/CollegeMsg.txt";
+    private static final String TARGET_GRAPH_FILE =
+            "/home/innofang/Documents/Github/subgraph-isomorphism/datasets/email-Eu-core/email-Eu-core-department-labels.txt";
 
     @Test
     public void testVF2() throws Exception {
@@ -43,7 +43,7 @@ public class VF2Test extends Configured implements Tool {
 
         Tool tool = new VF2Test();
         ToolRunner.run(tool, new String[0]);
-        print(tool);
+//        print(tool);
     }
 
     @Override
@@ -57,10 +57,10 @@ public class VF2Test extends Configured implements Tool {
         }
 
         Job job = Job.getInstance(getConf(), "vf2");
-        job.addCacheFile(new URI(MAIN_GRAPH_FILE));
+        job.addCacheFile(new URI(TARGET_GRAPH_FILE));
         job.setJarByClass(getClass());
         job.setInputFormatClass(SourceGraphFileInputFormat.class);
-        FileInputFormat.setInputPaths(job, new Path(INPUT_FILE));
+        FileInputFormat.setInputPaths(job, new Path(SOURCE_GRAPH_FILE));
 
         job.setMapperClass(VF2Mapper.class);
         job.setMapOutputKeyClass(Graph.class);
