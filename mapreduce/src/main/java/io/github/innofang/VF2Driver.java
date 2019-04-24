@@ -22,7 +22,8 @@ import java.net.URISyntaxException;
 public class VF2Driver {
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException, URISyntaxException {
         Configuration conf = new Configuration(false);
-
+        conf.addResource(new Path("/home/innofang/app/hadoop-2.6.0-cdh5.16.1/etc/hadoop/core-site.xml"));
+        conf.addResource(new Path("/home/innofang/app/hadoop-2.6.0-cdh5.16.1/etc/hadoop/hdfs-site.xml"));
         ArgsParser parser = ArgsParser.parse(args);
 
         Path outputPath = new Path(parser.getOutputFolderPath());

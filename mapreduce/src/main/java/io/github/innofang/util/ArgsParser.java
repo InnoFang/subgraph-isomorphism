@@ -7,34 +7,49 @@ import java.util.HashMap;
 
 public class ArgsParser {
 
-    private ArgsParser(){}
+    private ArgsParser() { }
+
     private static HashMap<String, String> arguments = new HashMap<>();
 
-    public static final String SOURCE = "source";
-    public static final String TARGET = "target";
-    public static final String OUTPUT = "output";
+    private static final String SOURCE = "source";
+    private static final String TARGET = "target";
+    private static final String OUTPUT = "output";
 
     public static ArgsParser parse(String[] args) {
 
+        // commons-cli 1.2
+
         Options options = new Options();
-        options.addRequiredOption("s", "source", true,
+
+        Option source = new Option("s", "source", true,
                 "the source graph file path on HDFS (Required)");
-        options.addRequiredOption("t", "target", true,
+        source.setRequired(true);
+
+        Option target = new Option("t", "target", true,
                 "the target graph file path on HDFS (Required)");
-        options.addRequiredOption("o", "output", true,
+        target.setRequired(true);
+
+        Option output = new Option("o", "output", true,
                 "the output folder path of MapReduce result on HDFS (Required)");
-        options.addOption("h", "help", false,
+        output.setRequired(true);
+
+        Option help = new Option("h", "help", false,
                 "show this help message and exit program");
 
-        CommandLineParser parser = new DefaultParser();
+        options.addOption(source)
+                .addOption(target)
+                .addOption(output)
+                .addOption(help);
+
+        CommandLineParser parser = new BasicParser();
         HelpFormatter formatter = new HelpFormatter();
         CommandLine cmd = null;
 
         try {
             cmd = parser.parse(options, args);
-            arguments.put(SOURCE, cmd.getParsedOptionValue("s").toString());
-            arguments.put(TARGET, cmd.getParsedOptionValue("t").toString());
-            arguments.put(OUTPUT, cmd.getParsedOptionValue("o").toString());
+            arguments.put(SOURCE, cmd.getOptionValue("s"));
+            arguments.put(TARGET, cmd.getOptionValue("t"));
+            arguments.put(OUTPUT, cmd.getOptionValue("o"));
         } catch (ParseException e) {
             System.out.println(e.getMessage());
             formatter.printHelp("sub-Graph Isomorphism", options, true);

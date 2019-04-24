@@ -71,10 +71,10 @@ public class SourceGraphFileInputFormat extends FileInputFormat<IntWritable, Gra
                         return true;
                     }
                     graph = new Graph();
-                } else if (info[0].equals("v") && info.length == 3) {    // v vertex label
-                    vertexList.add(new Vertex(Integer.parseInt(info[1]), info[2]));
-                } else if (info[0].equals("e") && info.length == 4) {   // e from to label
-                    edgeList.add(new Edge(Integer.parseInt(info[1]), Integer.parseInt(info[2]), info[3]));
+                } else if (info[0].equals("v") && info.length == 2) {    // v vertex label
+                    vertexList.add(new Vertex(Integer.parseInt(info[1])));
+                } else if (info[0].equals("e") && info.length == 3) {   // e from to label
+                    edgeList.add(new Edge(Integer.parseInt(info[1]), Integer.parseInt(info[2])));
                 } else {
                     System.err.println("Wrong line: " + line);
                     return false;
