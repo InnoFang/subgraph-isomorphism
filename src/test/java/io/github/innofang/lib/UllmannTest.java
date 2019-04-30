@@ -49,6 +49,24 @@ public class UllmannTest {
     @Test
     public void testUllmannWithEmailEuCore() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, IOException {
         String sourceGraphPath = "F:\\IDEA\\subgraph-isomorphism\\datasets\\email-Eu-core\\Q4-10-unweighted.my";
+        String targetGraphPath = "F:\\IDEA\\subgraph-isomorphism\\datasets\\email-Eu-core\\email-Eu-core.txt";
+
+        TestHelper.testIsomorphismAlgorithm(
+                targetGraphPath,
+                sourceGraphPath,
+                UllmannState.class,
+                new NormalUnweightedDataSet(),
+                new EmailEuCoreDataSet(),
+                mapping -> {
+                    System.out.println(mapping.toString());
+                    return false;
+                }
+        );
+    }
+
+    @Test
+    public void testUllmannWithEmailEuCoreDepartmentLabel() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, IOException {
+        String sourceGraphPath = "F:\\IDEA\\subgraph-isomorphism\\datasets\\email-Eu-core\\Q4-10-unweighted.my";
         String targetGraphPath = "F:\\IDEA\\subgraph-isomorphism\\datasets\\email-Eu-core\\email-Eu-core-department-labels.txt";
 
         TestHelper.testIsomorphismAlgorithm(
