@@ -2,6 +2,7 @@ package io.github.innofang.lib;
 
 import io.github.innofang.graph.datasets.EmailEuCoreDataSet;
 import io.github.innofang.graph.datasets.GraphDBDataSet;
+import io.github.innofang.graph.datasets.UnweightedDiGraphDataSet;
 import io.github.innofang.graph.datasets.UnweightedGraphDBDataSet;
 import io.github.innofang.util.TestHelper;
 import org.junit.Test;
@@ -75,6 +76,24 @@ public class UllmannTest {
                 UllmannState.class,
                 new UnweightedGraphDBDataSet(),
                 new EmailEuCoreDataSet(),
+                mapping -> {
+                    System.out.println(mapping.toString());
+                    return false;
+                }
+        );
+    }
+
+    @Test
+    public void testUllmannWithUnweightedDiGraph()  throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, IOException {
+        String sourceGraphPath = "F:\\IDEA\\subgraph-isomorphism\\datasets\\email-Eu-core\\Q4-10-unweighted.my";
+        String targetGraphPath = "F:\\IDEA\\subgraph-isomorphism\\datasets\\unweighted-digraph\\V100E1560.txt";
+
+        TestHelper.testIsomorphismAlgorithm(
+                targetGraphPath,
+                sourceGraphPath,
+                UllmannState.class,
+                new UnweightedGraphDBDataSet(),
+                new UnweightedDiGraphDataSet(),
                 mapping -> {
                     System.out.println(mapping.toString());
                     return false;
