@@ -86,6 +86,7 @@ public class UllmannTest {
     @Test
     public void testUllmannWithUnweightedDiGraph()  throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, IOException {
         String sourceGraphPath = "F:\\IDEA\\subgraph-isomorphism\\datasets\\email-Eu-core\\Q4-10-unweighted.my";
+        // If you want to use the following data set, you should run the unweighted-digraph-generator.py first.
         String targetGraphPath = "F:\\IDEA\\subgraph-isomorphism\\datasets\\unweighted-digraph\\V100E1560.txt";
 
         TestHelper.testIsomorphismAlgorithm(
