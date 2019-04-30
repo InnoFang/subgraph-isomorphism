@@ -6,8 +6,8 @@ import time
 def args_parser():
     parser = argparse.ArgumentParser(prog="Unweighted Graph Generator")
     # --vertex --edge --number --output
-    parser.add_argument('-v', '--vertex', type=int, dest='vertex', help="the number of vertex", required=True)
-    parser.add_argument('-e', '--edge', type=int, dest='edge', help='the number of edge', required=True)
+    parser.add_argument('-v', '--vertex', type=int, dest='vertex', help="the number of vertex (Required)", required=True)
+    parser.add_argument('-e', '--edge', type=int, dest='edge', help='the number of edge   (Required)', required=True)
     # parser.add_argument('-n', '--number', type=int, dest='number', help='the number of graph you want to generate',
     #                     default=1)
     parser.add_argument('-o', '--output', dest='output', help='the output file name')
