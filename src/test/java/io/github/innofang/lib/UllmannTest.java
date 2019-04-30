@@ -2,7 +2,7 @@ package io.github.innofang.lib;
 
 import io.github.innofang.graph.datasets.EmailEuCoreDataSet;
 import io.github.innofang.graph.datasets.GraphDBDataSet;
-import io.github.innofang.graph.datasets.NormalUnweightedDataSet;
+import io.github.innofang.graph.datasets.UnweightedGraphDBDataSet;
 import io.github.innofang.util.TestHelper;
 import org.junit.Test;
 
@@ -55,7 +55,7 @@ public class UllmannTest {
                 targetGraphPath,
                 sourceGraphPath,
                 UllmannState.class,
-                new NormalUnweightedDataSet(),
+                new UnweightedGraphDBDataSet(),
                 new EmailEuCoreDataSet(),
                 mapping -> {
                     System.out.println(mapping.toString());
@@ -73,7 +73,7 @@ public class UllmannTest {
                 targetGraphPath,
                 sourceGraphPath,
                 UllmannState.class,
-                new NormalUnweightedDataSet(),
+                new UnweightedGraphDBDataSet(),
                 new EmailEuCoreDataSet(),
                 mapping -> {
                     System.out.println(mapping.toString());
