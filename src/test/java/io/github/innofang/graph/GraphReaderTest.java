@@ -1,7 +1,7 @@
 package io.github.innofang.graph;
 
 import io.github.innofang.bean.Graph;
-import io.github.innofang.graph.datasets.NormalDataSet;
+import io.github.innofang.graph.datasets.GraphDBDataSet;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -13,7 +13,7 @@ public class GraphReaderTest {
     public void testNormalDataSet() throws IOException {
         String path = "F:\\IDEA\\subgraph-isomorphism\\datasets\\graphDB\\Q4.my";
         GraphReader reader = new GraphReader();
-        reader.setDataSetStrategy(new NormalDataSet());
+        reader.setDataSetStrategy(new GraphDBDataSet());
         List<Graph> graphList = reader.read(path);
         for (Graph graph: graphList) {
             System.out.println(graph);
@@ -24,7 +24,7 @@ public class GraphReaderTest {
     public void testGraphDB() throws IOException {
         String path = "F:\\IDEA\\subgraph-isomorphism\\datasets\\graphDB\\mygraphdb.data";
         GraphReader reader = new GraphReader();
-        reader.setDataSetStrategy(new NormalDataSet());
+        reader.setDataSetStrategy(new GraphDBDataSet());
         List<Graph> graphList = reader.read(path);
         int vertexSum = 0;
         int edgeSum = 0;
