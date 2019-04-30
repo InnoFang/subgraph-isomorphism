@@ -32,7 +32,7 @@ import java.util.*;
  * t # -1
  */
 
-public class GraphDBlDataSet implements DataSetStrategy {
+public class GraphDBDataSet implements DataSetStrategy {
 
     @Override
     public List<Graph> load(String filePath) throws IOException {

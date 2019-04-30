@@ -11,7 +11,7 @@ import java.util.*;
 
 
 @SuppressWarnings("Duplicates")
-public class NormalUnweightedDataSet implements DataSetStrategy {
+public class UnweightedGraphDBDataSet implements DataSetStrategy {
 
     @Override
     public List<Graph> load(String filePath) throws IOException {
