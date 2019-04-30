@@ -48,6 +48,24 @@ public class VF2Test {
     @Test
     public void testVF2WithEmailEuCore() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, IOException {
         String sourceGraphPath = "F:\\IDEA\\subgraph-isomorphism\\datasets\\email-Eu-core\\Q4-10-unweighted.my";
+        String targetGraphPath = "F:\\IDEA\\subgraph-isomorphism\\datasets\\email-Eu-core\\email-Eu-core.txt";
+
+        TestHelper.testIsomorphismAlgorithm(
+                targetGraphPath,
+                sourceGraphPath,
+                VF2State.class,
+                new NormalUnweightedDataSet(),
+                new EmailEuCoreDataSet(),
+                mapping -> {
+                    System.out.println(mapping.toString());
+                    return false;
+                }
+        );
+    }
+
+    @Test
+    public void testVF2WithEmailEuCoreDepartmentLabel() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, IOException {
+        String sourceGraphPath = "F:\\IDEA\\subgraph-isomorphism\\datasets\\email-Eu-core\\Q4-10-unweighted.my";
         String targetGraphPath = "F:\\IDEA\\subgraph-isomorphism\\datasets\\email-Eu-core\\email-Eu-core-department-labels.txt";
 
         TestHelper.testIsomorphismAlgorithm(
