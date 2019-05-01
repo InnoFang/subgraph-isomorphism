@@ -7,7 +7,7 @@ import time
 
 
 def args_parser():
-    parser = argparse.ArgumentParser(prog="Unweighted Graph Generator")
+    parser = argparse.ArgumentParser(prog="Unweighted DiGraph Generator")
     # source/target --vertex --edge --number --output
     parser.add_argument('type', choices=['single', 'multiple'], help="choose whether to generate single graph or multiple graphs")
     parser.add_argument('-v', '--vertex', type=int, dest='vertex', help="the number of vertex (Required)", required=True)
@@ -42,10 +42,10 @@ def generate_single_graph(vertex_num, edge_num, output):
     edge_set = set()
     for _ in range(edge_num):
         edge = vertex_array[np.random.randint(vertex_num, size=2)]
-        stamp = str(edge)
-        while stamp in edge_set:
+        stamp = str(np.sort(edge))
+        while stamp in edge_set or edge[0] == edge[1]: # exclude self-loop
             edge = vertex_array[np.random.randint(vertex_num, size=2)]
-            stamp = str(edge)
+            stamp = str(np.sort(edge))
         edge_set.add(stamp)
         print('{}   {}'.format(edge[0], edge[1]), file=f)
 
@@ -66,10 +66,10 @@ def generate_multiple_graphs(vertex_num, edge_num, number, output):
         edge_set = set()
         for _ in range(edge_num):
             edge = vertex_array[np.random.randint(vertex_num, size=2)]
-            stamp = str(edge)
-            while stamp in edge_set:
+            stamp = str(np.sort(edge))
+            while stamp in edge_set or edge[0] == edge[1]: # exclude self-loop
                 edge = vertex_array[np.random.randint(vertex_num, size=2)]
-                stamp = str(edge)
+                stamp = str(np.sort(edge))
             edge_set.add(stamp)
             print('e {} {}'.format(edge[0], edge[1]), file=f)
     print('t # -1', file=f)
