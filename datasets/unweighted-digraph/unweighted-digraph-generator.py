@@ -17,9 +17,9 @@ def args_parser():
     parser.add_argument('-o', '--output', dest='output', help='the output file name')
     args = parser.parse_args()
 
-    # Ensure: vertex < edge < vertex ** 2
-    if args.edge > args.vertex ** 2:
-        print('[ERROR] the number of edge is more than the square of the number of vertex')
+    # Ensure: vertex < edge < vertex * (vertex - 1) / 2
+    if args.edge > (args.vertex * (args.vertex - 1) / 2):
+        print('[ERROR] the number of edge is more than (vertex * (vertex - 1) / 2)')
         exit(1)
     if args.edge < args.vertex:
         print('[ERROR] the number of edge is too small,'
