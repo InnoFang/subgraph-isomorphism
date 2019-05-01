@@ -25,7 +25,7 @@ def show(graph, file_path, index=None):
     title = "{} [{}]".format(file_path, index) if index else file_path
     plt.title(title)
     pos = nx.spring_layout(graph, iterations=50)
-    nx.draw(graph, pos=pos, node_color='b', edge_color='y', font_weight='bold')
+    nx.draw(graph, pos=pos, node_color='b', edge_color='y', with_labels=True, font_weight='bold')
     plt.show()
 
 def visualize_multiple_graphs(file_path):
