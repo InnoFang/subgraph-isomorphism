@@ -58,7 +58,7 @@ def draw_graph_for(name, graph, show_edge_value=False):
     plt.title('{} Graph'.format(title))
     labels = nx.get_edge_attributes(graph, 'label')
     pos = nx.spring_layout(graph)
-    nx.draw(graph, pos=pos, node_color=node_color, edge_color=edge_color, with_labels=True, font_weight='bold')
+    nx.draw(graph, pos=pos, node_color=node_color, edge_color=edge_color, font_weight='bold')
     if show_edge_value:
         nx.draw_networkx_edge_labels(graph, pos, edge_labels=labels)
 
