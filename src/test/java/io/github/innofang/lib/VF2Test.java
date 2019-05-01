@@ -84,8 +84,11 @@ public class VF2Test {
 
     @Test
     public void testVF2WithUnweightedDiGraph()  throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, IOException {
-        String sourceGraphPath = "F:\\IDEA\\subgraph-isomorphism\\datasets\\email-Eu-core\\Q4-10-unweighted.my";
-        // If you want to use the following data set, you should run the unweighted-digraph-generator.py first.
+        // If you want to use the following data sets, you should run the unweighted-digraph-generator.py first.
+
+        // python unweighted-digraph-generator.py multiple -v 5 -e 7 -n 5
+        String sourceGraphPath = "F:\\IDEA\\subgraph-isomorphism\\datasets\\unweighted-digraph\\Q5-5.txt";
+        // python unweighted-digraph-generator.py single -v 100 -e 1560
         String targetGraphPath = "F:\\IDEA\\subgraph-isomorphism\\datasets\\unweighted-digraph\\V100E1560.txt";
 
         TestHelper.testIsomorphismAlgorithm(
