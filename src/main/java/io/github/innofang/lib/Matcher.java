@@ -31,11 +31,9 @@ public class Matcher {
                 s.addPair(pair);
                 if (match(s, visitor, count)) {
                     s.backTrack(pair);
-                    s = null;
                     return true;
                 } else {
                     s.backTrack(pair);
-                    s = null;
                 }
             }
         }
