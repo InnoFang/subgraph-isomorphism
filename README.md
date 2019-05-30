@@ -1,6 +1,6 @@
 # Subgraph Isomorphism
 
-Design and implement the common subgraph isomorphic algorithm based on `MapReduce` programming model on `Hadoop` platform
+❄Implement the common subgraph isomorphism algorithms (i.e. Ullmann, VF2) based on `MapReduce` on `Hadoop`. 
 
 ## What's subgraph isomorphism problem?
 
