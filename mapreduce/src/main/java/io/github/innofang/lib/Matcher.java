@@ -28,11 +28,9 @@ public class Matcher {
                 s.addPair(pair);
                 if (match(s, context, graph, visitor)) {
                     s.backTrack(pair);
-                    s = null;
                     return true;
                 } else {
                     s.backTrack(pair);
-                    s = null;
                 }
             }
         }
