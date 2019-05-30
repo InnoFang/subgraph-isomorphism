@@ -1,5 +1,7 @@
 ## How to run on Hadoop
 
+**PS** You should put the datasets on HDFS first.
+
  + **Step one: Generate the jar file**
     
     run the command `mvn clean package -DskipTests` 
@@ -19,7 +21,7 @@
     For example, for me, if I want to run the `UllmannDriver.java` (which is to run Ullmann Algorithm), I would run the command as follow:
     
     `hadoop jar /home/innofang/lib/mapreduce-1.0.jar io.github.innofang.UllmannDriver hdfs://localhost:9000/resources/graphDB/Q4.my hdfs://localhost:9000/output/subgraph-isomorphism/ullmann`
-    
+
 ## Make it run easily
 
 Use shell to make it easily, see [run.sh](run.sh), also you can catch the output content by [catch-output.sh](catch_output.sh).
