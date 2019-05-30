@@ -22,6 +22,16 @@ In theoretical computer science, the subgraph isomorphism problem is a computati
 
  + Cordella L P, Foggia P and Sansone C. A (sub)graph isomorphism algorithm for matching large graphs[J]. IEEE PAMI, 2004, 26(10):1367–1372. [link](https://ieeexplore.ieee.org/document/1323804?arnumber=1323804&tag=1)
 
+ + Ashish Sharma, Santosh Bahir, Sushant Narsale, Unmil Tambe, "A  Parallel Algorithm for Finding Sub-graph Isomorphism", CS420-ProjectReport  (www.cs.jhu.edu/~snarsal/CS420-ProjectReport.pdf), CS420: Parallel Programming. Fall 2008.
+
+## the UML of Implementation of SubGraph Isomorphism Algorithms
+
+![](https://raw.githubusercontent.com/InnoFang/jotter/image-hosting/subgraph-isomorphism/the%20UML%20of%20Implementation%20of%20Subgraph%20Isomorphism%20Algorithms.png)
+
+## Flow Diagram of the MapReduce Process
+
+![](https://raw.githubusercontent.com/InnoFang/jotter/image-hosting/subgraph-isomorphism/Flow%20Diagram%20of%20the%20MapReduce%20Process.jpg)
+
 ## [License](./LICENSE)
 
     Subgraph Isomorphism: Design and implement the latest subgraph isomorphic algorithm based on MapReduce programming model on Hadoop platform
