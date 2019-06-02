@@ -79,7 +79,7 @@ def assertion():
         if sys.argv[1] == '-examples':
             print("""
             [0] python isomorphism_checker.py ./datasets/test/isomorphism/target_graph.txt 0 ./datasets/test/isomorphism/source_graph.txt 0
-            [1] python isomorphism_checker.py ./datasets/graphDB/mygraphdb.test 3720 ./datasets/graphDB/Q4.my 40
+            [1] python isomorphism_checker.py ./datasets/graphDB/mygraphdb.test 3720 ./datasets/graphDB/Q4.txt 40
             """)
         else:
             print("""
