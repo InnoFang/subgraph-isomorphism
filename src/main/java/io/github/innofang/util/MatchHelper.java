@@ -11,7 +11,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-public class TestHelper {
+public class MatchHelper {
 
     /**
      * @param targetGraphPath a file path of target graph
