@@ -36,7 +36,7 @@ In theoretical computer science, the subgraph isomorphism problem is a computati
 
 ## [License](./LICENSE)
 
-    Subgraph Isomorphism: Design and implement the latest subgraph isomorphic algorithm based on MapReduce programming model on Hadoop platform
+    Subgraph Isomorphism: Implement the common subgraph isomorphism algorithms (i.e. Ullmann, VF2) based on MapReduce on Hadoop 
     Copyright (C) 2019  InnoFang
 
     This program is free software: you can redistribute it and/or modify
