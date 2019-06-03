@@ -2,16 +2,18 @@
 
 ❄Implement the common subgraph isomorphism algorithms (i.e. Ullmann, VF2) based on `MapReduce` on `Hadoop`. 
 
+More infomartion, please see [wiki](https://github.com/InnoFang/subgraph-isomorphism/wiki)
+
+More usage, please see test cases:
+ + [GraphReaderTest](https://github.com/InnoFang/subgraph-isomorphism/blob/master/src/test/java/io/github/innofang/graph/GraphReaderTest.java)
+ + [UllmannTest](https://github.com/InnoFang/subgraph-isomorphism/blob/master/src/test/java/io/github/innofang/lib/UllmannTest.java)
+ + [VF2Test](https://github.com/InnoFang/subgraph-isomorphism/blob/master/src/test/java/io/github/innofang/lib/VF2Test.java)
+
+[Download](https://github.com/InnoFang/subgraph-isomorphism/releases) jar files for a try!
+
 ## What's subgraph isomorphism problem?
 
 In theoretical computer science, the subgraph isomorphism problem is a computational task in which two graphs G and H are given as input, and one must determine whether G contains a subgraph that is isomorphic to H.
-
-## TO-DO for SubGraph Isomorphism Algorithm Implementation
-
- + [x] Ullmann Algorithm
- + [x] VF2 Algorithm
- + [x] Ullmann Algorithm on MapReduce
- + [x] VF2 Algorithm on MapReduce
 
 ## the UML of Implementation of SubGraph Isomorphism Algorithms
 
