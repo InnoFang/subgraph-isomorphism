@@ -38,8 +38,8 @@ public class MatchHelper {
     public static void testIsomorphismAlgorithm(String targetGraphPath,
                                                 String sourceGraphPath,
                                                 Class<? extends State> stateClass,
-                                                DataSetStrategy sourceDataSetStrategy,
                                                 DataSetStrategy targetDataSetStrategy,
+                                                DataSetStrategy sourceDataSetStrategy,
                                                 Matcher.Visitor visitor) throws IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
 
         GraphReader reader = new GraphReader();
