@@ -70,8 +70,8 @@ public class UllmannTest {
                 targetGraphPath,
                 sourceGraphPath,
                 UllmannState.class,
-                new UnweightedGraphDBDataSet(),
                 new EmailEuCoreDataSet(),
+                new UnweightedGraphDBDataSet(),
                 mapping -> {
                     System.out.println(mapping.toString());
                     return false;
@@ -92,8 +92,8 @@ public class UllmannTest {
                 targetGraphPath,
                 sourceGraphPath,
                 UllmannState.class,
-                new UnweightedDiGraphDataSet(),
                 new EmailEuCoreDataSet(),
+                new UnweightedDiGraphDataSet(),
                 mapping -> {
                     System.out.println(mapping.toString());
                     return false;
@@ -110,8 +110,8 @@ public class UllmannTest {
                 targetGraphPath,
                 sourceGraphPath,
                 UllmannState.class,
-                new UnweightedGraphDBDataSet(),
                 new EmailEuCoreDataSet(),
+                new UnweightedGraphDBDataSet(),
                 mapping -> {
                     System.out.println(mapping.toString());
                     return false;
@@ -131,8 +131,8 @@ public class UllmannTest {
                 targetGraphPath,
                 sourceGraphPath,
                 UllmannState.class,
-                new UnweightedGraphDBDataSet(),
                 new UnweightedDiGraphDataSet(),
+                new UnweightedGraphDBDataSet(),
                 mapping -> {
                     System.out.println(mapping.toString());
                     return false;
