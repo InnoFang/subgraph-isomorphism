@@ -69,8 +69,8 @@ public class VF2Test {
                 targetGraphPath,
                 sourceGraphPath,
                 VF2State.class,
-                new UnweightedGraphDBDataSet(),
                 new EmailEuCoreDataSet(),
+                new UnweightedGraphDBDataSet(),
                 mapping -> {
                     System.out.println(mapping.toString());
                     return false;
@@ -91,8 +91,8 @@ public class VF2Test {
                 targetGraphPath,
                 sourceGraphPath,
                 VF2State.class,
-                new UnweightedDiGraphDataSet(),
                 new EmailEuCoreDataSet(),
+                new UnweightedDiGraphDataSet(),
                 mapping -> {
                     System.out.println(mapping.toString());
                     return false;
@@ -109,8 +109,8 @@ public class VF2Test {
                 targetGraphPath,
                 sourceGraphPath,
                 VF2State.class,
-                new UnweightedDiGraphDataSet(),
                 new EmailEuCoreDataSet(),
+                new UnweightedDiGraphDataSet(),
                 mapping -> {
                     System.out.println(mapping.toString());
                     return false;
@@ -127,8 +127,8 @@ public class VF2Test {
                 targetGraphPath,
                 sourceGraphPath,
                 VF2State.class,
-                new UnweightedGraphDBDataSet(),
                 new EmailEuCoreDataSet(),
+                new UnweightedGraphDBDataSet(),
                 mapping -> {
                     System.out.println(mapping.toString());
                     return false;
@@ -149,8 +149,8 @@ public class VF2Test {
                 targetGraphPath,
                 sourceGraphPath,
                 VF2State.class,
-                new UnweightedGraphDBDataSet(),
                 new UnweightedDiGraphDataSet(),
+                new UnweightedGraphDBDataSet(),
                 mapping -> {
                     System.out.println(mapping.toString());
                     return false;
