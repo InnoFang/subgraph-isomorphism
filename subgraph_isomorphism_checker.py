@@ -128,7 +128,7 @@ if __name__ == '__main__':
 
     show_edge_value = True if show_edge_value == 'Y' else False
 
-    graph_matcher = iso.DiGraphMatcher(target, source, 
+    graph_matcher = iso.DiGraphMatcher(target, source,
         node_match=iso.categorical_node_match('label', -1), 
         edge_match=iso.categorical_edge_match('label', -1))		
     if graph_matcher.subgraph_is_isomorphic():		
@@ -136,7 +136,10 @@ if __name__ == '__main__':
         iso_num = 0
         for mapping in graph_matcher.subgraph_isomorphisms_iter():
             iso_num += 1
-            print(mapping)
+            dict = {}
+            for k,v in mapping.items():
+                dict[v] = k
+            print(sorted(dict.items()))
         print('{} pairs of sub-graph isomorphism.'.format(iso_num))
     else:
         print("<No Result> source_graph {} is not subgraph isomorphisc target_graph {}".format(source_number, target_number))
