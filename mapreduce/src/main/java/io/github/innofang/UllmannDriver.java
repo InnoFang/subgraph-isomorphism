@@ -1,22 +1,17 @@
 package io.github.innofang;
 
-import com.sun.org.apache.xpath.internal.Arg;
 import io.github.innofang.bean.Graph;
-import io.github.innofang.bean.IntMatrixWritable;
 import io.github.innofang.bean.TextArrayWritable;
-import io.github.innofang.mapper.ullmann.CalcAndCompMapper;
-import io.github.innofang.mapper.ullmann.ConstructMMapper;
+import io.github.innofang.mapper.ullmann.UllmannMapper;
 import io.github.innofang.reducer.IdentityReducer;
 import io.github.innofang.util.ArgsParser;
 import io.github.innofang.util.SourceGraphFileInputFormat;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.MapWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
-import org.apache.hadoop.mapreduce.lib.chain.ChainMapper;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
@@ -26,7 +21,7 @@ import java.net.URISyntaxException;
 
 public class UllmannDriver {
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException, URISyntaxException {
-        Configuration conf = new Configuration(false);
+        Configuration conf = new Configuration();
 
         ArgsParser parser = ArgsParser.parse(args);
 
@@ -43,21 +38,9 @@ public class UllmannDriver {
         job.setInputFormatClass(SourceGraphFileInputFormat.class);
         FileInputFormat.setInputPaths(job, parser.getSourceGraphFilePath());
 
-        ChainMapper.addMapper(job,
-                ConstructMMapper.class,
-                IntWritable.class,
-                Graph.class,
-                Graph.class,
-                IntMatrixWritable.class,
-                conf);
-
-        ChainMapper.addMapper(job,
-                CalcAndCompMapper.class,
-                Graph.class,
-                IntMatrixWritable.class,
-                Graph.class,
-                MapWritable.class,
-                new Configuration(false));
+        job.setMapperClass(UllmannMapper.class);
+        job.setMapOutputKeyClass(Graph.class);
+        job.setMapOutputValueClass(MapWritable.class);
 
         job.setNumReduceTasks(1);
 
