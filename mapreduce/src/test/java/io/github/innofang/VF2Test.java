@@ -25,7 +25,7 @@ import java.net.URI;
 public class VF2Test extends Configured implements Tool {
 
     private static final String SOURCE_GRAPH_FILE =
-            "/home/innofang/Documents/Github/subgraph-isomorphism/datasets/email-Eu-core/Q4-10-unweighted.my";
+            "/home/innofang/Documents/Github/subgraph-isomorphism/datasets/email-Eu-core/Q4.txt-10-unweighted.my";
 
     private static final String OUTPUT_FOLDER =
             "/home/innofang/Documents/Github/subgraph-isomorphism/output/vf2/";

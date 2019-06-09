@@ -30,7 +30,7 @@ import java.net.URI;
 public class UllmannTest extends Configured implements Tool {
 
     private static final String INPUT_FILE =
-            "/home/innofang/Documents/Github/subgraph-isomorphism/datasets/graphDB/Q4.my";
+            "/home/innofang/Documents/Github/subgraph-isomorphism/datasets/graphDB/Q4.txt";
 
     private static final String OUTPUT_FOLDER =
             "/home/innofang/Documents/Github/subgraph-isomorphism/output/ullmann/";
