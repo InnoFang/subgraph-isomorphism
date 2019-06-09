@@ -9,6 +9,6 @@ echo '\n'
 
 echo '=== Step three: Run the specify class/program ==='
 hadoop jar /home/innofang/lib/mapreduce-1.0.jar io.github.innofang.VF2Driver \
--s hdfs:////localhost:9000/datasets/ermil-Eu-core/email-Eu-core-department-labels.txt \
--t hdfs:////localhost:9000/datasets/emil-Eu-core/Q4-10-unweighted.my \
--o hdfs:////localhost:9000/output/subgraph-isomorphism/vf2
+-t hdfs://localhost:9000/user/innofang/datasets/email-Eu-core/email-Eu-core.txt \
+-s hdfs://localhost:9000/user/innofang/datasets/email-Eu-core/V3E3.txt \
+-o hdfs://localhost:9000/user/innofang/output/vf2
