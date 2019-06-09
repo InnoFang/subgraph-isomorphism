@@ -50,11 +50,11 @@ public class UllmannTest {
         String targetGraphPath = "F:\\IDEA\\subgraph-isomorphism\\datasets\\test\\isomorphism\\target_graph.txt";
 
         MatchHelper.testIsomorphismAlgorithm(
-                targetGraphPath,
-                sourceGraphPath,
-                UllmannState.class,
-                new GraphDBDataSet(),
-                mapping -> {
+                targetGraphPath,        // 数据图路径
+                sourceGraphPath,        // 查询图路径
+                UllmannState.class,     // 选取Ullmann算法
+                new GraphDBDataSet(),   // 图数据读取策略
+                mapping -> {            // 对子图同构结果进行处理
                     System.out.println(mapping.toString());
                     return false;
                 }
