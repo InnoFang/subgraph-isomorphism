@@ -1,22 +1,17 @@
 package io.github.innofang;
 
 import io.github.innofang.bean.Graph;
-import io.github.innofang.bean.IntMatrixWritable;
 import io.github.innofang.bean.TextArrayWritable;
-import io.github.innofang.mapper.ullmann.CalcAndCompMapper;
-import io.github.innofang.mapper.ullmann.ConstructMMapper;
+import io.github.innofang.mapper.ullmann.UllmannMapper;
 import io.github.innofang.reducer.IdentityReducer;
 import io.github.innofang.util.SourceGraphFileInputFormat;
-import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.MapWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
-import org.apache.hadoop.mapreduce.lib.chain.ChainMapper;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.Tool;
@@ -67,27 +62,16 @@ public class UllmannTest extends Configured implements Tool {
         job.setInputFormatClass(SourceGraphFileInputFormat.class);
         FileInputFormat.setInputPaths(job, new Path(INPUT_FILE));
 
-        ChainMapper.addMapper(job,
-                ConstructMMapper.class,
-                IntWritable.class,
-                Graph.class,
-                Graph.class,
-                IntMatrixWritable.class,
-                getConf());
-
-        ChainMapper.addMapper(job,
-                CalcAndCompMapper.class,
-                Graph.class,
-                IntMatrixWritable.class,
-                Graph.class,
-                MapWritable.class,
-                new Configuration(false));
+        job.setMapperClass(UllmannMapper.class);
+        job.setMapOutputKeyClass(Graph.class);
+        job.setMapOutputValueClass(MapWritable.class);
 
         job.setNumReduceTasks(1);
 
         job.setReducerClass(IdentityReducer.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(TextArrayWritable.class);
+
         FileOutputFormat.setOutputPath(job, outputPath);
 
         job.waitForCompletion(true);

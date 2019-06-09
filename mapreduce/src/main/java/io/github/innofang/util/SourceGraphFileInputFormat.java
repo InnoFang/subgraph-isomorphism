@@ -12,7 +12,6 @@ import org.apache.hadoop.mapreduce.RecordReader;
 import org.apache.hadoop.mapreduce.TaskAttemptContext;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.LineRecordReader;
-import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -76,7 +75,7 @@ public class SourceGraphFileInputFormat extends FileInputFormat<IntWritable, Gra
                 } else if (info[0].equals("e") && info.length == 3) {   // e from to label
                     edgeList.add(new Edge(Integer.parseInt(info[1]), Integer.parseInt(info[2])));
                 } else {
-                    System.err.println("Wrong line: " + line);
+                    System.err.println("Wrong line ??: " + line);
                     return false;
                 }
             }

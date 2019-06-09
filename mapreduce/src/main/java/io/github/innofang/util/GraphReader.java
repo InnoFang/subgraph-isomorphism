@@ -13,8 +13,6 @@ import java.util.HashSet;
 
 public class GraphReader {
 
-    private static final String CA_GRQC_TXT = "CA-GrQc.txt";
-    private static final String COLLEGE_MSG_TXT = "CollegeMsg.txt";
     private static final String EMAIL_EU_CORE_TXT = "email-Eu-core.txt";
     private static final String EMAIL_EU_CORE_DEPARTMENT_LABELS_TXT = "email-Eu-core-department-labels.txt";
 
@@ -33,35 +31,6 @@ public class GraphReader {
     public Graph loadGraph() throws IOException {
         assert path != null : "Path cannot be null, please create a GraphReader instance before use loadGraph()";
         switch (path.getName()) {
-            case CA_GRQC_TXT:
-                return loadGraphBy((line, vertices, edges) -> {
-                    if (line.startsWith("#"))
-                        return true;
-
-                    String[] info = line.split("\\s+");
-                    if (info.length == 2) {
-                        vertices.add(new Vertex(Integer.parseInt(info[0])));
-                        vertices.add(new Vertex(Integer.parseInt(info[1])));
-                        edges.add(new Edge(Integer.parseInt(info[0]), Integer.parseInt(info[1])));
-                    } else {
-                        System.err.println("Wrong Line: " + line);
-                        return false;
-                    }
-                    return true;
-                });
-            case COLLEGE_MSG_TXT:
-                return loadGraphBy((line, vertices, edges) -> {
-                    String[] info = line.split("\\s+");
-                    if (info.length == 3) {
-                        vertices.add(new Vertex(Integer.parseInt(info[0])));
-                        vertices.add(new Vertex(Integer.parseInt(info[1])));
-                        edges.add(new Edge(Integer.parseInt(info[0]), Integer.parseInt(info[1]), info[2]));
-                    } else {
-                        System.err.println("Wrong Line: " + line);
-                        return false;
-                    }
-                    return true;
-                });
             case EMAIL_EU_CORE_DEPARTMENT_LABELS_TXT:
             case EMAIL_EU_CORE_TXT:
                 return loadGraphBy((line, vertices, edges) -> {

@@ -29,18 +29,18 @@ public class UllmannMapper extends Mapper<IntWritable, Graph, Graph, MapWritable
             GraphReader reader = new GraphReader(fs, path);
             targetGraph = reader.loadGraph();
         } else {
-            System.err.println(ConstructMMapper.class.getName() + " cannot get the distributed cache files.");
+            System.err.println(UllmannMapper.class.getName() + " cannot get the distributed cache files.");
         }
     }
 
     @Override
     protected void map(IntWritable key, Graph value, Context context) throws IOException, InterruptedException {
-        Matcher.match(new UllmannState(value, targetGraph), context, value, (cxt, graph, mapping) -> {
+        Matcher.match(new UllmannState(value, targetGraph), mapping -> {
             MapWritable map = new MapWritable();
             for (Map.Entry<Integer, Integer> entry : mapping.entrySet()) {
                 map.put(new IntWritable(entry.getKey()), new IntWritable(entry.getValue()));
             }
-            cxt.write(graph, map);
+            context.write(value, map);
             return false;
         });
     }

@@ -21,9 +21,8 @@ import java.net.URISyntaxException;
 
 public class VF2Driver {
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException, URISyntaxException {
-        Configuration conf = new Configuration(false);
-        conf.addResource(new Path("/home/innofang/app/hadoop-2.6.0-cdh5.16.1/etc/hadoop/core-site.xml"));
-        conf.addResource(new Path("/home/innofang/app/hadoop-2.6.0-cdh5.16.1/etc/hadoop/hdfs-site.xml"));
+        Configuration conf = new Configuration();
+
         ArgsParser parser = ArgsParser.parse(args);
 
         Path outputPath = new Path(parser.getOutputFolderPath());
@@ -35,7 +34,7 @@ public class VF2Driver {
 
         Job job = Job.getInstance(conf, "VF2");
         job.addCacheFile(new URI(parser.getTargetGraphFilePath()));
-        job.setJarByClass(UllmannDriver.class);
+        job.setJarByClass(VF2Driver.class);
         job.setInputFormatClass(SourceGraphFileInputFormat.class);
         FileInputFormat.setInputPaths(job, parser.getSourceGraphFilePath());
 
