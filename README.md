@@ -19,11 +19,11 @@ In theoretical computer science, the subgraph isomorphism problem is a computati
 
  the encapsulation and optimization of the Ullmann algorithm and the VF2 algorithm are carried out. The UML as follow:
 
-![](https://raw.githubusercontent.com/InnoFang/jotter/image-hosting/subgraph-isomorphism/the%20UML%20of%20Implementation%20of%20Subgraph%20Isomorphism%20Algorithms.png)
+![](https://cdn.jsdelivr.net/gh/innofang/jotter/source/subgraph-isomorphism/the%20UML%20of%20Implementation%20of%20Subgraph%20Isomorphism%20Algorithms.png)
 
 ## Flow Diagram of the MapReduce Process
 
-![](https://raw.githubusercontent.com/InnoFang/jotter/image-hosting/subgraph-isomorphism/Flow%20Diagram%20of%20the%20MapReduce%20Process.jpg)
+![](https://cdn.jsdelivr.net/gh/innofang/jotter/source/subgraph-isomorphism/Flow%20Diagram%20of%20the%20MapReduce%20Process.jpg)
 
 
 ## Reference & Bibliography
