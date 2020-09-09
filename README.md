@@ -2,7 +2,7 @@
 
 ❄Implement the common subgraph isomorphism algorithms (i.e. Ullmann, VF2) based on `MapReduce` on `Hadoop`. 
 
-More infomartion, please see [wiki](https://github.com/InnoFang/subgraph-isomorphism/wiki)
+More information, please see [wiki](https://github.com/InnoFang/subgraph-isomorphism/wiki)
 
 More usage, please see test cases:
  + [GraphReaderTest](https://github.com/InnoFang/subgraph-isomorphism/blob/master/src/test/java/io/github/innofang/graph/GraphReaderTest.java)
